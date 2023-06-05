@@ -1,0 +1,136 @@
+﻿@page "/mining/mutuallockmining"
+@inherits LockMiningComponentBase
+<Microsoft.AspNetCore.Components.Web.Extensions.Head.Title Value=@PageTitle />
+<PageContainer Title=@PageTitle>
+    <ChildContent>
+
+        @if (this.Data.IsNotNullAndEmpty())
+        {
+            int i = 0;
+            <Collapse DefaultActiveKey="@(new[]{"0"})">
+
+                @foreach (var d in this.Data)
+                {
+                    var Last = d.Value.AssetInfos.OrderByDescending(m => m.Item1.IssueIndex).First().Item2;
+                    var assetState = Blockchain.Singleton.Store.GetAssets().TryGet(d.Key);
+                    var cap = assetState.Amount == -Fixed8.Satoshi ? "+\u221e" : assetState.Amount.ToString();
+                    var havecap = assetState.Available.ToString();
+
+                    <Panel Header="@assetState.GetName()" Key="@i.ToString()">
+                        <ExtraTemplate>
+                            @if (this.HaveEthID)
+                            {
+                                var url = $"/wallet/transferasset/{d.Key.ToString()}/2/{this.EthID.EthAddress}/{Last.MinAmount.ToString()}/{Blockchain.Singleton.HeaderHeight + 1001000}";
+                                <a class="bt" href="@url">@UIHelper.LocalString("去挖矿","Go Mining")</a>
+                            }
+                        </ExtraTemplate>
+                        <ChildContent>
+                            <Card Class="tabsCard">
+                                <CardTabs>
+                                    <Tabs DefaultActiveKey="@((i*100+1).ToString())">
+                                        <TabPane Key="@((i*100+1).ToString())">
+                                            <TabTemplate><Badge Dot><a>@UIHelper.LocalString("挖矿信息","Mining Information")</a></Badge></TabTemplate>
+                                        <ChildContent>
+                                            <div>
+                                                <ul>
+                                                    <li><Paragraph>@UIHelper.LocalString("资产Id","Asset Id")  :  <Text Strong Copyable>@d.Key.ToString()</Text></Paragraph></li>
+
+                                                    <li><Paragraph>@UIHelper.LocalString($"最大发行量:{cap}", $"Issue Cap:{cap}")</Paragraph></li>
+
+                                                    <li><Paragraph>@UIHelper.LocalString($"已发行量:{havecap}", $"Issued:{havecap}")  </Paragraph></li>
+                                                </ul>
+                                                @foreach (var l in d.Value.AssetInfos.OrderByDescending(m => m.Item1.IssueIndex))
+                                                    {
+                                                        <Divider Orientation="left" Style="font-weight:bold">@UIHelper.LocalString($"参数发布区块:{l.Item1.IssueIndex}", $"Parameter issue height:{l.Item1.IssueIndex}")</Divider>
+                                                        <ul>
+                                                            <li>@UIHelper.LocalString($"最少锁仓量:{l.Item2.MinAmount}", $"Min Lock:{l.Item2.MinAmount}")</li>
+                                                            <li>@UIHelper.LocalString($"最大锁仓量:{l.Item2.MaxAmount}", $"Max Lock:{l.Item2.MaxAmount}")</li>
+                                                            <li>@UIHelper.LocalString($"出矿率:{l.Item2.AirdropAmount}/100*100000", $"Airdrop Ratio:{l.Item2.AirdropAmount}/100*100000")</li>
+                                                        </ul>
+                                                    }
+                                                </div>
+                                            </ChildContent>
+                                        </TabPane>
+                                        <TabPane Key="@((i*100+2).ToString())">
+                                            <TabTemplate>@UIHelper.LocalString("本矿机挖矿记录","Mining Records")</TabTemplate>
+                                            <ChildContent>
+                                                <div>
+                                                    @foreach (var r in d.Value.SelfMiningRecords.OrderByDescending(m => m.Timestamp))
+                                                    {
+                                                        <ul>
+                                                            <li>@UIHelper.LocalString($"锁仓数:{r.Amount.ToString()}", $"Lock Volume:{r.Amount.ToString()}")</li>
+                                                            <li>@UIHelper.LocalString($"锁仓时间:{r.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}", $"Lock Time:{r.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}")</li>
+                                                            <li>@UIHelper.LocalString($"锁仓高度:{r.StartIndex}", $"Lock Height:{r.StartIndex}")</li>
+                                                            <li>@UIHelper.LocalString($"锁仓地址:{r.LockAddress.ToAddress()}", $"Lock Address:{r.LockAddress.ToAddress()}")</li>
+                                                            <li>@UIHelper.LocalString($"解锁地址:{r.Owner.ToAddress()}", $"Unlock Address:{r.Owner.ToAddress()}")</li>
+                                                            <li>@UIHelper.LocalString($"解锁高度:{r.EndIndex}", $"Unlock Height:{r.EndIndex}")</li>
+                                                        </ul>
+                                                        <Divider />
+                                                    }
+                                                </div>
+                                            </ChildContent>
+                                        </TabPane>
+                                        <TabPane Key="@((i*100+3).ToString())">
+                                            <TabTemplate>@UIHelper.LocalString("叶子矿机挖矿记录","Leaf Mining Records")</TabTemplate>
+                                            <ChildContent>
+                                                <div>
+                                                    @foreach (var r in d.Value.LeafMiningRecords.OrderByDescending(m => m.Timestamp))
+                                                    {
+                                                        <ul>
+                                                            <li>@UIHelper.LocalString($"锁仓数:{r.Amount.ToString()}", $"Lock Volume:{r.Amount.ToString()}")</li>
+                                                            <li>@UIHelper.LocalString($"锁仓时间:{r.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}", $"Lock Time:{r.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}")</li>
+                                                            <li>@UIHelper.LocalString($"锁仓高度:{r.StartIndex}", $"Lock Height:{r.StartIndex}")</li>
+                                                            <li>@UIHelper.LocalString($"锁仓地址:{r.LockAddress.ToAddress()}", $"Lock Address:{r.LockAddress.ToAddress()}")</li>
+                                                            <li>@UIHelper.LocalString($"解锁地址:{r.Owner.ToAddress()}", $"Unlock Address:{r.Owner.ToAddress()}")</li>
+                                                            <li>@UIHelper.LocalString($"解锁高度:{r.EndIndex}", $"Unlock Height:{r.EndIndex}")</li>
+                                                        </ul>
+                                                        <Divider />
+                                                    }
+                                                </div>
+                                            </ChildContent>
+                                        </TabPane>
+                                        <TabPane Key="@((i*100+4).ToString())">
+                                            <TabTemplate>@UIHelper.LocalString("本矿机出矿记录","Interest Records")</TabTemplate>
+                                            <ChildContent>
+                                                <div>
+                                                    @foreach (var r in d.Value.SelfInterestRecords.OrderByDescending(m => m.Timestamp))
+                                                    {
+                                                        <ul>
+                                                            <li>@UIHelper.LocalString($"出矿数:{r.Amount.ToString()}", $"Interest Volume:{r.Amount.ToString()}")</li>
+                                                            <li>@UIHelper.LocalString($"出矿时间:{r.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}", $"Interest Time:{r.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}")</li>
+                                                            <li>@UIHelper.LocalString($"出矿地址:{r.Owner.ToAddress()}", $"Interest Address:{r.Owner.ToAddress()}")</li>
+                                                        </ul>
+                                                        <Divider />
+                                                    }
+                                                </div>
+                                            </ChildContent>
+                                        </TabPane>
+                                        <TabPane Key="@((i*100+5).ToString())">
+                                            <TabTemplate>@UIHelper.LocalString("叶子矿机出矿记录","Leaf Interest Records")</TabTemplate>
+                                            <ChildContent>
+                                                <div>
+                                                    @foreach (var r in d.Value.LeafInterestRecords.OrderByDescending(m => m.Timestamp))
+                                                    {
+                                                        <ul>
+                                                            <li>@UIHelper.LocalString($"出矿数:{r.Amount.ToString()}", $"Interest Volume:{r.Amount.ToString()}")</li>
+                                                            <li>@UIHelper.LocalString($"出矿时间:{r.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}", $"Interest Time:{r.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}")</li>
+                                                            <li>@UIHelper.LocalString($"出矿地址:{r.Owner.ToAddress()}", $"Interest Address:{r.Owner.ToAddress()}")</li>
+                                                        </ul>
+                                                        <Divider />
+                                                    }
+                                                </div>
+                                            </ChildContent>
+                                        </TabPane>
+                                    </Tabs>
+                                </CardTabs>
+                            </Card>
+                        </ChildContent>
+                    </Panel>
+                    i++;
+                }
+
+            </Collapse>
+        }
+
+    </ChildContent>
+</PageContainer>

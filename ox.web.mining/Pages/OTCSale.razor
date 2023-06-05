@@ -1,0 +1,119 @@
+﻿@page "/invest/otcsale"
+@inherits MiningComponentBase
+<Microsoft.AspNetCore.Components.Web.Extensions.Head.Title Value=@PageTitle />
+<PageContainer Title=@PageTitle>
+    <Content>
+        <span>@msg</span>
+    </Content>
+    <ChildContent>
+        <Card>
+            <Form Model="@model"
+                  Style="margin-top: 8px;"
+                  OnFinish="HandleSubmit">
+                <FormItem Label=@UIHelper.LocalString("以太坊出金地址","Ethereum Sale Address") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                    <Input @bind-Value="@context.PoolEthAddress" ReadOnly=true />
+                </FormItem>
+                @{
+                    var selfaddr = this.EthID?.MapAddress?.ToAddress();
+                }
+                <FormItem Label=@UIHelper.LocalString("OX出金地址","OX Sale Address") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                    <Input @bind-Value="@selfaddr" ReadOnly=true />
+                </FormItem>
+                <FormItem Label=@UIHelper.LocalString("出金地址 USDX 可用余额","Sale Address USDX Available Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                    <Input @bind-Value="@this.BalanceState.AvailableBalance" ReadOnly=true />
+                </FormItem>
+                @{
+                    var addr = context.InPoolAddress?.ToAddress();
+                }
+                <FormItem Label=@UIHelper.LocalString("场外交易池地址","OTC Pool Address") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                    <Input @bind-Value="@addr" ReadOnly=true />
+                </FormItem>
+                <FormItem Label=@UIHelper.LocalString("场外交易池USDX余额","OX Dealer Pool USDX Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                    <Input @bind-Value="@this.OTCDealerOXPoolBalance" ReadOnly=true />
+                </FormItem>
+                <FormItem Label=@UIHelper.LocalString("USDX 出金额","USDC Sale Amount") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                    <Input Placeholder=@UIHelper.LocalString("输入要出金的 USDX 资产金额","Enter the USDX amount to sale") @bind-Value="@context.Amount" />
+                </FormItem>
+                <FormItem Label=@UIHelper.LocalString("手续费率","Commission Ratio") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                    <AntDesign.InputNumber @bind-Value="@context.FeeRatio" Min="0" Max="20" DefaultValue="5" />
+                    <span class="ant-form-text">%</span>
+                </FormItem>
+                <FormItem Label="Target disclosure" LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                    <RadioGroup @bind-Value="@context.State">
+
+                        <Radio Value=@OTCStatus.Open.Value()>@UIHelper.LocalString(OTCStatus.Open.StringValue(),OTCStatus.Open.EngStringMaxValue())</Radio>
+                        <Radio Value=@OTCStatus.Redeem.Value()>@UIHelper.LocalString(OTCStatus.Redeem.StringValue(),OTCStatus.Redeem.EngStringMaxValue())</Radio>
+                    </RadioGroup>
+                </FormItem>
+                <FormItem Label=" " Style="margin-top:32px" WrapperCol="_submitFormLayout.WrapperCol">
+                    <Button Type="primary" HtmlType="submit" Disabled=!this.Valid>
+                        @UIHelper.LocalString("提交","Submit")
+                    </Button>
+                </FormItem>
+            </Form>
+        </Card>
+    </ChildContent>
+</PageContainer>
+<style>
+
+    .card {
+        margin-bottom: 24px;
+    }
+
+        .card :global .ant-legacy-form-item .ant-legacy-form-item-control-wrapper {
+            width: 100%;
+        }
+
+    .errorIcon {
+        margin-right: 24px;
+        color: #ff4d4f;
+        cursor: pointer;
+    }
+
+        .errorIcon span.anticon {
+            margin-right: 4px;
+        }
+
+    .errorPopover :global .ant-popover-inner-content {
+        min-width: 256px;
+        max-height: 290px;
+        padding: 0;
+        overflow: auto;
+    }
+
+    .errorListItem {
+        padding: 8px 16px;
+        list-style: none;
+        border-bottom: 1px solid #f0f0f0;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+        .errorListItem:hover {
+            background: #e6f7ff;
+        }
+
+        .errorListItem:last-child {
+            border: 0;
+        }
+
+        .errorListItem .errorIcon {
+            float: left;
+            margin-top: 4px;
+            margin-right: 12px;
+            padding-bottom: 22px;
+            color: #ff4d4f;
+        }
+
+        .errorListItem .errorField {
+            margin-top: 2px;
+            color: rgba(0, 0, 0, 0.45);
+            font-size: 12px;
+        }
+
+    .editable td {
+        padding-top: 13px !important;
+        padding-bottom: 12.5px !important;
+    }
+
+</style>

@@ -1,0 +1,161 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>OX.UI.Mining</RootNamespace>
+    <Authors>gt</Authors>
+    <Copyright>gt</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>1.0.2</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="MAM\**" />
+    <EmbeddedResource Remove="MAM\**" />
+    <None Remove="MAM\**" />
+  </ItemGroup>
+
+
+
+  <ItemGroup>
+    <Compile Remove="DEX\SwapMix.cs" />
+    <Compile Remove="DEX\SwapPairRequest.cs" />
+    <Compile Remove="DEX\SwapPairRequest.Designer.cs" />
+    <Compile Remove="DEX\ViewSwapPair.cs" />
+    <Compile Remove="DEX\ViewSwapPair.Designer.cs" />
+    <Compile Remove="InvestRule.cs" />
+    <Compile Remove="InvestRule.Designer.cs" />
+    <Compile Remove="MemberAsset.cs" />
+    <Compile Remove="MemberAsset.Designer.cs" />
+    <Compile Remove="MemberAssetTreeNode.cs" />
+    <Compile Remove="OTC\AllOTCDealers.cs" />
+    <Compile Remove="OTC\AllOTCDealers.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="DEX\SwapPairRequest.resx" />
+    <EmbeddedResource Remove="DEX\ViewSwapPair.resx" />
+    <EmbeddedResource Remove="InvestRule.resx" />
+    <EmbeddedResource Remove="MemberAsset.resx" />
+    <EmbeddedResource Remove="OTC\AllOTCDealers.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ox.invest.core\ox.invest.core.csproj" />
+    <ProjectReference Include="..\ox.provider.mining\ox.provider.mining.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ox">
+      <HintPath>..\Libs\ox.dll</HintPath>
+    </Reference>
+    <Reference Include="ox.vm">
+      <HintPath>..\Libs\ox.vm.dll</HintPath>
+    </Reference>
+    <Reference Include="ox.wallets.core">
+      <HintPath>..\Libs\ox.wallets.core.dll</HintPath>
+    </Reference>
+    <Reference Include="ox.wallets.ui">
+      <HintPath>..\Libs\ox.wallets.ui.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="LAM\IssueLevelLockMiningAssetcs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="LAM\SpaceTimeSnapshot.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="LAM\IssueMutualLockMiningAssetcs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="LAM\IssueLockMiningAssetcs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="LAM\LAMRule.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="LAM\LevelLockMingingAssets.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="LAM\MutualLockMingingAssets.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="LAM\MyLevelLockOutMingingRecords.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="LAM\MyLevelLockInterestRecords.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="LAM\MyMutualLockInterestRecords.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="LAM\MyLevelLockInMingingRecords.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="LAM\MyMutualLockMingingRecords.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="LAM\MyMutualLockNodes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="LAM\MyLockInterestRecords.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="LAM\MyLockMingingRecords.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="LAM\LockMingingAssets.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="LAM\SelfLockForm.cs" />
+    <Compile Update="LAM\ViewMutualLockSeed.cs" />
+    <Compile Update="OTC\RegOTCDealerForm.cs" />
+    <Compile Update="DEX\Chart\SideStockControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="DEX\MySideSwapRecords.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="DEX\SideKLine.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="DEX\SidePairView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="DEX\RegSideSwapPair.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="DEX\SideSwapPairControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="DEX\SideSwapPairDetail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="DEX\SideSwapTrustRecharge.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="DEX\SideSwapRecharge.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="DEX\SwapRule.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="DEX\IssueSwapPair.cs" />
+    <Compile Update="DEX\KLine.cs" />
+    <Compile Update="DEX\MySwapRecords.cs" />
+    <Compile Update="DEX\SwapPairDetail.cs" />
+    <Compile Update="DialogPayToInvest.cs" />
+    <Compile Update="PledgeSummary.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Students.cs" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy $(TargetPath)  E:\Data\Source\AU-X\OX\OX-Wallets\ox.notecase\bin\Debug\net6.0-windows\bapps\mining\&#xD;&#xA;copy $(TargetPath)  E:\Data\Source\AU-X\OX\OX-Wallets\ox.mix\bin\Debug\net6.0-windows\bapps\mining\&#xD;&#xA;copy $(TargetPath)  E:\Data\Source\AU-X\OX\OX-Wallets\ox.web\bin\Debug\net6.0-windows\bapps\mining\&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;" />
+  </Target>
+
+</Project>

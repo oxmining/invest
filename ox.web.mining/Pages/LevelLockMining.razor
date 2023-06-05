@@ -1,0 +1,186 @@
+﻿@page "/mining/levellockmining"
+@inherits LockMiningComponentBase
+<Microsoft.AspNetCore.Components.Web.Extensions.Head.Title Value=@PageTitle />
+<PageContainer Title=@PageTitle>
+    <ChildContent>
+
+        @if (this.Data.IsNotNullAndEmpty())
+        {
+            var levelLockInStateRecords = this.Provider.GetAll<LevelLockTx, LevelLockValue>(InvestBizPersistencePrefixes.LevelLockInStateRecords);
+            int i = 0;
+            <Collapse DefaultActiveKey="@(new[]{"0"})">
+
+                @foreach (var d in this.Data)
+                {
+                    var Last = d.Value.AssetInfos.OrderByDescending(m => m.Item1.IssueIndex).First().Item2;
+                    var assetState = Blockchain.Singleton.Store.GetAssets().TryGet(d.Key);
+                    var cap = assetState.Amount == -Fixed8.Satoshi ? "+\u221e" : assetState.Amount.ToString();
+                    var havecap = assetState.Available.ToString();
+
+                    <Panel Header="@assetState.GetName()" Key="@i.ToString()">
+                        <ChildContent>
+                            <Card Class="tabsCard">
+                                <CardTabs>
+                                    <Tabs DefaultActiveKey="@((i*100+1).ToString())">
+                                        <TabPane Key="@((i*100+1).ToString())">
+                                            <TabTemplate><Badge Dot><a>@UIHelper.LocalString("挖矿信息","Mining Information")</a></Badge></TabTemplate>
+                                        <ChildContent>
+                                            <div>
+                                                <ul>
+                                                    <li><Paragraph>@UIHelper.LocalString("资产Id","Asset Id")  :  <Text Strong Copyable>@d.Key.ToString()</Text></Paragraph></li>
+
+                                                    <li><Paragraph>@UIHelper.LocalString($"最大发行量:{cap}", $"Issue Cap:{cap}")</Paragraph></li>
+
+                                                    <li><Paragraph>@UIHelper.LocalString($"已发行量:{havecap}", $"Issued:{havecap}")  </Paragraph></li>
+                                                </ul>
+                                                @foreach (var l in d.Value.AssetInfos.OrderByDescending(m => m.Item1.IssueIndex))
+                                                    {
+                                                        <Divider Orientation="left" Style="font-weight:bold">@UIHelper.LocalString($"参数发布区块:{l.Item1.IssueIndex}", $"Parameter issue height:{l.Item1.IssueIndex}")</Divider>
+                                                        <ul>
+                                                            <li>@UIHelper.LocalString($"最少质押量:{l.Item2.MinAmount}", $"Min Pledge:{l.Item2.MinAmount}")</li>
+                                                            <li>@UIHelper.LocalString($"阶梯质押量:{l.Item2.StepAmount}", $"Step Pledge:{l.Item2.StepAmount}")</li>
+                                                            <li>@UIHelper.LocalString($"出矿率:{l.Item2.AirdropAmount}/100", $"Airdrop Ratio:{l.Item2.AirdropAmount}/100")</li>
+                                                        </ul>
+                                                    }
+                                                </div>
+                                            </ChildContent>
+                                        </TabPane>
+                                        <TabPane Key="@((i*100+2).ToString())">
+                                            <TabTemplate>@UIHelper.LocalString("质押买入记录", "Level Lock Buy Records")</TabTemplate>
+                                            <ChildContent>
+                                                <div>
+                                                    @if (d.Value.LevelLockInRecords.IsNotNullAndEmpty())
+                                                    {
+                                                        Fixed8 spend = Fixed8.Zero;
+                                                        Fixed8 unspend = Fixed8.Zero;
+                                                        foreach (var r in d.Value.LevelLockInRecords)
+                                                        {
+                                                            var llt = levelLockInStateRecords.FirstOrDefault(m => m.Key.Equals(r.Value));
+                                                            if (!llt.Equals(new KeyValuePair<LevelLockTx, LevelLockValue>()))
+                                                            {
+                                                                if (llt.Value.Spend)
+                                                                {
+                                                                    spend += llt.Value.Amount;
+                                                                }
+                                                                else
+                                                                {
+                                                                    unspend += llt.Value.Amount;
+                                                                }
+                                                            }
+                                                        }
+                                                        <ul>
+                                                            <li>@UIHelper.LocalString($"未解押总额: {unspend}", $"Total not unlock amount: {unspend}")</li>
+                                                            <li>@UIHelper.LocalString($"已解押总额: {spend}", $"Total  unlock amount: {spend}")</li>
+                                                        </ul>
+                                                        <Divider Orientation="left" Style="font-weight:bold">@UIHelper.LocalString($"买入历史", $"Buy History")</Divider>
+
+                                                        foreach (var r in d.Value.LevelLockInRecords.OrderByDescending(m => m.Key.Timestamp))
+                                                        {
+                                                            <ul>
+                                                                <li>@UIHelper.LocalString($"质押买入数:{r.Key.Amount.ToString()}", $"Level Lock Buy Volume:{r.Key.Amount.ToString()}")</li>
+                                                                <li>@UIHelper.LocalString($"质押买入时间:{r.Key.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}", $"Level Lock Buy Time:{r.Key.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}")</li>
+                                                                <li>@UIHelper.LocalString($"质押来源:{r.Key.From.ToAddress()}", $"Level Lock From:{r.Key.From.ToAddress()}")</li>
+                                                                <li>@UIHelper.LocalString($"质押买入高度:{r.Key.PledgeIndex}", $"Level Lock Buy Height:{r.Key.PledgeIndex}")</li>
+                                                            </ul>
+                                                            <Divider />
+                                                        }
+                                                    }
+                                                </div>
+                                            </ChildContent>
+                                        </TabPane>
+                                        <TabPane Key="@((i*100+3).ToString())">
+                                            <TabTemplate>@UIHelper.LocalString("质押卖出记录", "Level Lock Sell Records")</TabTemplate>
+                                            <ChildContent>
+                                                <div>
+                                                    @if (d.Value.LevelLockOutRecords.IsNotNullAndEmpty())
+                                                    {
+                                                        foreach (var r in d.Value.LevelLockOutRecords.OrderByDescending(m => m.Key.Timestamp))
+                                                        {
+                                                            <ul>
+                                                                <li>@UIHelper.LocalString($"质押卖出数:{r.Key.Amount.ToString()}", $"Level Lock Sell Volume:{r.Key.Amount.ToString()}")</li>
+                                                                <li>@UIHelper.LocalString($"质押卖出时间:{r.Key.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}", $"Level Lock Sell Time:{r.Key.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}")</li>
+                                                                <li>@UIHelper.LocalString($"质押目标地址:{r.Key.To.ToAddress()}", $"Level Lock To:{r.Key.To.ToAddress()}")</li>
+                                                                <li>@UIHelper.LocalString($"质押卖出高度:{r.Key.PledgeIndex}", $"Level Lock Sell Height:{r.Key.PledgeIndex}")</li>
+                                                            </ul>
+                                                            <Divider />
+                                                        }
+                                                    }
+                                                </div>
+                                            </ChildContent>
+                                        </TabPane>
+                                        <TabPane Key="@((i*100+4).ToString())">
+                                            <TabTemplate>@UIHelper.LocalString("本矿机出矿记录","Interest Records")</TabTemplate>
+                                            <ChildContent>
+                                                <div>
+                                                    @if (d.Value.SelfInterestRecords.IsNotNullAndEmpty())
+                                                    {
+                                                        foreach (var r in d.Value.SelfInterestRecords.OrderByDescending(m => m.Timestamp))
+                                                        {
+                                                            if (r.IsLock)
+                                                            {
+                                                                <ul>
+                                                                    <li>@UIHelper.LocalString($"出矿数:{r.Amount.ToString()}", $"Interest Volume:{r.Amount.ToString()}")</li>
+                                                                    <li>@UIHelper.LocalString($"锁仓时间:{r.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}", $"Lock Time:{r.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}")</li>
+                                                                    <li>@UIHelper.LocalString($"锁仓高度:{r.StartIndex}", $"Lock Height:{r.StartIndex}")</li>
+                                                                    <li>@UIHelper.LocalString($"锁仓地址:{r.LockAddress.ToAddress()}", $"Lock Address:{r.LockAddress.ToAddress()}")</li>
+                                                                    <li>@UIHelper.LocalString($"解锁高度:{r.EndIndex}", $"Unlock Height:{r.EndIndex}")</li>
+                                                                </ul>
+                                                            }
+                                                            else
+                                                            {
+                                                                <ul>
+                                                                    <li>@UIHelper.LocalString($"出矿数:{r.Amount.ToString()}", $"Interest Volume:{r.Amount.ToString()}")</li>
+                                                                    <li>@UIHelper.LocalString($"出矿时间:{r.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}", $"Interest Time:{r.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}")</li>
+                                                                </ul>
+                                                            }
+                                                            <Divider />
+                                                        }
+                                                    }
+                                                </div>
+                                            </ChildContent>
+                                        </TabPane>
+                                        <TabPane Key="@((i*100+5).ToString())">
+                                            <TabTemplate>@UIHelper.LocalString("叶子矿机出矿记录","Leaf Interest Records")</TabTemplate>
+                                            <ChildContent>
+                                                <div>
+                                                    @if (d.Value.LeafInterestRecords.IsNotNullAndEmpty())
+                                                    {
+                                                        foreach (var r in d.Value.LeafInterestRecords.OrderByDescending(m => m.Timestamp))
+                                                        {
+                                                            if (r.IsLock)
+                                                            {
+                                                                <ul>
+                                                                    <li>@UIHelper.LocalString($"出矿数:{r.Amount.ToString()}", $"Interest Volume:{r.Amount.ToString()}")</li>
+                                                                    <li>@UIHelper.LocalString($"锁仓时间:{r.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}", $"Lock Time:{r.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}")</li>
+                                                                    <li>@UIHelper.LocalString($"锁仓地址:{r.LockAddress.ToAddress()}", $"Lock Address:{r.LockAddress.ToAddress()}")</li>
+                                                                    <li>@UIHelper.LocalString($"解锁地址:{r.Owner.ToAddress()}", $"Unlock Address:{r.Owner.ToAddress()}")</li>
+                                                                    <li>@UIHelper.LocalString($"解锁高度:{r.EndIndex}", $"Unlock Height:{r.EndIndex}")</li>
+                                                                </ul>
+                                                            }
+                                                            else
+                                                            {
+                                                                <ul>
+                                                                    <li>@UIHelper.LocalString($"出矿数:{r.Amount.ToString()}", $"Interest Volume:{r.Amount.ToString()}")</li>
+                                                                    <li>@UIHelper.LocalString($"出矿时间:{r.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}", $"Interest Time:{r.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}")</li>
+                                                                    <li>@UIHelper.LocalString($"出矿地址:{r.Owner.ToAddress()}", $"Interest Address:{r.Owner.ToAddress()}")</li>
+                                                                </ul>
+                                                            }
+                                                            <Divider />
+                                                        }
+                                                    }
+                                                </div>
+                                            </ChildContent>
+                                        </TabPane>
+                                    </Tabs>
+                                </CardTabs>
+                            </Card>
+                        </ChildContent>
+                    </Panel>
+                    i++;
+                }
+
+            </Collapse>
+        }
+
+    </ChildContent>
+</PageContainer>

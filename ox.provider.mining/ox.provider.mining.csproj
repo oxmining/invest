@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Version>1.0.2</Version>
+	  <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>OX.Mining</RootNamespace>
+    <Authors>gt</Authors>
+    <Copyright>gt</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="MiningProvider-swap.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ox.invest.core\ox.invest.core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ox">
+      <HintPath>..\Libs\ox.dll</HintPath>
+    </Reference>
+    <Reference Include="ox.vm">
+      <HintPath>..\Libs\ox.vm.dll</HintPath>
+    </Reference>
+    <Reference Include="ox.wallets.core">
+      <HintPath>..\Libs\ox.wallets.core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy $(TargetPath)  E:\Data\Source\AU-X\OX\OX-Wallets\ox.notecase\bin\Debug\net6.0-windows\bapps\mining\&#xD;&#xA;copy $(TargetPath)  E:\Data\Source\AU-X\OX\OX-Wallets\ox.mix\bin\Debug\net6.0-windows\bapps\mining\&#xD;&#xA;copy $(TargetPath)  E:\Data\Source\AU-X\OX\OX-Wallets\ox.web\bin\Debug\net6.0-windows\bapps\mining\&#xD;&#xA;&#xD;&#xA;" />
+  </Target>
+
+</Project>

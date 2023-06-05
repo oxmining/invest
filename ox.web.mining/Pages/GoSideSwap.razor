@@ -1,0 +1,116 @@
+﻿@page "/invest/gosideswap/{kind}/{pooladdress}"
+@inherits MiningComponentBase
+<Microsoft.AspNetCore.Components.Web.Extensions.Head.Title Value=@PageTitle />
+@{
+    var s = "";
+    if (this.SideSwapPairKey.IsNotNull())
+    {
+        if (this.kind == "0")
+        {
+            s = UIHelper.LocalString("买入", "Buy") + $"{this.AssetName}";
+        }
+        else if (this.kind == "1")
+        {
+            s = UIHelper.LocalString("卖出", "Sale") + $"{this.AssetName}";
+        }
+    }
+}
+<PageHeader Class="site-page-header" Title="@s" Subtitle="@this.pooladdress" />
+<span>@msg</span>
+<Card>
+    <Form Model="@Model"
+          Style="margin-top: 8px;"
+          OnFinish="HandleSubmit">
+        @{
+            var p = this.Price.ToString("f6");
+        }
+        <FormItem Label=@UIHelper.LocalString($"当前价格",$"Current Price") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+            <Input @bind-Value="@p" ReadOnly=true />
+        </FormItem>
+        <FormItem Label=@UIHelper.LocalString($"{this.AssetName} 可用余额",$"{this.AssetName} Available Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+            <Input @bind-Value="@this.BalanceState.AvailableBalance" ReadOnly=true />
+        </FormItem>
+        <FormItem Label="@UIHelper.LocalString("兑换金额","Swap Amount")" ShowFeedbackOnError="true" LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+            <AntDesign.InputNumber @bind-Value="@context.Amount" Min="1" TValue="uint" Max="100000000" PlaceHolder='@UIHelper.LocalString("请输入埋雷金额","please enter bury amount")'></AntDesign.InputNumber>
+        </FormItem>
+        <FormItem Label=" " Style="margin-top:32px" WrapperCol="_submitFormLayout.WrapperCol">
+            <Button Type="primary" HtmlType="submit" Disabled=!this.Valid>
+                @UIHelper.LocalString("提交","Submit")
+            </Button>
+        </FormItem>
+        <FormItem Label=" " Style="margin-top:32px" WrapperCol="_submitFormLayout.WrapperCol">
+            <Spin Spinning=loading2>
+            </Spin>
+        </FormItem>
+    </Form>
+    <div>
+        <RadioGroup OnChange="@((string e)=>changeKind(e))" @bind-Value="KLKind" ButtonStyle="@RadioButtonStyle.Solid">
+            <Radio RadioButton Value="@("day")">@UIHelper.LocalString("日线","Day Line")</Radio>
+            <Radio RadioButton Value="@("hour")">@UIHelper.LocalString("时线","Hour Line")</Radio>
+            </RadioGroup>
+        </div>
+        <Stock OnFirstRender="OnChartRender" Config="config1" />
+        </Card>
+        <style>
+
+            .card {
+                margin-bottom: 24px;
+            }
+
+                .card :global .ant-legacy-form-item .ant-legacy-form-item-control-wrapper {
+                    width: 100%;
+                }
+
+            .errorIcon {
+                margin-right: 24px;
+                color: #ff4d4f;
+                cursor: pointer;
+            }
+
+                .errorIcon span.anticon {
+                    margin-right: 4px;
+                }
+
+            .errorPopover :global .ant-popover-inner-content {
+                min-width: 256px;
+                max-height: 290px;
+                padding: 0;
+                overflow: auto;
+            }
+
+            .errorListItem {
+                padding: 8px 16px;
+                list-style: none;
+                border-bottom: 1px solid #f0f0f0;
+                cursor: pointer;
+                transition: all 0.3s;
+            }
+
+                .errorListItem:hover {
+                    background: #e6f7ff;
+                }
+
+                .errorListItem:last-child {
+                    border: 0;
+                }
+
+                .errorListItem .errorIcon {
+                    float: left;
+                    margin-top: 4px;
+                    margin-right: 12px;
+                    padding-bottom: 22px;
+                    color: #ff4d4f;
+                }
+
+                .errorListItem .errorField {
+                    margin-top: 2px;
+                    color: rgba(0, 0, 0, 0.45);
+                    font-size: 12px;
+                }
+
+            .editable td {
+                padding-top: 13px !important;
+                padding-bottom: 12.5px !important;
+            }
+
+        </style>

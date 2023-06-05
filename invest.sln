@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32602.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ox.invest.core", "ox.invest.core\ox.invest.core.csproj", "{193328D5-65C3-46D2-A87E-53133F0A2008}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ox.ui.mining", "ox.ui.mining\ox.ui.mining.csproj", "{40138641-B924-40E8-B7B1-A30C5D7F2EFF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ox.web.mining", "ox.web.mining\ox.web.mining.csproj", "{34696C04-D03B-4EBD-84FE-88E23C633CE6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ox.provider.mining", "ox.provider.mining\ox.provider.mining.csproj", "{FCD29417-BC7D-4570-8111-99CC7417083F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{193328D5-65C3-46D2-A87E-53133F0A2008}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{193328D5-65C3-46D2-A87E-53133F0A2008}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{193328D5-65C3-46D2-A87E-53133F0A2008}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{193328D5-65C3-46D2-A87E-53133F0A2008}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40138641-B924-40E8-B7B1-A30C5D7F2EFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40138641-B924-40E8-B7B1-A30C5D7F2EFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40138641-B924-40E8-B7B1-A30C5D7F2EFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40138641-B924-40E8-B7B1-A30C5D7F2EFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34696C04-D03B-4EBD-84FE-88E23C633CE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34696C04-D03B-4EBD-84FE-88E23C633CE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34696C04-D03B-4EBD-84FE-88E23C633CE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34696C04-D03B-4EBD-84FE-88E23C633CE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCD29417-BC7D-4570-8111-99CC7417083F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCD29417-BC7D-4570-8111-99CC7417083F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCD29417-BC7D-4570-8111-99CC7417083F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCD29417-BC7D-4570-8111-99CC7417083F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DE15F840-38E4-457E-BCEE-B2C9C51B2786}
+	EndGlobalSection
+EndGlobal

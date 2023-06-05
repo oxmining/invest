@@ -1,0 +1,79 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Copyright>gt</Copyright>
+		<AssemblyTitle>OX</AssemblyTitle>
+		<Version>1.0.2</Version>
+		<Authors>gt</Authors>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<AssemblyName>ox.invest.core</AssemblyName>
+		<PackageId>OX.Core</PackageId>
+		<PackageTags></PackageTags>
+		<PackageProjectUrl></PackageProjectUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl></RepositoryUrl>
+		<RootNamespace>OX.Mining</RootNamespace>
+		<Company>gt</Company>
+		<Description>OX.Core</Description>
+		<LangVersion>latest</LangVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Remove="MMM\**" />
+		<Compile Remove="Persistence\**" />
+		<Compile Remove="Trade\**" />
+		<EmbeddedResource Remove="MMM\**" />
+		<EmbeddedResource Remove="Persistence\**" />
+		<EmbeddedResource Remove="Trade\**" />
+		<None Remove="MMM\**" />
+		<None Remove="Persistence\**" />
+		<None Remove="Trade\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Remove="IInvestBizPersistence.cs" />
+	  <Compile Remove="Models\AssetKind.cs" />
+	  <Compile Remove="Models\InvestBalanceRecord.cs" />
+	  <Compile Remove="Models\InvestBizModelType.cs" />
+	  <Compile Remove="Models\InvestBizPersistencePrefixes.cs" />
+	  <Compile Remove="Models\InvestBizRecordHelper.cs" />
+	  <Compile Remove="Models\InvestMemberEthRecord.cs" />
+	  <Compile Remove="Models\InvestMemberFixedRecord.cs" />
+	  <Compile Remove="Models\InvestMemberVarRecord.cs" />
+	  <Compile Remove="Models\InvestSettingRecord.cs" />
+	  <Compile Remove="Models\InvestSettingTypes.cs" />
+	  <Compile Remove="Models\PledgePersistenceKey.cs" />
+	  <Compile Remove="Models\PledgeProof.cs" />
+	  <Compile Remove="Models\PledgeSummary.cs" />
+	  <Compile Remove="Models\PledgeTip.cs" />
+	  <Compile Remove="Models\WalletAccountProfile.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Models\" />
+	  <Folder Include="Properties\" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Akka" Version="1.5.3" />
+    <PackageReference Include="Nethereum.Signer" Version="4.14.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ox">
+      <HintPath>..\Libs\ox.dll</HintPath>
+    </Reference>
+    <Reference Include="ox.vm">
+      <HintPath>..\Libs\ox.vm.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	  <Exec Command="copy $(TargetPath)  E:\Data\Source\AU-X\OX\OX-Wallets\ox.notecase\bin\Debug\net6.0-windows\bapps\mining\&#xD;&#xA;copy $(TargetPath)  E:\Data\Source\AU-X\OX\OX-Wallets\ox.mix\bin\Debug\net6.0-windows\bapps\mining\&#xD;&#xA;copy $(TargetPath)  E:\Data\Source\AU-X\OX\OX-Wallets\ox.web\bin\Debug\net6.0-windows\bapps\mining\&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;" />
+	</Target>
+
+</Project>

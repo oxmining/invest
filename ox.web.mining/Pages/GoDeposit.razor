@@ -1,0 +1,102 @@
+﻿@page "/invest/godeposit/{dealerethaddress}"
+@inherits MiningComponentBase
+<Microsoft.AspNetCore.Components.Web.Extensions.Head.Title Value=@PageTitle />
+<PageContainer Title=@PageTitle>
+    <Content>
+        <span>@msg</span>
+    </Content>
+    <ChildContent>
+        <Card>
+            <Form Model="@model"
+                  Style="margin-top: 8px;"
+                  OnFinish="HandleSubmit">
+                <FormItem Label=@UIHelper.LocalString("OX 场外交易池地址","OX Dealer Pool Address") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                    <Input @bind-Value="@this.OTCDealerOXPoolAddress" ReadOnly=true />
+                </FormItem>
+                <FormItem Label=@UIHelper.LocalString("场外交易池USDX余额","OX Dealer Pool USDX Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                    <Input @bind-Value="@this.OTCDealerOXPoolBalance" ReadOnly=true />
+                </FormItem>
+                <FormItem Label=@UIHelper.LocalString("Eth 场外交易商地址","Eth OTC Dealer Address") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                    <Input @bind-Value="@context.PoolEthAddress" ReadOnly=true />
+                </FormItem>
+                <FormItem Label=@UIHelper.LocalString("Eth 入金地址","Eth Deposit Address") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                    <Input @bind-Value="@context.FromEthAddress" ReadOnly=true />
+                </FormItem>
+                <FormItem Label=@UIHelper.LocalString("OX 地址","OX Address") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                    <Input Placeholder=@UIHelper.LocalString("输入接收OX资产的地址","Enter the address to receive OX assets") @bind-Value="@context.OxAddress" />
+                </FormItem>
+                <FormItem Label=@UIHelper.LocalString("Eth 金额","Eth Amount") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                    <Input Placeholder=@UIHelper.LocalString("输入要入金的以太坊资产金额","Enter the Eth amount to buy") @bind-Value="@context.Amount" />
+                </FormItem>
+                <FormItem Label=" " Style="margin-top:32px" WrapperCol="_submitFormLayout.WrapperCol">
+                    <Button Type="primary" HtmlType="submit" Disabled=!this.Valid>
+                        @UIHelper.LocalString("提交","Submit")
+                    </Button>
+                </FormItem>
+            </Form>
+        </Card>
+    </ChildContent>
+</PageContainer>
+<style>
+
+    .card {
+        margin-bottom: 24px;
+    }
+
+        .card :global .ant-legacy-form-item .ant-legacy-form-item-control-wrapper {
+            width: 100%;
+        }
+
+    .errorIcon {
+        margin-right: 24px;
+        color: #ff4d4f;
+        cursor: pointer;
+    }
+
+        .errorIcon span.anticon {
+            margin-right: 4px;
+        }
+
+    .errorPopover :global .ant-popover-inner-content {
+        min-width: 256px;
+        max-height: 290px;
+        padding: 0;
+        overflow: auto;
+    }
+
+    .errorListItem {
+        padding: 8px 16px;
+        list-style: none;
+        border-bottom: 1px solid #f0f0f0;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+        .errorListItem:hover {
+            background: #e6f7ff;
+        }
+
+        .errorListItem:last-child {
+            border: 0;
+        }
+
+        .errorListItem .errorIcon {
+            float: left;
+            margin-top: 4px;
+            margin-right: 12px;
+            padding-bottom: 22px;
+            color: #ff4d4f;
+        }
+
+        .errorListItem .errorField {
+            margin-top: 2px;
+            color: rgba(0, 0, 0, 0.45);
+            font-size: 12px;
+        }
+
+    .editable td {
+        padding-top: 13px !important;
+        padding-bottom: 12.5px !important;
+    }
+
+</style>
