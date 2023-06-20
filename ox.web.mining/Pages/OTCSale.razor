@@ -38,7 +38,7 @@
                     <AntDesign.InputNumber @bind-Value="@context.FeeRatio" Min="0" Max="20" DefaultValue="5" />
                     <span class="ant-form-text">%</span>
                 </FormItem>
-                <FormItem Label="Target disclosure" LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                <FormItem Label="" LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
                     <RadioGroup @bind-Value="@context.State">
 
                         <Radio Value=@OTCStatus.Open.Value()>@UIHelper.LocalString(OTCStatus.Open.StringValue(),OTCStatus.Open.EngStringMaxValue())</Radio>
