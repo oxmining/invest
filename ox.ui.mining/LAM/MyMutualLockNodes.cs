@@ -238,7 +238,6 @@ namespace OX.UI.LAM
                 }
             });
         }
-
         #endregion
     }
 }
