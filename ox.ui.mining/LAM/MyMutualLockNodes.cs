@@ -184,59 +184,59 @@ namespace OX.UI.LAM
             this.DoInvoke(() =>
             {
                 this.treePools.Nodes.Clear();
-            });
-            var bizPlugin = Bapp.GetBappProvider<MiningBapp, IMiningProvider>();
-            if (bizPlugin != default)
-            {
-                var oxsLocks = bizPlugin.GetAll<UInt160, Fixed8>(InvestBizPersistencePrefixes.LockMiningOXSTotal);
-                foreach (var act in this.Operater.Wallet.GetHeldAccounts())
+                var bizPlugin = Bapp.GetBappProvider<MiningBapp, IMiningProvider>();
+                if (bizPlugin != default)
                 {
-                    if (bizPlugin.MutualLockNodes.TryGetValue(act.ScriptHash.GetMutualLockSeed(), out var miner))
+                    var oxsLocks = bizPlugin.GetAll<UInt160, Fixed8>(InvestBizPersistencePrefixes.LockMiningOXSTotal);
+                    foreach (var act in this.Operater.Wallet.GetHeldAccounts())
                     {
-                        var rm = miner.RegIndex % 100000;
-                        var rem = rm;
-                        var rem2 = Blockchain.Singleton.Height % 100000;
-                        if (rem2 > rem) rem += 100000;
-                        var sub = rem - rem2;
-                        var s = invest.MasterAccountAddress.Equals(miner.ParentHolder) ? UIHelper.LocalString("根", "Root ") : string.Empty;
-                        var node = new DarkTreeNode(UIHelper.LocalString($"{s}矿机({rm}):{miner.HolderAddress.ToAddress()}", $"{s}Miner({rm}):{miner.HolderAddress.ToAddress()}"));
-                        node.NodeType = 1;
-                        node.Tag = act.ScriptHash;
-                        var subnode = new DarkTreeNode(UIHelper.LocalString($"出矿倒计时:{sub}", $"Intrest Countdown:{sub}"));
-                        subnode.NodeType = 2;
-                        subnode.Tag = miner.RegIndex;
-                        node.Nodes.Add(subnode);
-                        this.CountDownNodes.Add(subnode);
-                        subnode = new DarkTreeNode(UIHelper.LocalString($"种子矿机:{miner.ParentHolder.ToAddress()}", $"Seed Miner:{miner.ParentHolder.ToAddress()}"));
-                        subnode.NodeType = 3;
-                        subnode.Tag = miner;
-                        node.Nodes.Add(subnode);
-
-                        if (oxsLocks.IsNotNullAndEmpty())
+                        if (bizPlugin.MutualLockNodes.TryGetValue(act.ScriptHash.GetMutualLockSeed(), out var miner))
                         {
-                            var oxsMsg = oxsLocks.FirstOrDefault(m => m.Key == act.ScriptHash);
-                            if (!oxsMsg.Equals(new KeyValuePair<UInt160, Fixed8>()))
+                            var rm = miner.RegIndex % 100000;
+                            var rem = rm;
+                            var rem2 = Blockchain.Singleton.Height % 100000;
+                            if (rem2 > rem) rem += 100000;
+                            var sub = rem - rem2;
+                            var s = invest.MasterAccountAddress.Equals(miner.ParentHolder) ? UIHelper.LocalString("根", "Root ") : string.Empty;
+                            var node = new DarkTreeNode(UIHelper.LocalString($"{s}矿机({rm}):{miner.HolderAddress.ToAddress()}", $"{s}Miner({rm}):{miner.HolderAddress.ToAddress()}"));
+                            node.NodeType = 1;
+                            node.Tag = act.ScriptHash;
+                            var subnode = new DarkTreeNode(UIHelper.LocalString($"出矿倒计时:{sub}", $"Intrest Countdown:{sub}"));
+                            subnode.NodeType = 2;
+                            subnode.Tag = miner.RegIndex;
+                            node.Nodes.Add(subnode);
+                            this.CountDownNodes.Add(subnode);
+                            subnode = new DarkTreeNode(UIHelper.LocalString($"种子矿机:{miner.ParentHolder.ToAddress()}", $"Seed Miner:{miner.ParentHolder.ToAddress()}"));
+                            subnode.NodeType = 3;
+                            subnode.Tag = miner;
+                            node.Nodes.Add(subnode);
+
+                            if (oxsLocks.IsNotNullAndEmpty())
                             {
-                                subnode = new DarkTreeNode(UIHelper.LocalString($"OXS锁仓时空量:{oxsMsg.Value.GetInternalValue()}", $"OXS Lock Space-Time Volume:{oxsMsg.Value.GetInternalValue()}"));
+                                var oxsMsg = oxsLocks.FirstOrDefault(m => m.Key == act.ScriptHash);
+                                if (!oxsMsg.Equals(new KeyValuePair<UInt160, Fixed8>()))
+                                {
+                                    subnode = new DarkTreeNode(UIHelper.LocalString($"OXS锁仓时空量:{oxsMsg.Value.GetInternalValue()}", $"OXS Lock Space-Time Volume:{oxsMsg.Value.GetInternalValue()}"));
+                                    subnode.NodeType = 3;
+                                    subnode.Tag = miner;
+                                    node.Nodes.Add(subnode);
+                                }
+                            }
+                            var lfs = bizPlugin.MutualLockNodes.Values.Where(m => m.ParentHolder == miner.HolderAddress);
+                            foreach (var LeafHolder in lfs)
+                            {
+                                var leafrem = LeafHolder.RegIndex % 100000;
+                                subnode = new DarkTreeNode(UIHelper.LocalString($"叶子矿机({leafrem}):{LeafHolder.HolderAddress.ToAddress()}", $"Leaf Miner({leafrem}):{LeafHolder.HolderAddress.ToAddress()}"));
                                 subnode.NodeType = 3;
-                                subnode.Tag = miner;
+                                subnode.Tag = LeafHolder;
                                 node.Nodes.Add(subnode);
                             }
+                            this.treePools.Nodes.Add(node);
                         }
-                        var lfs = bizPlugin.MutualLockNodes.Values.Where(m => m.ParentHolder == miner.HolderAddress);
-                        foreach (var LeafHolder in lfs)
-                        {
-                            var leafrem = LeafHolder.RegIndex % 100000;
-                            subnode = new DarkTreeNode(UIHelper.LocalString($"叶子矿机({leafrem}):{LeafHolder.HolderAddress.ToAddress()}", $"Leaf Miner({leafrem}):{LeafHolder.HolderAddress.ToAddress()}"));
-                            subnode.NodeType = 3;
-                            subnode.Tag = LeafHolder;
-                            node.Nodes.Add(subnode);
-                        }
-                        this.treePools.Nodes.Add(node);
                     }
+
                 }
- 
-            }
+            });
         }
 
         #endregion
