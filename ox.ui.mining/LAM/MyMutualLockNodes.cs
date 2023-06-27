@@ -184,6 +184,7 @@ namespace OX.UI.LAM
             this.DoInvoke(() =>
             {
                 this.treePools.Nodes.Clear();
+
                 var bizPlugin = Bapp.GetBappProvider<MiningBapp, IMiningProvider>();
                 if (bizPlugin != default)
                 {
@@ -238,6 +239,7 @@ namespace OX.UI.LAM
                 }
             });
         }
+
         #endregion
     }
 }

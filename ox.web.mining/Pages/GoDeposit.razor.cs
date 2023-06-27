@@ -29,7 +29,6 @@ using OX.UI.Mining;
 using AntDesign;
 using OX.Wallets.Eths;
 using OX.MetaMask;
-//using static NBitcoin.Scripting.OutputDescriptor;
 
 namespace OX.Web.Pages
 {

@@ -20,7 +20,6 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using OX.UI.Swap;
 using OX.IO.Data.LevelDB;
 using OX.Mining.StakingMining;
-//using static NBitcoin.Scripting.OutputDescriptor;
 
 namespace OX.UI.LAM
 {

@@ -1,4 +1,4 @@
-﻿@page "/invest/swap"
+﻿@page "/_pc/invest/swap"
 @inherits MiningComponentBase
 <Microsoft.AspNetCore.Components.Web.Extensions.Head.Title Value=@PageTitle />
 
@@ -36,11 +36,11 @@
                                                         </div>
                                                         <div class="listContentItem">
                                                             <span></span>
-                                                            <a href="/invest/goswap/0/@context.Key.ToAddress()">@UIHelper.LocalString($"买 {context.Value.TargetAssetState.GetName()}",$"Buy {context.Value.TargetAssetState.GetName()}")</a>
+                                                            <a href="/_pc/invest/goswap/0/@context.Key.ToAddress()">@UIHelper.LocalString($"买 {context.Value.TargetAssetState.GetName()}",$"Buy {context.Value.TargetAssetState.GetName()}")</a>
                                                         </div>
                                                         <div class="listContentItem">
                                                             <span></span>
-                                                            <a href="/invest/goswap/1/@context.Key.ToAddress()">@UIHelper.LocalString($"卖 {context.Value.TargetAssetState.GetName()}",$"Sale {context.Value.TargetAssetState.GetName()}")</a>
+                                                            <a href="/_pc/invest/goswap/1/@context.Key.ToAddress()">@UIHelper.LocalString($"卖 {context.Value.TargetAssetState.GetName()}",$"Sale {context.Value.TargetAssetState.GetName()}")</a>
                                                         </div>
                                                     </div>
                                                 </ListItem>
@@ -84,11 +84,11 @@
                                                         </div>
                                                         <div class="listContentItem">
                                                             <span></span>
-                                                            <a href="/invest/gosideswap/0/@addr">@UIHelper.LocalString($"买 {assetName}",$"Buy {assetName}")</a>
+                                                            <a href="/_pc/invest/gosideswap/0/@addr">@UIHelper.LocalString($"买 {assetName}",$"Buy {assetName}")</a>
                                                         </div>
                                                         <div class="listContentItem">
                                                             <span></span>
-                                                            <a href="/invest/gosideswap/1/@addr">@UIHelper.LocalString($"卖 {assetName}",$"Sale {assetName}")</a>
+                                                            <a href="/_pc/invest/gosideswap/1/@addr">@UIHelper.LocalString($"卖 {assetName}",$"Sale {assetName}")</a>
                                                         </div>
                                                     </div>
                                                 </ListItem>

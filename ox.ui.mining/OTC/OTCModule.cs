@@ -16,7 +16,6 @@ using OX.IO.Json;
 using System.Net.WebSockets;
 using OX.Mining;
 using OX.UI.Mining;
-//using static NBitcoin.Scripting.OutputDescriptor;
 using System.Security.Principal;
 using OX.Mining.DEX;
 using OX.UI.OTC;
@@ -77,7 +76,7 @@ namespace OX.UI.Swap
 
         private void DepositMenu_Click(object sender, EventArgs e)
         {
-            OXRunTime.GoWeb("/invest/deposit");
+            OXRunTime.GoWeb("/_pc/invest/deposit");
         }
 
         private void NewTraderMenu_Click(object sender, EventArgs e)

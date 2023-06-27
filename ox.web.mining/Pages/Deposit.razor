@@ -1,4 +1,4 @@
-﻿@page "/invest/deposit"
+﻿@page "/_pc/invest/deposit"
 @inherits MiningComponentBase
 <Microsoft.AspNetCore.Components.Web.Extensions.Head.Title Value=@PageTitle />
 <PageContainer Title=@PageTitle>
@@ -36,7 +36,7 @@
                                         <p>@UIHelper.LocalString( context.OTCDealerMerge.Setting.State.StringValue(),context.OTCDealerMerge.Setting.State.EngStringValue())</p>
                                     </div>
                                     <div class="listContentItem">
-                                        <a href="/invest/godeposit/@context.OTCDealerMerge.EthAddress">@UIHelper.LocalString("去入金","Go Deposit")</a>
+                                        <a href="/_pc/invest/godeposit/@context.OTCDealerMerge.EthAddress">@UIHelper.LocalString("去入金","Go Deposit")</a>
                                     </div>
                                 }
                             </div>

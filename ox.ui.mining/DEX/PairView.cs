@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using OX.UI.Mining;
-//using NBitcoin.OpenAsset;
 using OX.Mining.DEX;
 
 namespace OX.UI.Swap

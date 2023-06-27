@@ -10,7 +10,8 @@ namespace OX.Web.Models
 {
     public class MiningWebBox : WebBoxBlazor
     {
-
+        public override string Name => UIHelper.LocalString("挖矿", "Mining");
+        public override bool SupportMobile => false;
         public override uint BoxIndex { get { return 100; } }
         public MiningWebBox() : base()
         {
@@ -24,26 +25,26 @@ namespace OX.Web.Models
             List<MenuDataItem> list = new List<MenuDataItem>();
             list.Add(new MenuDataItem
             {
-                Path = "/invest",
+                Path = "/_pc/invest",
                 Name = UIHelper.LocalString("交易", "Exchange"),
                 Key = "exchange",
                 //Icon = "smile",
                 Children = new MenuDataItem[] {
                     new MenuDataItem
                     {
-                        Path = "/invest/deposit",
+                        Path = "/_pc/invest/deposit",
                         Name = UIHelper.LocalString("场外入金", "OTC Buy"),
                         Key = "deposit"
                     },
                      new MenuDataItem
                     {
-                        Path = "/invest/otcsale",
+                        Path = "/_pc/invest/otcsale",
                         Name = UIHelper.LocalString("场外出金", "OTC Sale"),
                         Key = "otcsale"
                     },
                      new MenuDataItem
                     {
-                        Path = "/invest/swap",
+                        Path = "/_pc/invest/swap",
                         Name = UIHelper.LocalString("兑换", "Swap"),
                         Key = "swap"
                     }
@@ -87,6 +88,11 @@ namespace OX.Web.Models
             }
             return list.ToArray();
         }
+        public override MenuDataItem[] GetMobileMemus()
+        {
+            List<MenuDataItem> list = new List<MenuDataItem>();
 
+            return list.ToArray();
+        }
     }
 }

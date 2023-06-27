@@ -16,7 +16,6 @@ using OX.IO.Json;
 using System.Net.WebSockets;
 using OX.Mining;
 using OX.UI.Mining;
-//using static NBitcoin.Scripting.OutputDescriptor;
 using System.Security.Principal;
 using OX.Mining.DEX;
 using OX.UI.OTC;

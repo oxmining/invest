@@ -19,7 +19,6 @@ using OX.UI.Mining;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using OX.UI.Swap;
 using OX.IO.Data.LevelDB;
-//using NBitcoin.Protocol;
 using OX.Mining.StakingMining;
 
 namespace OX.UI.LAM
