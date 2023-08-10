@@ -36,7 +36,7 @@ namespace OX.Web.Pages
 {
     public partial class MutualLockMining
     {
-        public override string PageTitle => UIHelper.LocalString("互锁挖矿", "Mutual Lock Mining");
+        public override string PageTitle => this.WebLocalString("互锁挖矿", "Mutual Lock Mining");
         Dictionary<UInt256, MutualMiningAssetData> Data = new Dictionary<UInt256, MutualMiningAssetData>();
         protected override void OnMiningInit()
         {

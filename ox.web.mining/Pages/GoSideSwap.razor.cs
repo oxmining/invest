@@ -43,7 +43,7 @@ namespace OX.Web.Pages
 
     public partial class GoSideSwap
     {
-        public override string PageTitle => UIHelper.LocalString("边池交易", "Side Pool Exchange");
+        public override string PageTitle => this.WebLocalString("边池交易", "Side Pool Exchange");
         [Parameter]
         public string kind { get; set; }
         [Parameter]
@@ -270,7 +270,7 @@ namespace OX.Web.Pages
                                             this.Box.Notecase.Wallet.ApplyTransaction(tx);
                                             this.Box.Notecase.Relay(tx);
                                             this.EthID.SetLastTransactionIndex(Blockchain.Singleton.Height);
-                                            msg = UIHelper.LocalString($"广播以太坊映射转帐交易成功  {tx.Hash}", $"Relay transfer ethereum map asset transaction completed  {tx.Hash}");
+                                            msg = this.WebLocalString($"广播以太坊映射转帐交易成功  {tx.Hash}", $"Relay transfer ethereum map asset transaction completed  {tx.Hash}");
                                             loading2 = false;
                                             StateHasChanged();
                                         }
@@ -283,7 +283,7 @@ namespace OX.Web.Pages
                 }
                 catch
                 {
-                    msg = UIHelper.LocalString($"内部错误", $"internal error");
+                    msg = this.WebLocalString($"内部错误", $"internal error");
                 }
                 loading2 = false;
             }

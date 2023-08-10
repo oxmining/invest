@@ -7,11 +7,11 @@
     {
         if (this.kind == "0")
         {
-            s = UIHelper.LocalString("买入", "Buy") + $"{this.SwapPairMerge.TargetAssetState.GetName()}";
+            s = this.WebLocalString("买入", "Buy") + $"{this.SwapPairMerge.TargetAssetState.GetName()}";
         }
         else if (this.kind == "1")
         {
-            s = UIHelper.LocalString("卖出", "Sale") + $"{this.SwapPairMerge.TargetAssetState.GetName()}";
+            s = this.WebLocalString("卖出", "Sale") + $"{this.SwapPairMerge.TargetAssetState.GetName()}";
         }
     }
 }
@@ -24,18 +24,18 @@
         @{
             var p = this.Price.ToString("f6");
         }
-        <FormItem Label=@UIHelper.LocalString($"当前价格",$"Current Price") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+        <FormItem Label=@this.WebLocalString($"当前价格",$"Current Price") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
             <Input @bind-Value="@p" ReadOnly=true />
         </FormItem>
-        <FormItem Label=@UIHelper.LocalString($"{this.AssetName} 可用余额",$"{this.AssetName} Available Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+        <FormItem Label=@this.WebLocalString($"{this.AssetName} 可用余额",$"{this.AssetName} Available Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
             <Input @bind-Value="@this.BalanceState.AvailableBalance" ReadOnly=true />
         </FormItem>
-        <FormItem Label="@UIHelper.LocalString("兑换金额","Swap Amount")" ShowFeedbackOnError="true" LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
-            <AntDesign.InputNumber @bind-Value="@context.Amount" Min="1" TValue="uint" Max="100000000" PlaceHolder='@UIHelper.LocalString("请输入埋雷金额","please enter bury amount")'></AntDesign.InputNumber>
+        <FormItem Label="@this.WebLocalString("兑换金额","Swap Amount")" ShowFeedbackOnError="true" LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+            <AntDesign.InputNumber @bind-Value="@context.Amount" Min="1" TValue="uint" Max="100000000" PlaceHolder='@this.WebLocalString("请输入埋雷金额","please enter bury amount")'></AntDesign.InputNumber>
         </FormItem>
         <FormItem Label=" " Style="margin-top:32px" WrapperCol="_submitFormLayout.WrapperCol">
             <Button Type="primary" HtmlType="submit" Disabled=!this.Valid>
-                @UIHelper.LocalString("提交","Submit")
+                @this.WebLocalString("提交","Submit")
             </Button>
         </FormItem>
         <FormItem Label=" " Style="margin-top:32px" WrapperCol="_submitFormLayout.WrapperCol">
@@ -45,8 +45,8 @@
     </Form>
     <div>
         <RadioGroup OnChange="@((string e)=>changeKind(e))" @bind-Value="KLKind" ButtonStyle="@RadioButtonStyle.Solid">
-            <Radio RadioButton Value="@("day")">@UIHelper.LocalString("日线","Day Line")</Radio>
-            <Radio RadioButton Value="@("hour")">@UIHelper.LocalString("时线","Hour Line")</Radio>
+            <Radio RadioButton Value="@("day")">@this.WebLocalString("日线","Day Line")</Radio>
+            <Radio RadioButton Value="@("hour")">@this.WebLocalString("时线","Hour Line")</Radio>
             </RadioGroup>
         </div>
         <Stock  OnFirstRender="OnChartRender" Config="config1" />

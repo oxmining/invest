@@ -10,44 +10,44 @@
             <Form Model="@model"
                   Style="margin-top: 8px;"
                   OnFinish="HandleSubmit">
-                <FormItem Label=@UIHelper.LocalString("以太坊出金地址","Ethereum Sale Address") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                <FormItem Label=@this.WebLocalString("以太坊出金地址","Ethereum Sale Address") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
                     <Input @bind-Value="@context.PoolEthAddress" ReadOnly=true />
                 </FormItem>
                 @{
                     var selfaddr = this.EthID?.MapAddress?.ToAddress();
                 }
-                <FormItem Label=@UIHelper.LocalString("OX出金地址","OX Sale Address") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                <FormItem Label=@this.WebLocalString("OX出金地址","OX Sale Address") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
                     <Input @bind-Value="@selfaddr" ReadOnly=true />
                 </FormItem>
-                <FormItem Label=@UIHelper.LocalString("出金地址 USDX 可用余额","Sale Address USDX Available Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                <FormItem Label=@this.WebLocalString("出金地址 USDX 可用余额","Sale Address USDX Available Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
                     <Input @bind-Value="@this.BalanceState.AvailableBalance" ReadOnly=true />
                 </FormItem>
                 @{
                     var addr = context.InPoolAddress?.ToAddress();
                 }
-                <FormItem Label=@UIHelper.LocalString("场外交易池地址","OTC Pool Address") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                <FormItem Label=@this.WebLocalString("场外交易池地址","OTC Pool Address") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
                     <Input @bind-Value="@addr" ReadOnly=true />
                 </FormItem>
-                <FormItem Label=@UIHelper.LocalString("场外交易池USDX余额","OX Dealer Pool USDX Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                <FormItem Label=@this.WebLocalString("场外交易池USDX余额","OX Dealer Pool USDX Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
                     <Input @bind-Value="@this.OTCDealerOXPoolBalance" ReadOnly=true />
                 </FormItem>
-                <FormItem Label=@UIHelper.LocalString("USDX 出金额","USDX Sale Amount") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
-                    <Input Placeholder=@UIHelper.LocalString("输入要出金的 USDX 资产金额","Enter the USDX amount to sale") @bind-Value="@context.Amount" />
+                <FormItem Label=@this.WebLocalString("USDX 出金额","USDX Sale Amount") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                    <Input Placeholder=@this.WebLocalString("输入要出金的 USDX 资产金额","Enter the USDX amount to sale") @bind-Value="@context.Amount" />
                 </FormItem>
-                <FormItem Label=@UIHelper.LocalString("手续费率","Commission Ratio") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                <FormItem Label=@this.WebLocalString("手续费率","Commission Ratio") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
                     <AntDesign.InputNumber @bind-Value="@context.FeeRatio" Min="0" Max="20" DefaultValue="5" />
                     <span class="ant-form-text">%</span>
                 </FormItem>
-                <FormItem Label=@UIHelper.LocalString("状态","State") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                <FormItem Label=@this.WebLocalString("状态","State") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
                     <RadioGroup @bind-Value="@context.State">
 
-                        <Radio Value=@OTCStatus.Open.Value()>@UIHelper.LocalString(OTCStatus.Open.StringValue(),OTCStatus.Open.EngStringMaxValue())</Radio>
-                        <Radio Value=@OTCStatus.Redeem.Value()>@UIHelper.LocalString(OTCStatus.Redeem.StringValue(),OTCStatus.Redeem.EngStringMaxValue())</Radio>
+                        <Radio Value=@OTCStatus.Open.Value()>@this.WebLocalString(OTCStatus.Open.StringValue(),OTCStatus.Open.EngStringMaxValue())</Radio>
+                        <Radio Value=@OTCStatus.Redeem.Value()>@this.WebLocalString(OTCStatus.Redeem.StringValue(),OTCStatus.Redeem.EngStringMaxValue())</Radio>
                     </RadioGroup>
                 </FormItem>
                 <FormItem Label=" " Style="margin-top:32px" WrapperCol="_submitFormLayout.WrapperCol">
                     <Button Type="primary" HtmlType="submit" Disabled=!this.Valid>
-                        @UIHelper.LocalString("提交","Submit")
+                        @this.WebLocalString("提交","Submit")
                     </Button>
                 </FormItem>
             </Form>

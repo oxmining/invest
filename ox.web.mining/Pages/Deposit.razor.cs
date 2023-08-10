@@ -31,7 +31,7 @@ namespace OX.Web.Pages
 {
     public partial class Deposit
     {
-        public override string PageTitle => UIHelper.LocalString("场外入金", "OTC Buy");
+        public override string PageTitle => this.WebLocalString("场外入金", "OTC Buy");
         OTCDealerViewModel[] OTCDealers { get; set; } = new OTCDealerViewModel[0];
 
         protected override void OnMiningInit()

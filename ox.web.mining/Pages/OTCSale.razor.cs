@@ -42,7 +42,7 @@ namespace OX.Web.Pages
 
     public partial class OTCSale
     {
-        public override string PageTitle => UIHelper.LocalString("场外出金", "OTC Sale");
+        public override string PageTitle => this.WebLocalString("场外出金", "OTC Sale");
         string msg;
         OTCSaleViewModel model { get; set; } = new OTCSaleViewModel { State = 1 };
         Fixed8 OTCDealerOXPoolBalance = Fixed8.Zero;
@@ -188,7 +188,7 @@ namespace OX.Web.Pages
                                             this.Box.Notecase.Wallet.ApplyTransaction(tx);
                                             this.Box.Notecase.Relay(tx);
                                             this.EthID.SetLastTransactionIndex(Blockchain.Singleton.Height);
-                                            msg = UIHelper.LocalString($"广播以太坊映射转帐交易成功  {tx.Hash}", $"Relay transfer ethereum map asset transaction completed  {tx.Hash}");
+                                            msg = this.WebLocalString($"广播以太坊映射转帐交易成功  {tx.Hash}", $"Relay transfer ethereum map asset transaction completed  {tx.Hash}");
                                             StateHasChanged();
                                         }
                                     }
@@ -199,7 +199,7 @@ namespace OX.Web.Pages
                 }
                 catch
                 {
-                    msg = UIHelper.LocalString($"内部错误", $"internal error");
+                    msg = this.WebLocalString($"内部错误", $"internal error");
                 }
             }
 

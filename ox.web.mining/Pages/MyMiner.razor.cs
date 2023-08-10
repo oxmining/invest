@@ -35,7 +35,7 @@ namespace OX.Web.Pages
 {
     public partial class MyMiner
     {
-        public override string PageTitle => UIHelper.LocalString("我的矿机", "My Miner");
+        public override string PageTitle => this.WebLocalString("我的矿机", "My Miner");
         MiningProvider Provider { get; set; }
         UInt160 SeedAddress { get; set; }
         MutualNode Miner;

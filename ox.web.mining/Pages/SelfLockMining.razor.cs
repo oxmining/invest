@@ -36,7 +36,7 @@ namespace OX.Web.Pages
 {
     public partial class SelfLockMining
     {
-        public override string PageTitle => UIHelper.LocalString("自锁挖矿", "Self Lock Mining");
+        public override string PageTitle => this.WebLocalString("自锁挖矿", "Self Lock Mining");
         Dictionary<UInt256, SelfMiningAssetData> Data = new Dictionary<UInt256, SelfMiningAssetData>();
         protected override void OnMiningInit()
         {

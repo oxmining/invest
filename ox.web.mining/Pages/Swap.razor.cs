@@ -33,7 +33,7 @@ namespace OX.Web.Pages
 {
     public partial class Swap
     {
-        public override string PageTitle => UIHelper.LocalString("兑换", "Swap");
+        public override string PageTitle => this.WebLocalString("兑换", "Swap");
         Dictionary<UInt160, SwapPairMerge> ExchangePairs = new Dictionary<UInt160, SwapPairMerge>();
         SideTransaction[] SideExchangePaires = new SideTransaction[0];
         protected override void OnMiningInit()

@@ -21,7 +21,7 @@
                             @if (this.HaveEthID)
                             {
                                 var url = $"/wallet/transferasset/{d.Key.ToString()}/2/{this.EthID.EthAddress}/{Last.MinAmount.ToString()}/{Blockchain.Singleton.HeaderHeight + 101000}";
-                                <a class="bt" href="@url">@UIHelper.LocalString("去挖矿","Go Mining")</a>
+                                <a class="bt" href="@url">@this.WebLocalString("去挖矿","Go Mining")</a>
                             }
                         </ExtraTemplate>
                         <ChildContent>
@@ -29,35 +29,35 @@
                                 <CardTabs>
                                     <Tabs DefaultActiveKey="@((i*100+1).ToString())">
                                         <TabPane Key="@((i*100+1).ToString())">
-                                            <TabTemplate><Badge Dot><a>@UIHelper.LocalString("挖矿信息","Mining Information")</a></Badge></TabTemplate>
+                                            <TabTemplate><Badge Dot><a>@this.WebLocalString("挖矿信息","Mining Information")</a></Badge></TabTemplate>
                                         <ChildContent>
                                             <div>
                                                 <ul>
-                                                    <li><Paragraph>@UIHelper.LocalString("资产Id","Asset Id")  :  <Text Strong Copyable>@d.Key.ToString()</Text></Paragraph></li>
+                                                    <li><Paragraph>@this.WebLocalString("资产Id","Asset Id")  :  <Text Strong Copyable>@d.Key.ToString()</Text></Paragraph></li>
 
-                                                    <li><Paragraph>@UIHelper.LocalString($"最大发行量:{cap}", $"Issue Cap:{cap}")</Paragraph></li>
+                                                    <li><Paragraph>@this.WebLocalString($"最大发行量:{cap}", $"Issue Cap:{cap}")</Paragraph></li>
 
-                                                    <li><Paragraph>@UIHelper.LocalString($"已发行量:{havecap}", $"Issued:{havecap}")  </Paragraph></li>
+                                                    <li><Paragraph>@this.WebLocalString($"已发行量:{havecap}", $"Issued:{havecap}")  </Paragraph></li>
                                                 </ul>
                                                 @foreach (var l in d.Value.AssetInfos.OrderByDescending(m => m.Item1.IssueIndex))
                                                     {
-                                                        <Divider Orientation="left" Style="font-weight:bold">@UIHelper.LocalString($"参数发布区块:{l.Item1.IssueIndex}", $"Parameter issue height:{l.Item1.IssueIndex}")</Divider>
+                                                        <Divider Orientation="left" Style="font-weight:bold">@this.WebLocalString($"参数发布区块:{l.Item1.IssueIndex}", $"Parameter issue height:{l.Item1.IssueIndex}")</Divider>
                                                         <ul>
-                                                            <li>@UIHelper.LocalString($"最少锁仓量:{l.Item2.MinAmount}", $"Min Lock:{l.Item2.MinAmount}")</li>
-                                                            <li>@UIHelper.LocalString($"最大锁仓量:{l.Item2.MaxAmount}", $"Max Lock:{l.Item2.MaxAmount}")</li>
-                                                            <li>@UIHelper.LocalString($"100000区块利率:{l.Item2.Interest_100000}/1000", $"100000 blocks ratio:{l.Item2.Interest_100000}/1000")</li>
-                                                            <li>@UIHelper.LocalString($"500000区块利率:{l.Item2.Interest_500000}/1000", $"500000 blocks ratio:{l.Item2.Interest_500000}/1000")</li>
-                                                            <li>@UIHelper.LocalString($"1000000区块利率:{l.Item2.Interest_1000000}/1000", $"1000000 blocks ratio:{l.Item2.Interest_1000000}/1000")</li>
-                                                            <li>@UIHelper.LocalString($"2000000区块利率:{l.Item2.Interest_2000000}/1000", $"2000000 blocks ratio:{l.Item2.Interest_2000000}/1000")</li>
-                                                            <li>@UIHelper.LocalString($"4000000区块利率:{l.Item2.Interest_4000000}/1000", $"4000000 blocks ratio:{l.Item2.Interest_4000000}/1000")</li>
-                                                            <li>@UIHelper.LocalString($"6000000区块利率:{l.Item2.Interest_6000000}/1000", $"6000000 blocks ratio:{l.Item2.Interest_6000000}/1000")</li>
+                                                            <li>@this.WebLocalString($"最少锁仓量:{l.Item2.MinAmount}", $"Min Lock:{l.Item2.MinAmount}")</li>
+                                                            <li>@this.WebLocalString($"最大锁仓量:{l.Item2.MaxAmount}", $"Max Lock:{l.Item2.MaxAmount}")</li>
+                                                            <li>@this.WebLocalString($"100000区块利率:{l.Item2.Interest_100000}/1000", $"100000 blocks ratio:{l.Item2.Interest_100000}/1000")</li>
+                                                            <li>@this.WebLocalString($"500000区块利率:{l.Item2.Interest_500000}/1000", $"500000 blocks ratio:{l.Item2.Interest_500000}/1000")</li>
+                                                            <li>@this.WebLocalString($"1000000区块利率:{l.Item2.Interest_1000000}/1000", $"1000000 blocks ratio:{l.Item2.Interest_1000000}/1000")</li>
+                                                            <li>@this.WebLocalString($"2000000区块利率:{l.Item2.Interest_2000000}/1000", $"2000000 blocks ratio:{l.Item2.Interest_2000000}/1000")</li>
+                                                            <li>@this.WebLocalString($"4000000区块利率:{l.Item2.Interest_4000000}/1000", $"4000000 blocks ratio:{l.Item2.Interest_4000000}/1000")</li>
+                                                            <li>@this.WebLocalString($"6000000区块利率:{l.Item2.Interest_6000000}/1000", $"6000000 blocks ratio:{l.Item2.Interest_6000000}/1000")</li>
                                                         </ul>
                                                     }
                                                 </div>
                                             </ChildContent>
                                         </TabPane>
                                         <TabPane Key="@((i*100+2).ToString())">
-                                            <TabTemplate>@UIHelper.LocalString("挖矿记录", "Mining Records")</TabTemplate>
+                                            <TabTemplate>@this.WebLocalString("挖矿记录", "Mining Records")</TabTemplate>
                                             <ChildContent>
                                                 @if (d.Value.MiningRecords.IsNotNullAndEmpty())
                                                 {
@@ -66,15 +66,15 @@
                                                         TransactionOutput output = p.Output;
                                                         <ul>
                                                             <li>
-                                                                @UIHelper.LocalString($"锁仓量:{output.Value}", $"Lock Volume:{output.Value}")
+                                                                @this.WebLocalString($"锁仓量:{output.Value}", $"Lock Volume:{output.Value}")
                                                             </li>
                                                             <li>
-                                                                @UIHelper.LocalString($"锁仓时间:{p.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}", $"Lock Time:{p.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}")
+                                                                @this.WebLocalString($"锁仓时间:{p.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}", $"Lock Time:{p.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}")
                                                             </li>
                                                             <li>
-                                                                @UIHelper.LocalString($"锁仓高度:{p.Index}", $"Lock Height:{p.Index}")
+                                                                @this.WebLocalString($"锁仓高度:{p.Index}", $"Lock Height:{p.Index}")
                                                             </li>
-                                                            <li>@UIHelper.LocalString($"解锁高度:{p.LockExpiration}", $"Unlock Height:{p.LockExpiration}")</li>
+                                                            <li>@this.WebLocalString($"解锁高度:{p.LockExpiration}", $"Unlock Height:{p.LockExpiration}")</li>
                                                         </ul>
                                                         <Divider />
                                                     }
@@ -82,7 +82,7 @@
                                             </ChildContent>
                                         </TabPane>
                                         <TabPane Key="@((i*100+3).ToString())">
-                                            <TabTemplate>@UIHelper.LocalString("出矿记录", "Interest Records")</TabTemplate>
+                                            <TabTemplate>@this.WebLocalString("出矿记录", "Interest Records")</TabTemplate>
                                             <ChildContent>
                                                 @if (d.Value.InterestRecords.IsNotNullAndEmpty())
                                                 {
@@ -91,15 +91,15 @@
                                                         TransactionOutput output = p.Output;
                                                         <ul>
                                                             <li>
-                                                                @UIHelper.LocalString($"锁仓量:{output.Value}", $"Lock Volume:{output.Value}")
+                                                                @this.WebLocalString($"锁仓量:{output.Value}", $"Lock Volume:{output.Value}")
                                                             </li>
                                                             <li>
-                                                                @UIHelper.LocalString($"锁仓时间:{p.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}", $"Lock Time:{p.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}")
+                                                                @this.WebLocalString($"锁仓时间:{p.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}", $"Lock Time:{p.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}")
                                                             </li>
                                                             <li>
-                                                                @UIHelper.LocalString($"锁仓高度:{p.Index}", $"Lock Height:{p.Index}")
+                                                                @this.WebLocalString($"锁仓高度:{p.Index}", $"Lock Height:{p.Index}")
                                                             </li>
-                                                            <li>@UIHelper.LocalString($"解锁高度:{p.LockExpiration}", $"Unlock Height:{p.LockExpiration}")</li>
+                                                            <li>@this.WebLocalString($"解锁高度:{p.LockExpiration}", $"Unlock Height:{p.LockExpiration}")</li>
                                                         </ul>
                                                         <Divider />
                                                     }

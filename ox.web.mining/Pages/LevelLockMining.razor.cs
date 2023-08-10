@@ -36,7 +36,7 @@ namespace OX.Web.Pages
 {
     public partial class LevelLockMining
     {
-        public override string PageTitle => UIHelper.LocalString("级锁挖矿", "Level Lock Mining");
+        public override string PageTitle => this.WebLocalString("级锁挖矿", "Level Lock Mining");
         Dictionary<UInt256, LevelMiningAssetData> Data = new Dictionary<UInt256, LevelMiningAssetData>();
         protected override void OnMiningInit()
         {

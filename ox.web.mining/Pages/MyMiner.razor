@@ -17,25 +17,25 @@
                         <Row Gutter="24">
 
                             <div>
-                                <Divider Orientation="left" Style="font-weight:bold">@UIHelper.LocalString("我的矿机","My Miner")</Divider>
+                                <Divider Orientation="left" Style="font-weight:bold">@this.WebLocalString("我的矿机","My Miner")</Divider>
                                 <ul>
                                     <li>
-                                        <Paragraph>@UIHelper.LocalString("种子地址","Miner Seed Address")  :  <Text Strong Copyable>@this.SeedAddress.ToAddress()</Text></Paragraph>
+                                        <Paragraph>@this.WebLocalString("种子地址","Miner Seed Address")  :  <Text Strong Copyable>@this.SeedAddress.ToAddress()</Text></Paragraph>
                                 </li>
                                 <li>
-                                    <Paragraph>@UIHelper.LocalString($"出矿倒计时:  {sub}区块", $"Intrest Countdown:  {sub} blocks")</Paragraph>
+                                    <Paragraph>@this.WebLocalString($"出矿倒计时:  {sub}区块", $"Intrest Countdown:  {sub} blocks")</Paragraph>
                                 </li>
                             </ul>
-                            <Divider Orientation="left" Style="font-weight:bold">@UIHelper.LocalString("种子矿机","Seed Miner")</Divider>
+                            <Divider Orientation="left" Style="font-weight:bold">@this.WebLocalString("种子矿机","Seed Miner")</Divider>
                             <ul>
                                 <li>
                                     <Space>
-                                        <SpaceItem><Paragraph>@UIHelper.LocalString("持有地址","Holder Address")  :  <Text Strong Copyable>@this.Miner.ParentHolder.ToAddress()</Text></Paragraph></SpaceItem>
-                                        <SpaceItem> <Paragraph>@UIHelper.LocalString("种子地址","Seed Address")  :  <Text Strong Copyable>@this.Miner.ParentHolder.GetMutualLockSeed().ToAddress()</Text></Paragraph></SpaceItem>
+                                        <SpaceItem><Paragraph>@this.WebLocalString("持有地址","Holder Address")  :  <Text Strong Copyable>@this.Miner.ParentHolder.ToAddress()</Text></Paragraph></SpaceItem>
+                                        <SpaceItem> <Paragraph>@this.WebLocalString("种子地址","Seed Address")  :  <Text Strong Copyable>@this.Miner.ParentHolder.GetMutualLockSeed().ToAddress()</Text></Paragraph></SpaceItem>
                                     </Space>
                                 </li>
                             </ul>
-                            <Divider Orientation="left" Style="font-weight:bold">@UIHelper.LocalString("叶子矿机","Leaf Miner")</Divider>
+                            <Divider Orientation="left" Style="font-weight:bold">@this.WebLocalString("叶子矿机","Leaf Miner")</Divider>
                             @if (this.Leafs.IsNotNullAndEmpty())
                                 {
                                     <ul>
@@ -46,8 +46,8 @@
                                                 var leafrem = LeafHolder.RegIndex % 100000;
                                                 <li>
                                                     <Space>
-                                                        <SpaceItem> <Paragraph>@UIHelper.LocalString($"({leafrem})持有地址:", $"({leafrem})Holder Address:") <Text Strong Copyable>@LeafHolder.HolderAddress.ToAddress()</Text></Paragraph></SpaceItem>
-                                                    <SpaceItem> <Paragraph>@UIHelper.LocalString("种子地址","Seed Address")  :  <Text Strong Copyable>@LeafHolder.HolderAddress.GetMutualLockSeed().ToAddress()</Text></Paragraph></SpaceItem>
+                                                        <SpaceItem> <Paragraph>@this.WebLocalString($"({leafrem})持有地址:", $"({leafrem})Holder Address:") <Text Strong Copyable>@LeafHolder.HolderAddress.ToAddress()</Text></Paragraph></SpaceItem>
+                                                    <SpaceItem> <Paragraph>@this.WebLocalString("种子地址","Seed Address")  :  <Text Strong Copyable>@LeafHolder.HolderAddress.GetMutualLockSeed().ToAddress()</Text></Paragraph></SpaceItem>
                                                 </Space>
 
                                             </li>
@@ -67,7 +67,7 @@
                             </GridCol>
                             <GridCol Class="col" Span="16">
                                 <Result Status="warning"
-                                    Title="@UIHelper.LocalString("你还没有矿机","You don't have a mining machine")" />
+                                    Title="@this.WebLocalString("你还没有矿机","You don't have a mining machine")" />
                             </GridCol>
                             <GridCol Class="col" Span="4">
                             </GridCol>
@@ -77,7 +77,7 @@
                             <GridCol Class="col" Span="4">
                             </GridCol>
                             <GridCol Class="col" Span="16">
-                                <Search Placeholder="@UIHelper.LocalString("输入种子地址","input seed address")" Size="@InputSize.Large" EnterButton="@UIHelper.LocalString("去注册矿机","Go Register Miner")" @bind-Value="@this.RegSeed" OnSearch="OnRegister" />
+                                <Search Placeholder="@this.WebLocalString("输入种子地址","input seed address")" Size="@InputSize.Large" EnterButton="@this.WebLocalString("去注册矿机","Go Register Miner")" @bind-Value="@this.RegSeed" OnSearch="OnRegister" />
                             </GridCol>
                             <GridCol Class="col" Span="4">
                             </GridCol>
@@ -85,12 +85,12 @@
                     }
                     <Row Gutter="24">
                         <div>
-                        <Divider Orientation="left" Style="font-weight:bold">@UIHelper.LocalString("计算种子地址","Calculate Seed Address")</Divider>
+                        <Divider Orientation="left" Style="font-weight:bold">@this.WebLocalString("计算种子地址","Calculate Seed Address")</Divider>
                         <ul>
-                                <li> <Search Style="min-width:300px;" Placeholder="@UIHelper.LocalString("输入矿机持有地址","input miner holder address")" Size="@InputSize.Small" EnterButton="@UIHelper.LocalString("获取种子地址","Get Seed Address")" @bind-Value="@this.HA" OnSearch="Cal" /></li>
+                                <li> <Search Style="min-width:300px;" Placeholder="@this.WebLocalString("输入矿机持有地址","input miner holder address")" Size="@InputSize.Small" EnterButton="@this.WebLocalString("获取种子地址","Get Seed Address")" @bind-Value="@this.HA" OnSearch="Cal" /></li>
                                 <li>
                                     <Space>
-                                        <SpaceItem><Paragraph>@UIHelper.LocalString("种子地址","Seed Address")  :  <Text Strong Copyable>@this.HS</Text></Paragraph></SpaceItem>
+                                        <SpaceItem><Paragraph>@this.WebLocalString("种子地址","Seed Address")  :  <Text Strong Copyable>@this.HS</Text></Paragraph></SpaceItem>
                                     </Space>
                                 </li>
                         </ul>

@@ -9,7 +9,7 @@
                 <CardTabs>
                     <Tabs DefaultActiveKey="1">
                         <TabPane Key="1">
-                            <TabTemplate><Badge Dot><a> @UIHelper.LocalString("主池交易对","Main Pool Exchange Pairs")</a>         </Badge>                               </TabTemplate>
+                            <TabTemplate><Badge Dot><a> @this.WebLocalString("主池交易对","Main Pool Exchange Pairs")</a>         </Badge>                               </TabTemplate>
                             <ChildContent>
                                 <div class="standardList">
                                     <Card Class="listCard"
@@ -23,24 +23,24 @@
                                                 <ListItem>
                                                     <div class="listContent">
                                                         <div class="listContentItem">
-                                                            <span>@UIHelper.LocalString("交易池地址","Exchange Pool Address")</span>
+                                                            <span>@this.WebLocalString("交易池地址","Exchange Pool Address")</span>
                                                             <p>@context.Key.ToAddress() </p>
                                                         </div>
                                                         <div class="listContentItem">
-                                                            <span>@UIHelper.LocalString("标的资产名称","Target Asset Name")</span>
+                                                            <span>@this.WebLocalString("标的资产名称","Target Asset Name")</span>
                                                             <p>@context.Value.TargetAssetState.GetName() </p>
                                                         </div>
                                                         <div class="listContentItem">
-                                                            <span>@UIHelper.LocalString("标的资产Id","Target Asset Id")</span>
+                                                            <span>@this.WebLocalString("标的资产Id","Target Asset Id")</span>
                                                             <p>@context.Value.TargetAssetState.AssetId.ToString() </p>
                                                         </div>
                                                         <div class="listContentItem">
                                                             <span></span>
-                                                            <a href="/_pc/invest/goswap/0/@context.Key.ToAddress()">@UIHelper.LocalString($"买 {context.Value.TargetAssetState.GetName()}",$"Buy {context.Value.TargetAssetState.GetName()}")</a>
+                                                            <a href="/_pc/invest/goswap/0/@context.Key.ToAddress()">@this.WebLocalString($"买 {context.Value.TargetAssetState.GetName()}",$"Buy {context.Value.TargetAssetState.GetName()}")</a>
                                                         </div>
                                                         <div class="listContentItem">
                                                             <span></span>
-                                                            <a href="/_pc/invest/goswap/1/@context.Key.ToAddress()">@UIHelper.LocalString($"卖 {context.Value.TargetAssetState.GetName()}",$"Sale {context.Value.TargetAssetState.GetName()}")</a>
+                                                            <a href="/_pc/invest/goswap/1/@context.Key.ToAddress()">@this.WebLocalString($"卖 {context.Value.TargetAssetState.GetName()}",$"Sale {context.Value.TargetAssetState.GetName()}")</a>
                                                         </div>
                                                     </div>
                                                 </ListItem>
@@ -51,7 +51,7 @@
                             </ChildContent>
                         </TabPane>
                         <TabPane Key="2">
-                            <TabTemplate>@UIHelper.LocalString("边池交易对","Side Pool Exchange Pairs")</TabTemplate>
+                            <TabTemplate>@this.WebLocalString("边池交易对","Side Pool Exchange Pairs")</TabTemplate>
                             <ChildContent>
                                 <div class="standardList">
                                     <Card Class="listCard"
@@ -71,24 +71,24 @@
                                                     }
                                                     <div class="listContent">
                                                         <div class="listContentItem">
-                                                            <span>@UIHelper.LocalString("交易池地址","Exchange Pool Address")</span>
+                                                            <span>@this.WebLocalString("交易池地址","Exchange Pool Address")</span>
                                                             <p>@addr</p>
                                                         </div>
                                                         <div class="listContentItem">
-                                                            <span>@UIHelper.LocalString("标的资产名称","Target Asset Name")</span>
+                                                            <span>@this.WebLocalString("标的资产名称","Target Asset Name")</span>
                                                             <p>@assetName </p>
                                                         </div>
                                                         <div class="listContentItem">
-                                                            <span>@UIHelper.LocalString("标的资产Id","Target Asset Id")</span>
+                                                            <span>@this.WebLocalString("标的资产Id","Target Asset Id")</span>
                                                             <p>@assetId.ToString() </p>
                                                         </div>
                                                         <div class="listContentItem">
                                                             <span></span>
-                                                            <a href="/_pc/invest/gosideswap/0/@addr">@UIHelper.LocalString($"买 {assetName}",$"Buy {assetName}")</a>
+                                                            <a href="/_pc/invest/gosideswap/0/@addr">@this.WebLocalString($"买 {assetName}",$"Buy {assetName}")</a>
                                                         </div>
                                                         <div class="listContentItem">
                                                             <span></span>
-                                                            <a href="/_pc/invest/gosideswap/1/@addr">@UIHelper.LocalString($"卖 {assetName}",$"Sale {assetName}")</a>
+                                                            <a href="/_pc/invest/gosideswap/1/@addr">@this.WebLocalString($"卖 {assetName}",$"Sale {assetName}")</a>
                                                         </div>
                                                     </div>
                                                 </ListItem>

@@ -41,7 +41,7 @@ namespace OX.Web.Pages
 
     public partial class GoDeposit
     {
-        public override string PageTitle => UIHelper.LocalString("入金", "Buy");
+        public override string PageTitle => this.WebLocalString("入金", "Buy");
         [Parameter]
         public string dealerethaddress { get; set; }
 
@@ -109,7 +109,7 @@ namespace OX.Web.Pages
 
                         if (Box.Notecase.DoDeposit(act, this.model.FromEthAddress, this.model.PoolEthAddress, sh, r.EthTxId, r.stringToSign, r.signatureData, true))
                         {
-                            this.msg = UIHelper.LocalString($"以太坊交易 {r.EthTxId}已经尝试", $"Ethereum transaction {r.EthTxId} has been attempted");
+                            this.msg = this.WebLocalString($"以太坊交易 {r.EthTxId}已经尝试", $"Ethereum transaction {r.EthTxId} has been attempted");
                         }
 
                         StateHasChanged();
@@ -117,7 +117,7 @@ namespace OX.Web.Pages
                 }
                 catch (UserDeniedException e)
                 {
-                    this.msg = UIHelper.LocalString($"已经拒绝交易", $"Transaction has been rejected");
+                    this.msg = this.WebLocalString($"已经拒绝交易", $"Transaction has been rejected");
                     StateHasChanged();
                 }
             }

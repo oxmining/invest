@@ -10,7 +10,6 @@ namespace OX.Web.Models
 {
     public class MiningWebBox : WebBoxBlazor
     {
-        public override string Name => UIHelper.LocalString("挖矿", "Mining");
         public override bool SupportMobile => false;
         public override uint BoxIndex { get { return 100; } }
         public MiningWebBox() : base()
@@ -20,32 +19,32 @@ namespace OX.Web.Models
         {
 
         }
-        public override MenuDataItem[] GetMemus()
+        public override MenuDataItem[] GetMemus(string language)
         {
             List<MenuDataItem> list = new List<MenuDataItem>();
             list.Add(new MenuDataItem
             {
                 Path = "/_pc/invest",
-                Name = UIHelper.LocalString("交易", "Exchange"),
+                Name = UIHelper.WebLocalString(language, "交易", "Exchange"),
                 Key = "exchange",
                 //Icon = "smile",
                 Children = new MenuDataItem[] {
                     new MenuDataItem
                     {
                         Path = "/_pc/invest/deposit",
-                        Name = UIHelper.LocalString("场外入金", "OTC Buy"),
+                        Name = UIHelper.WebLocalString(language,"场外入金", "OTC Buy"),
                         Key = "deposit"
                     },
                      new MenuDataItem
                     {
                         Path = "/_pc/invest/otcsale",
-                        Name = UIHelper.LocalString("场外出金", "OTC Sale"),
+                        Name =UIHelper.WebLocalString(language,"场外出金", "OTC Sale"),
                         Key = "otcsale"
                     },
                      new MenuDataItem
                     {
                         Path = "/_pc/invest/swap",
-                        Name = UIHelper.LocalString("兑换", "Swap"),
+                        Name = UIHelper.WebLocalString(language,"兑换", "Swap"),
                         Key = "swap"
                     }
                 }
@@ -55,32 +54,32 @@ namespace OX.Web.Models
                 list.Add(new MenuDataItem
                 {
                     Path = "/mining",
-                    Name = UIHelper.LocalString("挖矿", "Mining"),
+                    Name = UIHelper.WebLocalString(language, "挖矿", "Mining"),
                     Key = "mining",
                     //Icon = "smile",
                     Children = new MenuDataItem[] {
                          new MenuDataItem
                     {
                         Path = "/mining/myminer",
-                        Name = UIHelper.LocalString("矿机", "Miner"),
+                        Name =UIHelper.WebLocalString(language,"矿机", "Miner"),
                         Key = "myminer"
                     },
                     new MenuDataItem
                     {
                         Path = "/mining/selflockmining",
-                        Name =  UIHelper.LocalString("自锁挖矿", "Self Lock Mining"),
+                        Name =  UIHelper.WebLocalString(language,"自锁挖矿", "Self Lock Mining"),
                         Key = "selflockmining"
                     },
                     new MenuDataItem
                     {
                         Path = "/mining/mutuallockmining",
-                        Name =  UIHelper.LocalString("互锁挖矿", "Mutual Lock Mining"),
+                        Name =  UIHelper.WebLocalString(language,"互锁挖矿", "Mutual Lock Mining"),
                         Key = "mutuallockmining"
                     },
                     new MenuDataItem
                     {
                         Path = "/mining/levellockmining",
-                        Name =  UIHelper.LocalString("级锁挖矿", "Level Lock Mining"),
+                        Name =  UIHelper.WebLocalString(language,"级锁挖矿", "Level Lock Mining"),
                         Key = "levellockmining"
                     }
                 }
@@ -88,7 +87,7 @@ namespace OX.Web.Models
             }
             return list.ToArray();
         }
-        public override MenuDataItem[] GetMobileMemus()
+        public override MenuDataItem[] GetMobileMemus(string language)
         {
             List<MenuDataItem> list = new List<MenuDataItem>();
 
