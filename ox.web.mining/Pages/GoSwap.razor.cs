@@ -54,6 +54,8 @@ namespace OX.Web.Pages
         public UInt160 PoolSH { get; set; } = default;
         public SwapPairMerge SwapPairMerge { get; set; } = default;
         decimal Price { get; set; }
+        public Fixed8 TargetBalance { get; set; } = Fixed8.Zero;
+        public Fixed8 PricingBalance { get; set; } = Fixed8.Zero;
         public UInt256 AssetId { get; set; }
         public string AssetName { get; set; }
         public EthAssetBalanceState BalanceState = new EthAssetBalanceState();
@@ -172,6 +174,8 @@ namespace OX.Web.Pages
                 if (vom.IsNotNull())
                 {
                     Price = vom.Price;
+                    TargetBalance = vom.Volume.TargetBalance;
+                    PricingBalance = vom.Volume.PricingBalance;
                 }
 
             }

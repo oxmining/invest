@@ -27,6 +27,15 @@
         <FormItem Label=@this.WebLocalString($"当前价格",$"Current Price") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
             <Input @bind-Value="@p" ReadOnly=true />
         </FormItem>
+        @if (this.SideSwapPairKey.IsNotNull())
+        {
+            <FormItem Label=@this.WebLocalString($"交易池 {this.AssetName} 余额",$"Exchange Pool {this.AssetName} Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                <Input @bind-Value="@TargetBalance" ReadOnly=true />
+            </FormItem>
+            <FormItem Label=@this.WebLocalString($"交易池 OXC 余额",$"Exchange Pool OXC Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                <Input @bind-Value="@PricingBalance" ReadOnly=true />
+            </FormItem>
+        }
         <FormItem Label=@this.WebLocalString($"{this.AssetName} 可用余额",$"{this.AssetName} Available Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
             <Input @bind-Value="@this.BalanceState.AvailableBalance" ReadOnly=true />
         </FormItem>
