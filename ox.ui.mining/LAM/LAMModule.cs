@@ -60,7 +60,7 @@ namespace OX.UI.LAM
             MinerMenu.Size = new System.Drawing.Size(170, 22);
             MinerMenu.Text = UIHelper.LocalString("矿机", "Miner");
 
-            //注册互锁节点
+            //计算矿机种子
             ToolStripMenuItem viewMutualNodeSeedMenu = new ToolStripMenuItem();
             viewMutualNodeSeedMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
             viewMutualNodeSeedMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
@@ -71,7 +71,20 @@ namespace OX.UI.LAM
             viewMutualNodeSeedMenu.Text = UIHelper.LocalString("计算矿机种子", "Calculation Miner  Seed");
             viewMutualNodeSeedMenu.Click += ViewMutualNodeSeedMenu_Click;
             MinerMenu.DropDownItems.Add(viewMutualNodeSeedMenu);
+
             //注册互锁节点
+            ToolStripMenuItem viewTotalLockVolumeMenu = new ToolStripMenuItem();
+            viewTotalLockVolumeMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            viewTotalLockVolumeMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            //exitmenu.Image = global::Example.Icons.NewFile_6276;
+            viewTotalLockVolumeMenu.Name = "viewTotalLockVolumeMenu";
+            viewTotalLockVolumeMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+            viewTotalLockVolumeMenu.Size = new System.Drawing.Size(170, 22);
+            viewTotalLockVolumeMenu.Text = UIHelper.LocalString("查询总锁仓量", "View Total Lock Volume");
+            viewTotalLockVolumeMenu.Click += ViewTotalLockVolumeMenu_Click;
+            MinerMenu.DropDownItems.Add(viewTotalLockVolumeMenu);
+
+            //我的矿机
             ToolStripMenuItem myMutualLockNodeMenu = new ToolStripMenuItem();
             myMutualLockNodeMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
             myMutualLockNodeMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
@@ -199,7 +212,7 @@ namespace OX.UI.LAM
             myLevelLockInterestRecordsMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             //exitmenu.Image = global::Example.Icons.NewFile_6276;
             myLevelLockInterestRecordsMenu.Name = "myLevelLockInterestRecordsMenu";
-            myLevelLockInterestRecordsMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            myLevelLockInterestRecordsMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
             myLevelLockInterestRecordsMenu.Size = new System.Drawing.Size(170, 22);
             myLevelLockInterestRecordsMenu.Text = UIHelper.LocalString("我的级锁出矿记录", " My Level Lock Interest Records");
             myLevelLockInterestRecordsMenu.Click += MyLevelLockInterestRecordsMenu_Click;
@@ -210,7 +223,7 @@ namespace OX.UI.LAM
             myLevelLockInRecordsMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             //exitmenu.Image = global::Example.Icons.NewFile_6276;
             myLevelLockInRecordsMenu.Name = "myLevelLockInRecordsMenu";
-            myLevelLockInRecordsMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            myLevelLockInRecordsMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
             myLevelLockInRecordsMenu.Size = new System.Drawing.Size(170, 22);
             myLevelLockInRecordsMenu.Text = UIHelper.LocalString("我的质押买入记录", "My Level Lock Buy Records");
             myLevelLockInRecordsMenu.Click += MyLevelLockInRecordsMenu_Click;
@@ -221,7 +234,7 @@ namespace OX.UI.LAM
             myLevelLockOutRecordsMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             //exitmenu.Image = global::Example.Icons.NewFile_6276;
             myLevelLockOutRecordsMenu.Name = "myLevelLockOutRecordsMenu";
-            myLevelLockOutRecordsMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            myLevelLockOutRecordsMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             myLevelLockOutRecordsMenu.Size = new System.Drawing.Size(170, 22);
             myLevelLockOutRecordsMenu.Text = UIHelper.LocalString("我的质押卖出记录", "My Level Lock Sell Records");
             myLevelLockOutRecordsMenu.Click += MyLevelLockOutRecordsMenu_Click;
@@ -261,6 +274,11 @@ namespace OX.UI.LAM
             });
             this.Container.TopMenus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             investMenu});
+        }
+
+        private void ViewTotalLockVolumeMenu_Click(object sender, EventArgs e)
+        {
+            new ViewTotalLockVolume().ShowDialog();
         }
 
         private void MyLevelLockOutRecordsMenu_Click(object sender, EventArgs e)

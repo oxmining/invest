@@ -24,8 +24,8 @@ namespace OX.UI.LAM
             {
                 var settings = bizPlugin.GetAllInvestSettings();
                 //this.Clear();
-                //AddSetting(settings, InvestSettingTypes.NodeBonusOXSLockVolume, UIHelper.LocalString("矿机推荐奖励OXS锁仓量门槛", "Miner reward OXS lock volume threshold"), "");
-                //AddSetting(settings, InvestSettingTypes.NodeBonusOXSMinLock, UIHelper.LocalString("矿机推荐奖励OXS最低锁仓数", "Miner reward OXS min lock number"), "OXS");
+                AddSetting(settings, InvestSettingTypes.NodeBonusTotalLockVolume, UIHelper.LocalString("矿机推荐奖励锁仓量门槛", "Miner reward lock volume threshold"), "");
+                //AddSetting(settings, InvestSettingTypes.NodeBonusOXSMinLock, UIHelper.LocalString("矿机推荐奖励最低锁仓数", "Miner reward min lock number"), "OXS");
                 AddSetting(settings, InvestSettingTypes.NodeTeamBonusOXSLockVolume, UIHelper.LocalString("团队管理奖励OXS锁仓量门槛", "Team manage OXS lock volume threshold"), "");
                 AddSetting(settings, InvestSettingTypes.NodeTeamBonusOXSMinLock, UIHelper.LocalString("团队管理奖励OXS最低锁仓数", "Team manage OXS min lock number"), "OXS");
 

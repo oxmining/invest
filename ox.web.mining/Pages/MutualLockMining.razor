@@ -6,6 +6,14 @@
 
         @if (this.Data.IsNotNullAndEmpty())
         {
+            string settingStr = string.Empty;
+            var settings = this.Provider.GetAllInvestSettings();
+            var setting = settings.FirstOrDefault(m => Enumerable.SequenceEqual(m.Key, new[] { InvestSettingTypes.NodeBonusTotalLockVolume }));
+            if (!setting.Equals(new KeyValuePair<byte[], InvestSettingRecord>()))
+            {
+                settingStr = this.WebLocalString($"矿机推荐奖励锁仓量门槛:{setting.Value.Value}", $"Miner reward lock volume threshold:{setting.Value.Value}");
+            }
+
             int i = 0;
             <Collapse DefaultActiveKey="@(new[]{"0"})">
 
@@ -48,6 +56,9 @@
                                                             <li>@this.WebLocalString($"出矿率:{l.Item2.AirdropAmount}/100*100000", $"Airdrop Ratio:{l.Item2.AirdropAmount}/100*100000")</li>
                                                         </ul>
                                                     }
+                                                    <Divider Orientation="left" Style="font-weight:bold">
+                                                        @settingStr
+                                                    </Divider>
                                                 </div>
                                             </ChildContent>
                                         </TabPane>
@@ -55,6 +66,14 @@
                                             <TabTemplate>@this.WebLocalString("本矿机挖矿记录","Mining Records")</TabTemplate>
                                             <ChildContent>
                                                 <div>
+                                                    @if (this.Miner.IsNotNull() && this.HaveEthID)
+                                                    {
+                                                        var lw = this.Provider.GetTotalValidLockVolume(d.Key, this.EthID.MapAddress);
+                                                        if (lw.IsNull()) lw = new LongWrapper();
+                                                        <Divider Style="font-weight:bold">
+                                                            @this.WebLocalString($"累计有效时空锁仓总量：{lw.Value}",$"Total Valid Space-Time Lock Volume：{lw.Value}")
+                                                        </Divider>
+                                                    }
                                                     @foreach (var r in d.Value.SelfMiningRecords.OrderByDescending(m => m.Timestamp))
                                                     {
                                                         <ul>

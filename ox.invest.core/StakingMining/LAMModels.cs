@@ -8,6 +8,21 @@ using System.Security.Policy;
 
 namespace OX.Mining.StakingMining
 {
+    public class LongWrapper : ISerializable
+    {
+        public ulong Value { get; set; }
+        public virtual int Size => sizeof(ulong);
+        public LongWrapper() : this(0) { }
+        public LongWrapper(ulong value) { this.Value = value; }
+        public void Serialize(BinaryWriter writer)
+        {
+            writer.Write(Value);
+        }
+        public void Deserialize(BinaryReader reader)
+        {
+            Value = reader.ReadUInt64();
+        }
+    }
     public class StringWrapper : ISerializable
     {
         public string Text { get; private set; }
@@ -63,7 +78,7 @@ namespace OX.Mining.StakingMining
         public UInt256 AssetId;
         public UInt160 Holder;
         public UInt256 TxId;
-        public virtual int Size => AssetId.Size  + Holder.Size   + TxId.Size;
+        public virtual int Size => AssetId.Size + Holder.Size + TxId.Size;
         public void Serialize(BinaryWriter writer)
         {
             writer.Write(AssetId);
@@ -154,6 +169,23 @@ namespace OX.Mining.StakingMining
             RootSeedAddress = reader.ReadSerializable<UInt160>();
             ParentHolder = reader.ReadSerializable<UInt160>();
             IsEthMap = reader.ReadBoolean();
+        }
+    }
+    public class TotalLockVolumeKey : ISerializable
+    {
+        public UInt256 AssetId;
+        public UInt160 Holder;
+
+        public virtual int Size => AssetId.Size + Holder.Size;
+        public void Serialize(BinaryWriter writer)
+        {
+            writer.Write(AssetId);
+            writer.Write(Holder);
+        }
+        public void Deserialize(BinaryReader reader)
+        {
+            AssetId = reader.ReadSerializable<UInt256>();
+            Holder = reader.ReadSerializable<UInt160>();
         }
     }
 }

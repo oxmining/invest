@@ -1,4 +1,5 @@
-﻿using OX.Bapps;
+﻿using Org.BouncyCastle.Asn1.X509;
+using OX.Bapps;
 using OX.Cryptography.ECC;
 using OX.IO;
 using OX.IO.Data.LevelDB;
@@ -231,8 +232,8 @@ namespace OX.Mining
                                     batch.Save_LevelLockInRecord(this, block, tx, output, k, from, parentNode.HolderAddress);
                                     break;
                                 }
- 
-                            }                             
+
+                            }
                         }
                     }
                 }
@@ -366,7 +367,9 @@ namespace OX.Mining
                     {
                         var asset = regAssets.Select(m => m.Value)?.FirstOrDefault(m => m.AssetId.Equals(output.AssetId));
                         if (asset.IsNotNull() && output.Value >= asset.MinAmount && output.Value <= asset.MaxAmount)
+                        {
                             batch.Save_LockMiningRecordsForEth(this, block, emt, k, output);
+                        }
                     }
                 }
             }
@@ -532,6 +535,16 @@ namespace OX.Mining
                 byte[] data = v.ToArray();
                 return new KeyValuePair<byte[], InvestSettingRecord>(ks, data.AsSerializable<InvestSettingRecord>());
             });
+        }
+        public LongWrapper GetTotalValidLockVolume(UInt256 assetId, UInt160 holder)
+        {
+            TotalLockVolumeKey key = new TotalLockVolumeKey { AssetId = assetId, Holder = holder };
+            var lw = this.Get<LongWrapper>(InvestBizPersistencePrefixes.TotalMutualLockSpaceTimeLockVolume, key);
+            if (lw.IsNull())
+            {
+                lw = new LongWrapper();
+            }
+            return lw;
         }
         //public IEnumerable<KeyValuePair<MiningHashKey, MinePoolPublishRecord>> GetMinePools(UInt160 holder = default)
         //{

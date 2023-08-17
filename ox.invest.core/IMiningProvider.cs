@@ -31,6 +31,7 @@ namespace OX.Mining
          Dictionary<UInt160, OTCDealerMerge> OTCDealers { get; set; }
         bool TryGetHashAccount(UInt256 PubkeyHash, out AccountPack pack);
         IEnumerable<KeyValuePair<byte[], InvestSettingRecord>> GetAllInvestSettings();
+        LongWrapper GetTotalValidLockVolume(UInt256 assetId, UInt160 holder);
         //IEnumerable<KeyValuePair<MiningHashKey, MinePoolPublishRecord>> GetMinePools(UInt160 holder = default);
         //LevelThresholdPublishRecord GetMinePoolLevelThreshold(MiningKey minePoolKey);
         //IEnumerable<KeyValuePair<UInt160, MinerData>> GetMyMiners();

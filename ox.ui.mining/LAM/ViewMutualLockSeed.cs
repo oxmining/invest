@@ -31,7 +31,7 @@ namespace OX.UI.LAM
             InitializeComponent();
             this.Text = UIHelper.LocalString("计算矿机种子", "Calculation Miner Seed");
             this.bt_copy.Text = UIHelper.LocalString("复制", "Copy");
-            this.lb_accounts.Text = UIHelper.LocalString("私钥账户:", "Private Account:");
+            this.lb_accounts.Text = UIHelper.LocalString("账户地址:", "Account Address:");
             this.lb_seedAddress.Text = UIHelper.LocalString("种子地址:", "Seed Address:");
             this.lb_genesisSeed.Text = UIHelper.LocalString("根种子:", "Root Seed:");
             this.btnOk.Text = UIHelper.LocalString("关闭", "Close");

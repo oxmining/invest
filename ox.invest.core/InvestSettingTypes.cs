@@ -13,7 +13,7 @@
         public const byte SwapTraderFee = 0x08;
         public const byte SwapExternalToken = 0x09;
         public const byte MinerBonusToken = 0x0A;
-        public const byte NodeBonusOXSLockVolume = 0x0B;
+        public const byte NodeBonusTotalLockVolume = 0x0B;
         public const byte DEXBonusToken = 0x0C;
         public const byte NodeBonusOXSMinLock = 0x0D;
         public const byte SidePairRegFee = 0x0E;

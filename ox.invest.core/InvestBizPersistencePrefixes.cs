@@ -53,6 +53,7 @@
         public const byte LevelLockInRecords = 0x33;
         public const byte LevelLockInterestRecords = 0x34;
         public const byte LevelLockInStateRecords = 0x35;
-        public const byte OTC_Dealer = 0x36;       
+        public const byte OTC_Dealer = 0x36;
+        public const byte TotalMutualLockSpaceTimeLockVolume = 0x37;
     }
 }

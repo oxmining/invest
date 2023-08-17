@@ -16,6 +16,7 @@ namespace OX.Mining
 
     public static class MutualLockHelper
     {
+        public const uint MAXVALIDMUTUALLOCKBLOCKS = 6000000;
         static UInt160 genesisSeedAddress;
         public static UInt160 GenesisSeed()
         {
@@ -47,21 +48,34 @@ namespace OX.Mining
             }
             return false;
         }
-        
+
         public static uint Calculate(this IEnumerable<MutualLockKey> mutualLockRecords, uint currentBlockHeight)
         {
+            if (mutualLockRecords.IsNullOrEmpty()) return 0;
             uint v = 0;
             foreach (var r in mutualLockRecords.Where(m => m.EndIndex >= currentBlockHeight))
             {
                 if (currentBlockHeight > r.StartIndex)
                 {
                     //The time gradient value of 1 coin is generated for every 100 coins
-                    var multiple = (currentBlockHeight - r.StartIndex) / 100000;
+                    var g = currentBlockHeight - r.StartIndex;
+                    var multiple = g <= MAXVALIDMUTUALLOCKBLOCKS ? g / 100000 : 0;
                     var num = r.Amount.GetInternalValue() / (Fixed8.D * 100);
                     v += (uint)num * multiple;
                 }
             }
             return v;
+        }
+        public static ulong CalculateValidSpaceTimeVolume(Fixed8 value, uint startIndex, uint endIndex)
+        {
+            if (endIndex <= startIndex) return 0;
+            if (value < Fixed8.Zero) return 0;
+            var r = endIndex - startIndex;
+            if (r > MAXVALIDMUTUALLOCKBLOCKS)
+            {
+                r = MAXVALIDMUTUALLOCKBLOCKS;
+            }
+            return (ulong)(value.GetInternalValue() / Fixed8.D) * r;
         }
         public static bool VerifyLevelLockRecord(this TransactionOutput output, IMiningProvider miningProvider)
         {

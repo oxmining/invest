@@ -6,6 +6,14 @@
 
         @if (this.Data.IsNotNullAndEmpty())
         {
+            string settingStr = string.Empty;
+            var settings = this.Provider.GetAllInvestSettings();
+            var setting = settings.FirstOrDefault(m => Enumerable.SequenceEqual(m.Key, new[] { InvestSettingTypes.NodeBonusTotalLockVolume }));
+            if (!setting.Equals(new KeyValuePair<byte[], InvestSettingRecord>()))
+            {
+                settingStr = this.WebLocalString($"矿机推荐奖励锁仓量门槛:{setting.Value.Value}", $"Miner reward lock volume threshold:{setting.Value.Value}");
+            }
+
             int i = 0;
             <Collapse DefaultActiveKey="@(new[]{"0"})">
 
@@ -20,6 +28,7 @@
                         <ExtraTemplate>
                             @if (this.HaveEthID)
                             {
+
                                 var url = $"/wallet/transferasset/{d.Key.ToString()}/2/{this.EthID.EthAddress}/{Last.MinAmount.ToString()}/{Blockchain.Singleton.HeaderHeight + 101000}";
                                 <a class="bt" href="@url">@this.WebLocalString("去挖矿","Go Mining")</a>
                             }
@@ -53,15 +62,27 @@
                                                             <li>@this.WebLocalString($"6000000区块利率:{l.Item2.Interest_6000000}/1000", $"6000000 blocks ratio:{l.Item2.Interest_6000000}/1000")</li>
                                                         </ul>
                                                     }
+                                                    <Divider Orientation="left" Style="font-weight:bold">
+                                                        @settingStr
+                                                    </Divider>
                                                 </div>
                                             </ChildContent>
                                         </TabPane>
                                         <TabPane Key="@((i*100+2).ToString())">
                                             <TabTemplate>@this.WebLocalString("挖矿记录", "Mining Records")</TabTemplate>
                                             <ChildContent>
+                                                @if (this.Miner.IsNotNull() && this.HaveEthID)
+                                                {
+                                                    var lw = this.Provider.GetTotalValidLockVolume(d.Key, this.EthID.MapAddress);
+                                                    if (lw.IsNull()) lw = new LongWrapper();
+                                                    <Divider Style="font-weight:bold">
+                                                        @this.WebLocalString($"累计有效时空锁仓总量：{lw.Value}",$"Total Valid Space-Time Lock Volume：{lw.Value}")
+                                                    </Divider>
+                                                }
+
                                                 @if (d.Value.MiningRecords.IsNotNullAndEmpty())
                                                 {
-                                                    @foreach (var p in d.Value.MiningRecords.OrderByDescending(m=>m.Timestamp))
+                                                    @foreach (var p in d.Value.MiningRecords.OrderByDescending(m => m.Timestamp))
                                                     {
                                                         TransactionOutput output = p.Output;
                                                         <ul>

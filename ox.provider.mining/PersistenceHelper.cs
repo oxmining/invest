@@ -19,6 +19,7 @@ using OX.Mining.Trade;
 using OX.Mining.OTC;
 using Org.BouncyCastle.Cms;
 using Nethereum.Signer.Crypto;
+using System.Reflection;
 
 namespace OX.Mining
 {
@@ -234,6 +235,7 @@ namespace OX.Mining
                 {
                     SelfLockKey key = new SelfLockKey { AssetId = output.AssetId, Holder = recipient, TxId = lat.Hash };
                     batch.Put(SliceBuilder.Begin(InvestBizPersistencePrefixes.LockMiningRecords).Add(key), SliceBuilder.Begin().Add(new LockMiningRecordMerge { AssetId = output.AssetId, TransactionType = lat.Type, TxId = lat.Hash, K = k, Index = block.Index, Timestamp = block.Timestamp, LockExpiration = lat.LockExpiration, Output = output }));
+                    batch.Save_TotalLockVolume(miningProvider, output.AssetId, recipient, output.Value, block.Index, lat.LockExpiration);
                 }
             }
         }
@@ -246,6 +248,7 @@ namespace OX.Mining
                 {
                     SelfLockKey key = new SelfLockKey { AssetId = output.AssetId, Holder = recipient, TxId = emt.Hash };
                     batch.Put(SliceBuilder.Begin(InvestBizPersistencePrefixes.LockMiningRecords).Add(key), SliceBuilder.Begin().Add(new LockMiningRecordMerge { AssetId = output.AssetId, TransactionType = emt.Type, TxId = emt.Hash, K = k, Index = block.Index, Timestamp = block.Timestamp, LockExpiration = emt.LockExpirationIndex, Output = output }));
+                    batch.Save_TotalLockVolume(miningProvider, output.AssetId, recipient, output.Value, block.Index, emt.LockExpirationIndex);
                 }
             }
         }
@@ -330,6 +333,7 @@ namespace OX.Mining
                 {
                     MutualLockKey key = new MutualLockKey { Owner = recipient, ParentOwner = miner.ParentHolder, AssetId = output.AssetId, Amount = output.Value, LockAddress = output.ScriptHash, StartIndex = block.Index, EndIndex = emt.LockExpirationIndex, Timestamp = block.Timestamp, TxId = emt.Hash };
                     batch.Put(SliceBuilder.Begin(InvestBizPersistencePrefixes.MutualLockRecords).Add(key), SliceBuilder.Begin().Add(new MutualLockValue { TransactionType = emt.Type, TxId = emt.Hash }));
+                    batch.Save_TotalLockVolume(miningProvider, output.AssetId, recipient, output.Value, block.Index, emt.LockExpirationIndex);
                 }
             }
         }
@@ -341,6 +345,7 @@ namespace OX.Mining
                 {
                     MutualLockKey key = new MutualLockKey { Owner = recipient, ParentOwner = miner.ParentHolder, AssetId = output.AssetId, Amount = output.Value, LockAddress = output.ScriptHash, StartIndex = block.Index, EndIndex = lat.LockExpiration, Timestamp = block.Timestamp, TxId = lat.Hash };
                     batch.Put(SliceBuilder.Begin(InvestBizPersistencePrefixes.MutualLockRecords).Add(key), SliceBuilder.Begin().Add(new MutualLockValue { TransactionType = lat.Type, TxId = lat.Hash }));
+                    batch.Save_TotalLockVolume(miningProvider, output.AssetId, recipient, output.Value, block.Index, lat.LockExpiration);
                 }
             }
         }
@@ -424,6 +429,17 @@ namespace OX.Mining
                     batch.Put(SliceBuilder.Begin(InvestBizPersistencePrefixes.LevelLockInterestRecords).Add(key), SliceBuilder.Begin().Add(ist.Hash));
                 }
             }
+        }
+        public static void Save_TotalLockVolume(this WriteBatch batch, MiningProvider miningProvider,UInt256 assetId, UInt160 holder, Fixed8 value, uint startIndex, uint endIndex)
+        {
+            TotalLockVolumeKey key = new TotalLockVolumeKey { AssetId = assetId, Holder = holder };
+            var lw = miningProvider.Get<LongWrapper>(InvestBizPersistencePrefixes.TotalMutualLockSpaceTimeLockVolume, key);
+            if (lw.IsNull())
+            {
+                lw = new LongWrapper();
+            }
+            lw.Value += MutualLockHelper.CalculateValidSpaceTimeVolume(value, startIndex, endIndex);
+            batch.Put(SliceBuilder.Begin(InvestBizPersistencePrefixes.TotalMutualLockSpaceTimeLockVolume).Add(key), SliceBuilder.Begin().Add(lw));
         }
     }
 }
