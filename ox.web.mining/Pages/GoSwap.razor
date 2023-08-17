@@ -2,15 +2,24 @@
 @inherits MiningComponentBase
 <Microsoft.AspNetCore.Components.Web.Extensions.Head.Title Value=@PageTitle />
 @{
+    bool pagevalid = true;
     var s = "";
     if (this.SwapPairMerge.IsNotNull())
     {
         if (this.kind == "0")
         {
-            s = this.WebLocalString("买入", "Buy") + $"{this.SwapPairMerge.TargetAssetState.GetName()}";
+            if (IsIDOTime)
+            {
+                s = this.WebLocalString("IDO 预购", "IDO Buy") + $"{this.SwapPairMerge.TargetAssetState.GetName()}";
+            }
+            else
+            {
+                s = this.WebLocalString("买入", "Buy") + $"{this.SwapPairMerge.TargetAssetState.GetName()}";
+            }
         }
         else if (this.kind == "1")
         {
+            pagevalid = !IsIDOTime;
             s = this.WebLocalString("卖出", "Sale") + $"{this.SwapPairMerge.TargetAssetState.GetName()}";
         }
     }
@@ -23,18 +32,52 @@
           OnFinish="HandleSubmit">
         @{
             var p = this.Price.ToString("f6");
+            if (IsIDOTime && IDO.IsNotNull())
+            {
+                p = this.IDO.Price.ToString();
+            }
         }
-        <FormItem Label=@this.WebLocalString($"当前价格",$"Current Price") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
-            <Input @bind-Value="@p" ReadOnly=true />
-        </FormItem>
+        @if (IsIDOTime)
+        {
+            <FormItem Label=@this.WebLocalString($"IDO 价格",$"IDO Price") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                <Input @bind-Value="@p" ReadOnly=true />
+            </FormItem>
+        }
+        else
+        {
+            <FormItem Label=@this.WebLocalString($"当前价格",$"Current Price") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                <Input @bind-Value="@p" ReadOnly=true />
+            </FormItem>
+        }
         @if (this.SwapPairMerge.IsNotNull())
         {
-            <FormItem Label=@this.WebLocalString($"交易池 {this.SwapPairMerge.TargetAssetState.GetName()} 余额",$"Exchange Pool {this.SwapPairMerge.TargetAssetState.GetName()} Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
-                <Input @bind-Value="@TargetBalance" ReadOnly=true />
-            </FormItem>
-            <FormItem Label=@this.WebLocalString($"交易池 OXC 余额",$"Exchange Pool OXC Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
-                <Input @bind-Value="@PricingBalance" ReadOnly=true />
-        </FormItem>
+            if (!IsIDOTime)
+            {
+                <FormItem Label=@this.WebLocalString($"交易池 {this.SwapPairMerge.TargetAssetState.GetName()} 余额",$"Exchange Pool {this.SwapPairMerge.TargetAssetState.GetName()} Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                    <Input @bind-Value="@TargetBalance" ReadOnly=true />
+                </FormItem>
+                <FormItem Label=@this.WebLocalString($"交易池 OXC 余额",$"Exchange Pool OXC Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                    <Input @bind-Value="@PricingBalance" ReadOnly=true />
+                </FormItem>
+            }
+            else
+            {
+                var acts = Blockchain.Singleton.CurrentSnapshot.Accounts.GetAndChange(PoolSH, () => null);
+                if (acts.IsNotNull())
+                {
+                    var targetBalance = acts.GetBalance(SwapPairMerge.TargetAssetState.AssetId);
+                    var pricingBalance = acts.GetBalance(Blockchain.OXC);
+                    var tb = targetBalance.ToString();
+                    var pb = pricingBalance.ToString();
+
+                    <FormItem Label=@this.WebLocalString($"交易池 {this.SwapPairMerge.TargetAssetState.GetName()} 余额",$"Exchange Pool {this.SwapPairMerge.TargetAssetState.GetName()} Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                        <Input @bind-Value="@tb" ReadOnly=true />
+                    </FormItem>
+                    <FormItem Label=@this.WebLocalString($"交易池 OXC 余额",$"Exchange Pool OXC Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                        <Input @bind-Value="@pb" ReadOnly=true />
+                    </FormItem>
+                }
+            }
         }
         <FormItem Label=@this.WebLocalString($"{this.AssetName} 可用余额",$"{this.AssetName} Available Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
             <Input @bind-Value="@this.BalanceState.AvailableBalance" ReadOnly=true />
@@ -43,7 +86,7 @@
             <AntDesign.InputNumber @bind-Value="@context.Amount" Min="1" TValue="uint" Max="100000000" PlaceHolder='@this.WebLocalString("请输入埋雷金额","please enter bury amount")'></AntDesign.InputNumber>
         </FormItem>
         <FormItem Label=" " Style="margin-top:32px" WrapperCol="_submitFormLayout.WrapperCol">
-            <Button Type="primary" HtmlType="submit" Disabled=!this.Valid>
+            <Button Type="primary" HtmlType="submit" Disabled=!this.Valid||!pagevalid>
                 @this.WebLocalString("提交","Submit")
             </Button>
         </FormItem>
@@ -58,69 +101,69 @@
             <Radio RadioButton Value="@("hour")">@this.WebLocalString("时线","Hour Line")</Radio>
             </RadioGroup>
         </div>
-        <Stock  OnFirstRender="OnChartRender" Config="config1" />
+        <Stock OnFirstRender="OnChartRender" Config="config1" />
         </Card>
-        
-<style>
 
-    .card {
-        margin-bottom: 24px;
-    }
+        <style>
 
-        .card :global .ant-legacy-form-item .ant-legacy-form-item-control-wrapper {
-            width: 100%;
-        }
+            .card {
+                margin-bottom: 24px;
+            }
 
-    .errorIcon {
-        margin-right: 24px;
-        color: #ff4d4f;
-        cursor: pointer;
-    }
+                .card :global .ant-legacy-form-item .ant-legacy-form-item-control-wrapper {
+                    width: 100%;
+                }
 
-        .errorIcon span.anticon {
-            margin-right: 4px;
-        }
+            .errorIcon {
+                margin-right: 24px;
+                color: #ff4d4f;
+                cursor: pointer;
+            }
 
-    .errorPopover :global .ant-popover-inner-content {
-        min-width: 256px;
-        max-height: 290px;
-        padding: 0;
-        overflow: auto;
-    }
+                .errorIcon span.anticon {
+                    margin-right: 4px;
+                }
 
-    .errorListItem {
-        padding: 8px 16px;
-        list-style: none;
-        border-bottom: 1px solid #f0f0f0;
-        cursor: pointer;
-        transition: all 0.3s;
-    }
+            .errorPopover :global .ant-popover-inner-content {
+                min-width: 256px;
+                max-height: 290px;
+                padding: 0;
+                overflow: auto;
+            }
 
-        .errorListItem:hover {
-            background: #e6f7ff;
-        }
+            .errorListItem {
+                padding: 8px 16px;
+                list-style: none;
+                border-bottom: 1px solid #f0f0f0;
+                cursor: pointer;
+                transition: all 0.3s;
+            }
 
-        .errorListItem:last-child {
-            border: 0;
-        }
+                .errorListItem:hover {
+                    background: #e6f7ff;
+                }
 
-        .errorListItem .errorIcon {
-            float: left;
-            margin-top: 4px;
-            margin-right: 12px;
-            padding-bottom: 22px;
-            color: #ff4d4f;
-        }
+                .errorListItem:last-child {
+                    border: 0;
+                }
 
-        .errorListItem .errorField {
-            margin-top: 2px;
-            color: rgba(0, 0, 0, 0.45);
-            font-size: 12px;
-        }
+                .errorListItem .errorIcon {
+                    float: left;
+                    margin-top: 4px;
+                    margin-right: 12px;
+                    padding-bottom: 22px;
+                    color: #ff4d4f;
+                }
 
-    .editable td {
-        padding-top: 13px !important;
-        padding-bottom: 12.5px !important;
-    }
+                .errorListItem .errorField {
+                    margin-top: 2px;
+                    color: rgba(0, 0, 0, 0.45);
+                    font-size: 12px;
+                }
 
-</style>
+            .editable td {
+                padding-top: 13px !important;
+                padding-bottom: 12.5px !important;
+            }
+
+        </style>

@@ -29,6 +29,7 @@ using OX.UI.Mining;
 using AntDesign;
 using OX.Wallets.Eths;
 using OX.MetaMask;
+using static NBitcoin.Scripting.OutputDescriptor;
 using Akka.Routing;
 using OX.Mining.DEX;
 using NuGet.Protocol.Plugins;
@@ -53,6 +54,8 @@ namespace OX.Web.Pages
 
         public UInt160 PoolSH { get; set; } = default;
         public SwapPairMerge SwapPairMerge { get; set; } = default;
+        public bool IsIDOTime { get; set; } = false;
+        public SwapPairIDO IDO { get; set; } = default;
         decimal Price { get; set; }
         public Fixed8 TargetBalance { get; set; } = Fixed8.Zero;
         public Fixed8 PricingBalance { get; set; } = Fixed8.Zero;
@@ -168,6 +171,12 @@ namespace OX.Web.Pages
                     if (PoolSH == p.Key)
                     {
                         SwapPairMerge = p.Value;
+                        IsIDOTime = p.Value.SwapPairReply.Stamp > Blockchain.Singleton.Height;
+                        try
+                        {
+                            IDO = this.SwapPairMerge.SwapPairReply.Mark.AsSerializable<SwapPairIDO>();
+                        }
+                        catch { }
                     }
                 }
                 var vom = Provider.Get<SwapVolumeMerge>(InvestBizPersistencePrefixes.SwapPairLastExchange, this.PoolSH);
