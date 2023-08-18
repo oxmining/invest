@@ -60,25 +60,25 @@ namespace OX.Web.Models
                     Children = new MenuDataItem[] {
                          new MenuDataItem
                     {
-                        Path = "/mining/myminer",
+                        Path = "/_pc/mining/myminer",
                         Name =UIHelper.WebLocalString(language,"矿机", "Miner"),
                         Key = "myminer"
                     },
                     new MenuDataItem
                     {
-                        Path = "/mining/selflockmining",
+                        Path = "/_pc/mining/selflockmining",
                         Name =  UIHelper.WebLocalString(language,"自锁挖矿", "Self Lock Mining"),
                         Key = "selflockmining"
                     },
                     new MenuDataItem
                     {
-                        Path = "/mining/mutuallockmining",
+                        Path = "/_pc/mining/mutuallockmining",
                         Name =  UIHelper.WebLocalString(language,"互锁挖矿", "Mutual Lock Mining"),
                         Key = "mutuallockmining"
                     },
                     new MenuDataItem
                     {
-                        Path = "/mining/levellockmining",
+                        Path = "/_pc/mining/levellockmining",
                         Name =  UIHelper.WebLocalString(language,"级锁挖矿", "Level Lock Mining"),
                         Key = "levellockmining"
                     }

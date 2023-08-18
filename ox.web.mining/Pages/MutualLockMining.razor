@@ -1,4 +1,4 @@
-﻿@page "/mining/mutuallockmining"
+﻿@page "/_pc/mining/mutuallockmining"
 @inherits LockMiningComponentBase
 <Microsoft.AspNetCore.Components.Web.Extensions.Head.Title Value=@PageTitle />
 <PageContainer Title=@PageTitle>
@@ -28,7 +28,7 @@
                         <ExtraTemplate>
                             @if (this.HaveEthID)
                             {
-                                var url = $"/wallet/transferasset/{d.Key.ToString()}/2/{this.EthID.EthAddress}/{Last.MinAmount.ToString()}/{Blockchain.Singleton.HeaderHeight + 1001000}";
+                                var url = $"/_pc/wallet/transferasset/{d.Key.ToString()}/2/{this.EthID.EthAddress}/{Last.MinAmount.ToString()}/{Blockchain.Singleton.HeaderHeight + 1001000}";
                                 <a class="bt" href="@url">@this.WebLocalString("去挖矿","Go Mining")</a>
                             }
                         </ExtraTemplate>

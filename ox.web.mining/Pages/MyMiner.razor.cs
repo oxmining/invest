@@ -28,6 +28,7 @@ using OX.Bapps;
 using OX.UI.Mining;
 using OX.Mining.StakingMining;
 using Akka.Util;
+using NBitcoin.OpenAsset;
 using Nethereum.Model;
 using Org.BouncyCastle.Bcpg.OpenPgp;
 
@@ -85,7 +86,7 @@ namespace OX.Web.Pages
             try
             {
                 var regSh = this.RegSeed.ToScriptHash();
-                NavigationManager.NavigateTo($"/wallet/transferasset/{Blockchain.OXC.ToString()}/1/{this.RegSeed}/100");
+                NavigationManager.NavigateTo($"/_pc/wallet/transferasset/{Blockchain.OXC.ToString()}/1/{this.RegSeed}/100");
             }
             catch
             {

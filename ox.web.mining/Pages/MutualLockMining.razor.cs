@@ -28,6 +28,7 @@ using OX.Bapps;
 using OX.UI.Mining;
 using OX.Mining.StakingMining;
 using Akka.Util;
+using NBitcoin.OpenAsset;
 using Nethereum.Model;
 using NuGet.Protocol.Plugins;
 using OX.IO.Data.LevelDB;
@@ -43,7 +44,7 @@ namespace OX.Web.Pages
             base.OnMiningInit();
             ReloadData();
         }
-    
+
         protected override void AccountChanged()
         {
             ReloadData();
@@ -60,7 +61,7 @@ namespace OX.Web.Pages
                     AssetId = r.Key,
                     AssetInfos = r.Select(m => new Tuple<MutualLockMiningAssetKey, MutualLockMiningAssetReply>(m.Key, m.Value)).ToArray()
                 };
-                if (this.Valid)
+                if (this.Valid && this.Miner.IsNotNull())
                 {
                     var sb = SliceBuilder.Begin().Add(r.Key).Add(this.Miner.ParentHolder).Add(this.Miner.HolderAddress);
                     var k = Provider.GetAll<MutualLockKey, MutualLockValue>(InvestBizPersistencePrefixes.MutualLockRecords, sb.ToArray());
