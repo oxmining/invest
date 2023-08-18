@@ -29,13 +29,11 @@ using OX.UI.Mining;
 using AntDesign;
 using OX.Wallets.Eths;
 using OX.MetaMask;
-using static NBitcoin.Scripting.OutputDescriptor;
 using Nethereum.Hex.HexConvertors.Extensions;
 using Nethereum.Model;
 using OX.Wallets.UI.Forms;
 using System.Security.Principal;
 using Microsoft.AspNetCore.SignalR.Protocol;
-using NBitcoin.OpenAsset;
 
 namespace OX.Web.Pages
 {

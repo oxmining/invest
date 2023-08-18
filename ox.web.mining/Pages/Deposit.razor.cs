@@ -26,7 +26,6 @@ using OX.Wallets.States;
 using OX.Mining.OTC;
 using OX.Bapps;
 using OX.UI.Mining;
-using static NBitcoin.Scripting.OutputDescriptor;
 
 namespace OX.Web.Pages
 {
