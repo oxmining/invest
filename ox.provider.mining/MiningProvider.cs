@@ -357,18 +357,21 @@ namespace OX.Mining
         public void OnEthereumMapTransactionForSelfLock(WriteBatch batch, Block block, EthereumMapTransaction emt)
         {
             var contractSH = emt.GetContract().ScriptHash;
-            for (ushort k = 0; k < emt.Outputs.Length; k++)
+            if (emt.IsSelfLock())
             {
-                TransactionOutput output = emt.Outputs[k];
-                if (output.ScriptHash.Equals(contractSH))
+                for (ushort k = 0; k < emt.Outputs.Length; k++)
                 {
-                    var regAssets = this.GetAll<LockMiningAssetKey, LockMiningAssetReply>(InvestBizPersistencePrefixes.LockMiningAssetReply);
-                    if (regAssets.IsNotNullAndEmpty())
+                    TransactionOutput output = emt.Outputs[k];
+                    if (output.ScriptHash.Equals(contractSH))
                     {
-                        var asset = regAssets.Select(m => m.Value)?.FirstOrDefault(m => m.AssetId.Equals(output.AssetId));
-                        if (asset.IsNotNull() && output.Value >= asset.MinAmount && output.Value <= asset.MaxAmount)
+                        var regAssets = this.GetAll<LockMiningAssetKey, LockMiningAssetReply>(InvestBizPersistencePrefixes.LockMiningAssetReply);
+                        if (regAssets.IsNotNullAndEmpty())
                         {
-                            batch.Save_LockMiningRecordsForEth(this, block, emt, k, output);
+                            var asset = regAssets.Select(m => m.Value)?.FirstOrDefault(m => m.AssetId.Equals(output.AssetId));
+                            if (asset.IsNotNull() && output.Value >= asset.MinAmount && output.Value <= asset.MaxAmount)
+                            {
+                                batch.Save_LockMiningRecordsForEth(this, block, emt, k, output);
+                            }
                         }
                     }
                 }
