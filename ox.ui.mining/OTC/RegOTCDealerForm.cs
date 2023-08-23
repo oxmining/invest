@@ -164,7 +164,7 @@ namespace OX.UI.OTC
                 var signMessage = signer.EncodeUTF8AndSign(tx.InputOutputHash.ToArray().ToHexString(), ecKey);
                 tx.Attributes = new TransactionAttribute[] { new TransactionAttribute { Usage = TransactionAttributeUsage.EthSignature, Data = signMessage.HexToByteArray() } };
 
-                var sg = tx.EthSignatures.First().CreateStringSignature();
+                //var sg = tx.EthSignatures.First().CreateStringSignature();
 
                 if (tx.IsNotNull())
                 {

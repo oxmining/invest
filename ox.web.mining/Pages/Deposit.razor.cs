@@ -26,6 +26,7 @@ using OX.Wallets.States;
 using OX.Mining.OTC;
 using OX.Bapps;
 using OX.UI.Mining;
+using static NBitcoin.Scripting.OutputDescriptor;
 
 namespace OX.Web.Pages
 {
@@ -52,7 +53,7 @@ namespace OX.Web.Pages
                         });
                     }
                 }
-                OTCDealers = list.OrderByDescending(m => m.Balance).ToArray();
+                OTCDealers = list.OrderBy(m => m.OTCDealerMerge.Setting.InRate).ToArray();
             }
         }
  
