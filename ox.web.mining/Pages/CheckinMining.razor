@@ -1,0 +1,26 @@
+﻿@page "/_pc/mining/checkinmining"
+@inherits LockMiningComponentBase
+<Microsoft.AspNetCore.Components.Web.Extensions.Head.Title Value=@PageTitle />
+<PageContainer Title=@PageTitle>
+    <ChildContent>
+        <Row Gutter="24">
+            <GridCol Class="col" Span="8">
+            </GridCol>
+            <GridCol Class="col" Span="8">
+                <Button OnClick="Checkin" Type="@ButtonType.Primary" Size="large ">@this.WebLocalString("签到一次","Check-in once")</Button>
+            </GridCol>
+            <GridCol Class="col" Span="8">
+            </GridCol>
+        </Row>
+        <Row Gutter="24">
+            <GridCol Class="col" Span="4">
+            </GridCol>
+            <GridCol Class="col" Span="16">
+                @msg
+            </GridCol>
+            <GridCol Class="col" Span="4">
+            </GridCol>
+        </Row>
+
+    </ChildContent>
+</PageContainer>

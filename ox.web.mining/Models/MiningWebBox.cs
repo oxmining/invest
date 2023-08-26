@@ -82,6 +82,13 @@ namespace OX.Web.Models
                         Name =  UIHelper.WebLocalString(language,"级锁挖矿", "Level Lock Mining"),
                         Key = "levellockmining"
                     }
+                    ,
+                    new MenuDataItem
+                    {
+                        Path = "/_pc/mining/checkinmining",
+                        Name =  UIHelper.WebLocalString(language,"签到挖矿", "Checkin Mining"),
+                        Key = "checkinmining"
+                    }
                 }
                 });
             }
