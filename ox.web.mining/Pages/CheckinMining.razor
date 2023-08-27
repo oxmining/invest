@@ -29,12 +29,33 @@
             <GridCol Class="col" Span="4">
             </GridCol>
         </Row>
-         <Row Gutter="24">
-             <div style="padding:60px;">
-                 <Paragraph>
+        <Row Gutter="24">
+            <div style="padding:60px;">
+                <Paragraph>
                     @this.WebLocalString($"每10000个区块最多签到一次，每0.1eth余额将获得一个代币挖矿奖励，签到的次数越多代币锁定的时间越短",$"Every 10000 blocks can be checked in at most once, and every 0.1eth balance will receive a token mining reward. The more times you check in, the shorter the token locking time")
-                 </Paragraph>
-             </div>
+                </Paragraph>
+            </div>
+        </Row>
+        <Row Gutter="24">
+            <GridCol Class="col" Span="4">
+            </GridCol>
+            <GridCol Class="col" Span="16">
+                <div>
+                    <AntDesign.Title Level="3">
+                        @this.WebLocalString($"签到挖矿基金池余额:",$"Checkin mining fund pool balance:")
+                        <Text Code> @this.SwapFeeBalance  OXC</Text>
+                    </AntDesign.Title>
+                </div>
+            </GridCol>
+            <GridCol Class="col" Span="4">
+            </GridCol>
+        </Row>
+        <Row Gutter="24">
+            <div style="padding:60px;">
+                <Paragraph>
+                    @this.WebLocalString($"所有的主池交易中卖出资产的交易都会征收1%的手续费，其中80%的手续费按照时空权重分配给所有参与交易对IDO预购的账户，其中20%的手续费捐献给签到挖矿基金池。                    所有的边池交易中卖出资产的交易都会征收1%的手续费，并捐献给签到挖矿基金池。                    签到挖矿基金池的所有手续费资产将在第6000000区块高度时按照挖矿量占比分配给所有签到挖矿的账户。",$"All transactions in the main pool that sell assets will incur a 1% handling fee, of which 80% will be allocated to all accounts participating in the transaction for IDO pre purchase based on spatiotemporal weights, and 20% of the handling fee will be donated to the check in mining fund pool.                   All edge pool transactions that sell assets will incur a 1% handling fee and be donated to the check in mining fund pool.                    All fee assets for check in mining fund pool will be allocated to all check in mining accounts based on the proportion of mining volume at the block 6000000")
+                </Paragraph>
+            </div>
         </Row>
     </ChildContent>
 </PageContainer>

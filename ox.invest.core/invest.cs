@@ -41,7 +41,10 @@ namespace OX.Mining
        
         public static ECPoint SidePoolAccountPubKey = ECPoint.DecodePoint(PubKeys[1].HexToBytes(), ECCurve.Secp256r1);
         public static UInt160 SidePoolAccountAddress = Contract.CreateSignatureRedeemScript(SidePoolAccountPubKey).ToScriptHash();
-        
+
+        public static ECPoint SwapFeeAccountPubKey = ECPoint.DecodePoint(PubKeys[2].HexToBytes(), ECCurve.Secp256r1);
+        public static UInt160 SwapFeeAccountAddress = Contract.CreateSignatureRedeemScript(SwapFeeAccountPubKey).ToScriptHash();
+
         public static ECPoint LockMiningAccountPubKey = ECPoint.DecodePoint(PubKeys[5].HexToBytes(), ECCurve.Secp256r1);
         public static UInt160 LockMiningAccountAddress = Contract.CreateSignatureRedeemScript(LockMiningAccountPubKey).ToScriptHash();
 

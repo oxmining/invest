@@ -42,6 +42,7 @@ namespace OX.Web.Pages
         public override string PageTitle => this.WebLocalString("签到挖矿", "Checkin Mining");
         public string msg;
         ulong Count = 0;
+        Fixed8 SwapFeeBalance = Fixed8.Zero;
         protected override void OnMiningInit()
         {
             base.OnMiningInit();
@@ -54,6 +55,8 @@ namespace OX.Web.Pages
         }
         void ReloadData()
         {
+            var act = Blockchain.Singleton.CurrentSnapshot.Accounts.TryGet(invest.SwapFeeAccountAddress);
+            act.Balances.TryGetValue(Blockchain.OXC, out SwapFeeBalance);
             if (this.HaveEthID && this.Provider.IsNotNull())
             {
                 var lw = this.Provider.Get<LongWrapper>(InvestBizPersistencePrefixes.MarkMiningCount, new StringWrapper(this.EthID.EthAddress));
