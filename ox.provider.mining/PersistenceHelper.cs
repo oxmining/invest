@@ -443,7 +443,7 @@ namespace OX.Mining
         }
         public static void UpdateCheckinMiningCount(this WriteBatch batch, MiningProvider provider, string ethAddress, uint markIndex)
         {
-            StringWrapper sw = new StringWrapper(ethAddress);
+            StringWrapper sw = new StringWrapper(ethAddress.ToLower());
             var lw = provider.Get<LongWrapper>(InvestBizPersistencePrefixes.MarkMiningCount, sw);
             if (lw.IsNull())
             {
