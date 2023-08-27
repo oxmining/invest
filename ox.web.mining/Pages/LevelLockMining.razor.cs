@@ -28,7 +28,6 @@ using OX.Bapps;
 using OX.UI.Mining;
 using OX.Mining.StakingMining;
 using Akka.Util;
-using NBitcoin.OpenAsset;
 using Nethereum.Model;
 using NuGet.Protocol.Plugins;
 using OX.IO.Data.LevelDB;
