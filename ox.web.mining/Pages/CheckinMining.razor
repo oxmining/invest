@@ -7,7 +7,15 @@
             <GridCol Class="col" Span="8">
             </GridCol>
             <GridCol Class="col" Span="8">
-                <Button OnClick="Checkin" Type="@ButtonType.Primary" Size="large ">@this.WebLocalString("签到一次","Check-in once")</Button>
+                <Space>
+                    <SpaceItem>
+                        <Text Code>@this.WebLocalString($"累计签到 {this.Count} 次",$"Accumulated check-in {this. Count} times")</Text>
+                    </SpaceItem>
+                    <SpaceItem>
+                        <Button OnClick="Checkin" Type="@ButtonType.Primary" Size="large ">@this.WebLocalString("签到一次","Check-in once")</Button>
+                    </SpaceItem>
+
+                </Space>
             </GridCol>
             <GridCol Class="col" Span="8">
             </GridCol>

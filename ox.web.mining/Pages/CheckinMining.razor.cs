@@ -28,6 +28,7 @@ using OX.Bapps;
 using OX.UI.Mining;
 using OX.Mining.StakingMining;
 using Akka.Util;
+using NBitcoin.OpenAsset;
 using Nethereum.Model;
 using NuGet.Protocol.Plugins;
 using OX.IO.Data.LevelDB;
@@ -41,6 +42,7 @@ namespace OX.Web.Pages
     {
         public override string PageTitle => this.WebLocalString("签到挖矿", "Checkin Mining");
         public string msg;
+        ulong Count = 0;
         protected override void OnMiningInit()
         {
             base.OnMiningInit();
@@ -53,7 +55,11 @@ namespace OX.Web.Pages
         }
         void ReloadData()
         {
-
+            if (this.HaveEthID)
+            {
+                var lw = this.Provider.Get<LongWrapper>(InvestBizPersistencePrefixes.MarkMiningCount, new StringWrapper(this.EthID.EthAddress));
+                if (lw.IsNotNull()) Count = lw.Value;
+            }
         }
         async void Checkin()
         {

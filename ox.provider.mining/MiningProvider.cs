@@ -4,6 +4,7 @@ using OX.Cryptography.ECC;
 using OX.IO;
 using OX.IO.Data.LevelDB;
 using OX.Ledger;
+using OX.Mining.CheckinMining;
 using OX.Mining.DEX;
 using OX.Mining.OTC;
 using OX.Mining.StakingMining;
@@ -158,6 +159,10 @@ namespace OX.Mining
                 else if (tx is SideTransaction st)
                 {
                     OnSideTransaction(batch, block, st);
+                }
+                else if (tx is RangeTransaction rt)
+                {
+                    OnRangeTransaction(batch, block, rt);
                 }
                 else if (tx is EventTransaction eventTx)
                 {
@@ -436,6 +441,24 @@ namespace OX.Mining
                         }
                     }
                 }
+            }
+        }
+        public void OnRangeTransaction(WriteBatch batch, Block block, RangeTransaction rt)
+        {
+            if (rt.VerifyCheckinMining(block.Index, markIndex =>
+            {
+                ulong nonce = 0;
+                var blockHash = Blockchain.Singleton.GetBlockHash(markIndex);
+                if (blockHash.IsNotNull())
+                {
+                    var block = Blockchain.Singleton.GetBlock(blockHash);
+                    if (block.IsNotNull())
+                        nonce = block.ConsensusData;
+                }
+                return nonce;
+            }, out string ethAddress, out uint markIndex))
+            {
+                batch.UpdateCheckinMiningCount(this,ethAddress,markIndex);
             }
         }
         public void OnSideTransaction(WriteBatch batch, Block block, SideTransaction st)

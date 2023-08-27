@@ -430,7 +430,7 @@ namespace OX.Mining
                 }
             }
         }
-        public static void Save_TotalLockVolume(this WriteBatch batch, MiningProvider miningProvider,UInt256 assetId, UInt160 holder, Fixed8 value, uint startIndex, uint endIndex)
+        public static void Save_TotalLockVolume(this WriteBatch batch, MiningProvider miningProvider, UInt256 assetId, UInt160 holder, Fixed8 value, uint startIndex, uint endIndex)
         {
             TotalLockVolumeKey key = new TotalLockVolumeKey { AssetId = assetId, Holder = holder };
             var lw = miningProvider.Get<LongWrapper>(InvestBizPersistencePrefixes.TotalMutualLockSpaceTimeLockVolume, key);
@@ -440,6 +440,17 @@ namespace OX.Mining
             }
             lw.Value += MutualLockHelper.CalculateValidSpaceTimeVolume(value, startIndex, endIndex);
             batch.Put(SliceBuilder.Begin(InvestBizPersistencePrefixes.TotalMutualLockSpaceTimeLockVolume).Add(key), SliceBuilder.Begin().Add(lw));
+        }
+        public static void UpdateCheckinMiningCount(this WriteBatch batch, MiningProvider provider, string ethAddress, uint markIndex)
+        {
+            StringWrapper sw = new StringWrapper(ethAddress);
+            var lw = provider.Get<LongWrapper>(InvestBizPersistencePrefixes.MarkMiningCount, sw);
+            if (lw.IsNull())
+            {
+                lw = new LongWrapper();
+            }
+            lw.Value += 1;
+            batch.Put(SliceBuilder.Begin(InvestBizPersistencePrefixes.MarkMiningCount).Add(sw), SliceBuilder.Begin().Add(lw));
         }
     }
 }
