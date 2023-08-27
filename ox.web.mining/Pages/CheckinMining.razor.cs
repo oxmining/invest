@@ -54,7 +54,7 @@ namespace OX.Web.Pages
         }
         void ReloadData()
         {
-            if (this.HaveEthID)
+            if (this.HaveEthID && this.Provider.IsNotNull())
             {
                 var lw = this.Provider.Get<LongWrapper>(InvestBizPersistencePrefixes.MarkMiningCount, new StringWrapper(this.EthID.EthAddress));
                 if (lw.IsNotNull()) Count = lw.Value;
