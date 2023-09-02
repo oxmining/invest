@@ -1,4 +1,4 @@
-﻿@page "/_pc/invest/godeposit/{dealerethaddress}"
+﻿@page "/_pc/invest/godeposit/{dealerethaddressHex}"
 @inherits MiningComponentBase
 <Microsoft.AspNetCore.Components.Web.Extensions.Head.Title Value=@PageTitle />
 <PageContainer Title=@PageTitle>
@@ -16,9 +16,11 @@
                 <FormItem Label=@this.WebLocalString("场外交易池USDX余额","OX Dealer Pool USDX Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
                     <Input @bind-Value="@this.OTCDealerOXPoolBalance" ReadOnly=true />
                 </FormItem>
-                <FormItem Label=@this.WebLocalString("Eth 场外交易商地址","Eth OTC Dealer Address") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+
+              @*   <FormItem Label=@this.WebLocalString("Eth 场外交易商地址","Eth OTC Dealer Address") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
                     <Input @bind-Value="@context.PoolEthAddress" ReadOnly=true />
-                </FormItem>
+                </FormItem> *@
+
                 <FormItem Label=@this.WebLocalString("Eth 入金地址","Eth Deposit Address") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
                     <Input @bind-Value="@context.FromEthAddress" ReadOnly=true />
                 </FormItem>

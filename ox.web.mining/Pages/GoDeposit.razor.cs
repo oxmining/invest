@@ -29,6 +29,7 @@ using OX.UI.Mining;
 using AntDesign;
 using OX.Wallets.Eths;
 using OX.MetaMask;
+using static NBitcoin.Scripting.OutputDescriptor;
 
 namespace OX.Web.Pages
 {
@@ -43,7 +44,7 @@ namespace OX.Web.Pages
     {
         public override string PageTitle => this.WebLocalString("入金", "Buy");
         [Parameter]
-        public string dealerethaddress { get; set; }
+        public string dealerethaddressHex { get; set; }
 
         string msg;
         DepositModel model { get; set; } = new DepositModel();
@@ -76,23 +77,33 @@ namespace OX.Web.Pages
 
         protected override async void OnMiningInit()
         {
-
-            this.model.PoolEthAddress = dealerethaddress;
-            var st = dealerethaddress.BuildOTCDealerTransaction();
-            var sh = st.GetContract().ScriptHash;
-            OTCDealerOXPoolAddress = sh.ToAddress();
-            var account = Blockchain.Singleton.CurrentSnapshot.Accounts.TryGet(sh);
-            if (account.IsNotNull() && account.Balances.TryGetValue(invest.USDX_Asset, out OTCDealerOXPoolBalance))
+            if (dealerethaddressHex.IsNotNullAndEmpty())
             {
+                try
+                {
+                    var dealerethaddress = System.Text.Encoding.UTF8.GetString(dealerethaddressHex.HexToBytes());
+                    this.model.PoolEthAddress = dealerethaddress;
+                    var st = dealerethaddress.BuildOTCDealerTransaction();
+                    var sh = st.GetContract().ScriptHash;
+                    OTCDealerOXPoolAddress = sh.ToAddress();
+                    var account = Blockchain.Singleton.CurrentSnapshot.Accounts.TryGet(sh);
+                    if (account.IsNotNull() && account.Balances.TryGetValue(invest.USDX_Asset, out OTCDealerOXPoolBalance))
+                    {
 
-            }
+                    }
 
-            if (this.EthID.IsNotNull())
-            {
-                this.model.FromEthAddress = this.EthID.EthAddress;
-                this.model.OxAddress = this.EthID.MapAddress.ToAddress();
+                    if (this.EthID.IsNotNull())
+                    {
+                        this.model.FromEthAddress = this.EthID.EthAddress;
+                        this.model.OxAddress = this.EthID.MapAddress.ToAddress();
+                    }
+                    await Task.CompletedTask;
+                }
+                catch
+                {
+
+                }
             }
-            await Task.CompletedTask;
         }
 
         private async void HandleSubmit()

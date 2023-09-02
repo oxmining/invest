@@ -18,25 +18,28 @@
                         <ListItem>
                             <div class="listContent">
                                 <div class="listContentItem">
-                                    <span>@this.WebLocalString("以太坊地址","Ethereum Address")</span>
-                                    <p>@context.OTCDealerMerge.EthAddress </p>
+                                    <span>@this.WebLocalString("出金地址","Sale Address")</span>
+                                    <p>@context.OTCDealerMerge.InPoolAddress.ToAddress() </p>
                                 </div>
                                 @if (context.OTCDealerMerge.Setting.IsNotNull())
                                 {
                                     <div class="listContentItem">
-                                        <span>@this.WebLocalString("手续费率","Fee Ratio")</span>
-                                        <p>@context.OTCDealerMerge.Setting.InRate %</p>
-                                    </div>
-                                    <div class="listContentItem">
                                         <span>@this.WebLocalString("USDX 余额","USDX Balance")</span>
                                         <p>@context.Balance</p>
+                                    </div>
+                                    <div class="listContentItem">
+                                        <span>@this.WebLocalString("手续费率","Fee Ratio")</span>
+                                        <p>@context.OTCDealerMerge.Setting.InRate %</p>
                                     </div>
                                     <div class="listContentItem">
                                         <span>@this.WebLocalString("状态","State")</span>
                                         <p>@this.WebLocalString( context.OTCDealerMerge.Setting.State.StringValue(),context.OTCDealerMerge.Setting.State.EngStringValue())</p>
                                     </div>
                                     <div class="listContentItem">
-                                        <a href="/_pc/invest/godeposit/@context.OTCDealerMerge.EthAddress">@this.WebLocalString("去入金","Go Deposit")</a>
+                                        @{
+                                            var hex = System.Text.Encoding.UTF8.GetBytes(context.OTCDealerMerge.EthAddress).ToHexString();
+                                        }
+                                        <a href="/_pc/invest/godeposit/@hex">@this.WebLocalString("去入金","Go Deposit")</a>
                                     </div>
                                 }
                             </div>
