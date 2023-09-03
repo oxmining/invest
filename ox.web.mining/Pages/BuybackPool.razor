@@ -1,0 +1,63 @@
+﻿@page "/_pc/mining/buybacktrusst"
+@inherits MiningComponentBase
+@using OX.Wallets
+@using OX.SmartContract
+<Microsoft.AspNetCore.Components.Web.Extensions.Head.Title Value=@PageTitle />
+<PageContainer Title=@PageTitle>
+    <ChildContent>
+        <Card>
+            <div>
+                <Divider>@this.WebLocalString("捐赠基金","Endowment fund")</Divider>
+                @{
+                    var oxc_balance = string.Empty;
+                    var oxs_balance = string.Empty;
+                    var acts = Blockchain.Singleton.CurrentSnapshot.Accounts.GetAndChange(invest.MiningBuyBackFundAccountAddress, () => null);
+                    if (acts.IsNotNull())
+                    {
+                        oxc_balance = acts.GetBalance(Blockchain.OXC).ToString();
+                        oxs_balance = acts.GetBalance(Blockchain.OXS).ToString();
+                    }
+                }
+                <Paragraph><Text Code>@this.WebLocalString("OXS 余额", "OXS Balance")</Text>@oxs_balance</Paragraph>
+                <Paragraph><Text Code>@this.WebLocalString("OXC 余额", "OXC Balance")</Text>@oxc_balance</Paragraph>
+                <Divider>@this.WebLocalString("回购信托池","Buy-Back Trust Pool")</Divider>
+                <Paragraph><Text Code>@this.WebLocalString("委托人公钥","Truster Public Key")</Text> <Text Copyable>@MiningTrustPoolHelper.Truster.ToString()</Text></Paragraph>
+
+                <Paragraph><Text Code>@this.WebLocalString("委托人地址","Truster Address")</Text> <Text Copyable>@Contract.CreateSignatureRedeemScript(MiningTrustPoolHelper.Truster).ToScriptHash().ToAddress()</Text></Paragraph>
+
+                <Paragraph><Text Code>@this.WebLocalString("受托人公钥","Trustee Public Key")</Text> <Text Copyable>@MiningTrustPoolHelper.Trustee.ToString()</Text></Paragraph>
+
+                <Paragraph><Text Code>@this.WebLocalString("受托人地址","Trustee Address")</Text> <Text Copyable>@Contract.CreateSignatureRedeemScript(MiningTrustPoolHelper.Trustee).ToScriptHash().ToAddress()</Text></Paragraph>
+
+                <Paragraph>
+                    <Text Code>@this.WebLocalString("信托范围", "Trust Scope")</Text>
+                    <ul>
+                        @foreach (var s in MiningTrustPoolHelper.Targets)
+                        {
+                            <li>
+                                <Text Copyable>@s</Text>
+                         </li>
+                        }
+                    </ul>
+
+                </Paragraph>
+                @{
+                    var TrustPoolAddress = MiningTrustPoolHelper.TrustPoolAddress;
+                    var accountState = Blockchain.Singleton.CurrentSnapshot.Accounts.GetAndChange(TrustPoolAddress, () => null);
+                }
+                <Paragraph><Text Code>@this.WebLocalString("信托地址", "Trust Address")</Text> <Text Copyable>@TrustPoolAddress.ToAddress()</Text></Paragraph>
+
+                @foreach (var asset in MiningTrustPoolHelper.TargetAssets)
+                {
+                    if (accountState.Balances.TryGetValue(asset.Value, out Fixed8 balance))
+                    {
+                        <Paragraph><Text Code>@this.WebLocalString($"{asset.Key} 余额", $"{asset.Key} Balance")</Text>@balance.ToString()</Paragraph>
+                    }
+                }
+
+            </div>
+
+
+        </Card>
+    </ChildContent>
+</PageContainer>
