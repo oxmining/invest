@@ -32,10 +32,10 @@
                 <Paragraph>
                     <Text Code>@this.WebLocalString("信托范围", "Trust Scope")</Text>
                     <ul>
-                        @foreach (var s in MiningTrustPoolHelper.Targets)
+                        @foreach (var s in MiningTrustPoolHelper.AssetTargets)
                         {
                             <li>
-                                <Text Copyable>@s</Text>
+                                <Text Code>@this.WebLocalString($"{s.Key}  交易池地址",$"{s.Key}  Exchange Pool Address")</Text><Text Copyable>@s.Value</Text>
                          </li>
                         }
                     </ul>
@@ -54,7 +54,10 @@
                         <Paragraph><Text Code>@this.WebLocalString($"{asset.Key} 余额", $"{asset.Key} Balance")</Text>@balance.ToString()</Paragraph>
                     }
                 }
-
+                <Divider>@this.WebLocalString("章程","Charter")</Divider>
+                <Paragraph>
+                    @this.WebLocalString("捐赠基金账户内的OXS提取的OXC代币将主要用于捐赠给回购信托池，回购信托池已永久性地限定信托交易对象为7个DEX交易对的交易池,没有任何其他资产转移途径。当每个质押挖矿资产的总发行量达到50000000时，回购信托池的OXC余额将开始在DEX交易对中对质押挖矿资产执行回购计划和价格稳定计划。回购信托池也将接受其他来源的OXC资产捐赠","The OXC tokens extracted from OXS in the endowment fund account will mainly be used for endowment to the buy-back trust pool, which has permanently restricted the trust's trading partners to a exchange pool of 7 DEX exchange pairs, with no other asset transfer channels. When the total issuance of each pledged mining asset reaches 50000000, the OXC balance of the buy-back trust pool will begin to execute buy-back plans and price stabilization plans on the pledged mining asset in the DEX exchange pair.The buy-back trust pool will also accept endowment of OXC assets from other sources")
+                </Paragraph>
             </div>
 
 

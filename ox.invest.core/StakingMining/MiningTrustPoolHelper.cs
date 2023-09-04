@@ -17,20 +17,23 @@ namespace OX.Mining.StakingMining
 {
     public static class MiningTrustPoolHelper
     {
-        public static string[] Targets = new string[] {
-            "AMtDeobTS9czi6MPRVDdERfYp7gWaUqCmX",
-            "ATxdqbSJyQNRN8X6zyJDWrDzAYfo3oPyP5",
-            "AQC1NeRC8BfN5QmKTAfHumQi9UUdL38chH",
-            "AUTz1AAwj4Dpk9u6VzWupqT2NHyVd2spfZ",
-            "AaiQJMeqmrunxASM8DdJDquDxcG8nNtHXX",
-            "Aaad8ABGsmun7YWMTTYuC5DDY5tqbeHTFJ",
-            "ALFDnFuAeShm7vFyFmZhjiBLAHJJhpn8bG"
-        };
+         
+        public static Dictionary<string, string> AssetTargets = new Dictionary<string, string>();
         public static Dictionary<string, UInt256> TargetAssets = new Dictionary<string, UInt256>();
         public static ECPoint Truster = invest.MasterAccountPubKey;
         public static ECPoint Trustee = invest.MiningBuyBackFundAccountPubKey;
         static MiningTrustPoolHelper()
         {
+            AssetTargets["MLM"] = "ALFDnFuAeShm7vFyFmZhjiBLAHJJhpn8bG";
+            AssetTargets["SLM"] = "Aaad8ABGsmun7YWMTTYuC5DDY5tqbeHTFJ";
+            AssetTargets["LLM"] = "AaiQJMeqmrunxASM8DdJDquDxcG8nNtHXX";
+            AssetTargets["ML2"] = "ATxdqbSJyQNRN8X6zyJDWrDzAYfo3oPyP5";
+            AssetTargets["SL2"] = "AQC1NeRC8BfN5QmKTAfHumQi9UUdL38chH";
+            AssetTargets["LL2"] = "AMtDeobTS9czi6MPRVDdERfYp7gWaUqCmX";
+            AssetTargets["BNS"] = "AUTz1AAwj4Dpk9u6VzWupqT2NHyVd2spfZ";
+
+
+
             TargetAssets["OXC"] = Blockchain.OXC;
             TargetAssets["MLM"] = UInt256.Parse("0x80c531d84f1f1fd04c3be5fe8a2ce8b50831b60e145035ac1ed18281e2133608");
             TargetAssets["SLM"] = UInt256.Parse("0x1e953288acd127a066110ca9e6bbfc2ce8821cd0e10a94fd0a6b3138b452434d");
@@ -58,7 +61,7 @@ namespace OX.Mining.StakingMining
                 IsMustRelateTruster = true,
                 Truster = Truster,
                 Trustee = Trustee,
-                Targets = Targets.Select(m => m.ToScriptHash()).OrderBy(p => p).ToArray()
+                Targets = AssetTargets.Select(m => m.Value.ToScriptHash()).OrderBy(p => p).ToArray()
             };
             return att.GetContract().ScriptHash;
         }
