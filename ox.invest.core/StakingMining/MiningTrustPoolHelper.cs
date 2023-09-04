@@ -17,7 +17,7 @@ namespace OX.Mining.StakingMining
 {
     public static class MiningTrustPoolHelper
     {
-         
+
         public static Dictionary<string, string> AssetTargets = new Dictionary<string, string>();
         public static Dictionary<string, UInt256> TargetAssets = new Dictionary<string, UInt256>();
         public static ECPoint Truster = invest.MasterAccountPubKey;
@@ -35,13 +35,13 @@ namespace OX.Mining.StakingMining
 
 
             TargetAssets["OXC"] = Blockchain.OXC;
-            TargetAssets["MLM"] = UInt256.Parse("0x80c531d84f1f1fd04c3be5fe8a2ce8b50831b60e145035ac1ed18281e2133608");
-            TargetAssets["SLM"] = UInt256.Parse("0x1e953288acd127a066110ca9e6bbfc2ce8821cd0e10a94fd0a6b3138b452434d");
-            TargetAssets["LLM"] = UInt256.Parse("0xb6be9c0e8e8360eceb44f1fa503332f9f63418204757f21e34cf10769d6fd5e4");
-            TargetAssets["BNS"] = UInt256.Parse("0xb11e03edb58288218f5e9e12da3ab77cfadaf046cae5b547bd402c6f5b452725");
-            TargetAssets["ML2"] = UInt256.Parse("0x70955c804f4263513b671cf18b5ff10a80b5088c08c5aceaa55cdfae44acb2ea");
-            TargetAssets["SL2"] = UInt256.Parse("0xcbb321f3db6dddb1b7311f57a8219d3bd822a4a1ea61657d9e5ccdfd7e5696be");
-            TargetAssets["LL2"] = UInt256.Parse("0x3a1788400daaa7b489dd498154cc2bf1a2c456c91a5d01f086e1712a072ddffc");
+            TargetAssets["MLM"] = invest.MLM_Asset;
+            TargetAssets["SLM"] = invest.SLM_Asset;
+            TargetAssets["LLM"] = invest.LLM_Asset;
+            TargetAssets["BNS"] = invest.BNS_Asset;
+            TargetAssets["ML2"] = invest.ML2_Asset;
+            TargetAssets["SL2"] = invest.SL2_Asset;
+            TargetAssets["LL2"] = invest.LL2_Asset;
         }
         static UInt160 _trustPoolAddress;
         public static UInt160 TrustPoolAddress

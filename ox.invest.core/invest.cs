@@ -57,6 +57,25 @@ namespace OX.Mining
         
          public static UInt256 USDX_Asset
         { get; private set; } = UInt256.Parse("0x7035ea8f10c4209340aafc6f826c969be9ce2ab3e168feb067303c1dc05a1573");
+        public static UInt256 MLM_Asset
+        { get; private set; } = UInt256.Parse("0x80c531d84f1f1fd04c3be5fe8a2ce8b50831b60e145035ac1ed18281e2133608");
+
+        public static UInt256 SLM_Asset
+        { get; private set; } = UInt256.Parse("0x1e953288acd127a066110ca9e6bbfc2ce8821cd0e10a94fd0a6b3138b452434d");
+
+        public static UInt256 LLM_Asset
+        { get; private set; } = UInt256.Parse("0xb6be9c0e8e8360eceb44f1fa503332f9f63418204757f21e34cf10769d6fd5e4");
+
+        public static UInt256 BNS_Asset
+        { get; private set; } = UInt256.Parse("0xb11e03edb58288218f5e9e12da3ab77cfadaf046cae5b547bd402c6f5b452725");
+        public static UInt256 ML2_Asset
+        { get; private set; } = UInt256.Parse("0x70955c804f4263513b671cf18b5ff10a80b5088c08c5aceaa55cdfae44acb2ea");
+        public static UInt256 SL2_Asset
+        { get; private set; } = UInt256.Parse("0xcbb321f3db6dddb1b7311f57a8219d3bd822a4a1ea61657d9e5ccdfd7e5696be");
+        public static UInt256 LL2_Asset
+        { get; private set; } = UInt256.Parse("0x3a1788400daaa7b489dd498154cc2bf1a2c456c91a5d01f086e1712a072ddffc");
+
+
 
         public static UInt256 DEXBonusAsset
         { get; private set; } = UInt256.Parse("0xa24f75b23a4965cb132c9a38651bee994a2083bd6a716017f509b22c7a7f2e5c");
