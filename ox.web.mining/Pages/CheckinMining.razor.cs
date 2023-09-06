@@ -28,6 +28,7 @@ using OX.Bapps;
 using OX.UI.Mining;
 using OX.Mining.StakingMining;
 using Akka.Util;
+using NBitcoin.OpenAsset;
 using Nethereum.Model;
 using NuGet.Protocol.Plugins;
 using OX.IO.Data.LevelDB;
@@ -97,8 +98,6 @@ namespace OX.Web.Pages
                                 };
                                 CheckinMark mark = new CheckinMark { BlockIndex = minIndex, Kind = 0 };
                                 tx.Attributes = new TransactionAttribute[] { new TransactionAttribute { Usage = TransactionAttributeUsage.Tip4, Data = mark.ToArray() }, new TransactionAttribute { Usage = TransactionAttributeUsage.EthSignature, Data = System.Text.Encoding.UTF8.GetBytes(signatureData) } };
-                                var f = tx.Attributes.First(mark => mark.Usage == TransactionAttributeUsage.Tip4);
-                                var c = f.Data.GetVarSize();
                                 if (tx.IsNotNull())
                                 {
                                     if (Blockchain.Singleton.ContainsTransaction(tx.Hash))

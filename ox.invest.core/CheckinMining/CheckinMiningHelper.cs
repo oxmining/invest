@@ -17,11 +17,11 @@ namespace OX.Mining.CheckinMining
 {
     public static class CheckinMiningHelper
     {
-        public static bool VerifyCheckinMining(this RangeTransaction rt, uint blockIndex, Func<uint, ulong> funGetConsensusData, out string ethAddress,out uint markIndex)
+        public static bool VerifyCheckinMining(this RangeTransaction rt, uint blockIndex, Func<uint, ulong> funGetConsensusData, out string ethAddress, out uint markIndex)
         {
             markIndex = 0;
             ethAddress = string.Empty;
-            if (blockIndex <= rt.MaxIndex && blockIndex > rt.MinIndex && rt.MinIndex % 10000 == 0 && rt.MaxIndex % 10000 == 0 && rt.MaxIndex == rt.MinIndex + 10000)
+            if (blockIndex <= rt.MaxIndex && blockIndex > rt.MinIndex && rt.MinIndex % 10000 == 0 && rt.MaxIndex % 10000 == 0 && rt.MaxIndex == rt.MinIndex + 10000 && rt.Attributes.IsNotNullAndEmpty() && rt.Attributes.Count() == 2 && rt.Witnesses.IsNullOrEmpty() && rt.Inputs.IsNullOrEmpty() && rt.Outputs.IsNullOrEmpty())
             {
                 var attrs = rt.Attributes.Where(p => p.Usage == TransactionAttributeUsage.Tip4);
                 if (attrs.IsNotNullAndEmpty() && attrs.Count() == 1)
