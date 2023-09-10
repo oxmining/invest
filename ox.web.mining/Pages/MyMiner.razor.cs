@@ -29,6 +29,7 @@ using OX.UI.Mining;
 using OX.Mining.StakingMining;
 using Akka.Util;
 using Nethereum.Model;
+using Nethereum.Util;
 using Org.BouncyCastle.Bcpg.OpenPgp;
 
 namespace OX.Web.Pages
@@ -103,7 +104,12 @@ namespace OX.Web.Pages
                 }
                 catch
                 {
-                    HS = string.Empty;
+                    if (HA.IsValidEthereumAddressHexFormat())
+                    {
+                        HS = HA.BuildMapAddress().GetMutualLockSeed().ToAddress();
+                    }
+                    else
+                        HS = string.Empty;
                 }
             }
         }

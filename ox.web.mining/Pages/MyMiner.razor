@@ -87,7 +87,7 @@
                         <div>
                         <Divider Orientation="left" Style="font-weight:bold">@this.WebLocalString("计算种子地址","Calculate Seed Address")</Divider>
                         <ul>
-                                <li> <Search Style="min-width:300px;" Placeholder="@this.WebLocalString("输入矿机持有地址","input miner holder address")" Size="@InputSize.Small" EnterButton="@this.WebLocalString("获取种子地址","Get Seed Address")" @bind-Value="@this.HA" OnSearch="Cal" /></li>
+                                <li> <Search Style="min-width:600px;" Placeholder="@this.WebLocalString("输入持有矿机的私钥地址或以太坊地址","Enter the private key address or Ethereum address for holding the mining machine")" Size="@InputSize.Small" EnterButton="@this.WebLocalString("获取种子地址","Get Seed Address")" @bind-Value="@this.HA" OnSearch="Cal" /></li>
                                 <li>
                                     <Space>
                                         <SpaceItem><Paragraph>@this.WebLocalString("种子地址","Seed Address")  :  <Text Strong Copyable>@this.HS</Text></Paragraph></SpaceItem>
