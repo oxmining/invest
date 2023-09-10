@@ -19,6 +19,7 @@ using OX.IO;
 using OX.SmartContract;
 using OX.Cryptography.AES;
 using OX.UI.Mining;
+using Nethereum.Util;
 
 namespace OX.UI.LAM
 {
@@ -89,14 +90,20 @@ namespace OX.UI.LAM
 
         private void tb_address_TextChanged(object sender, EventArgs e)
         {
+            var s = this.tb_address.Text;
             try
             {
-                var sh = this.tb_address.Text.ToScriptHash();
+                var sh =s.ToScriptHash();
                 this.tb_seedAddress.Text = sh.GetMutualLockSeed().ToAddress();
             }
             catch
             {
-                this.tb_seedAddress.Text = string.Empty;
+                if (s.IsValidEthereumAddressHexFormat())
+                {
+                    this.tb_seedAddress.Text = s.BuildMapAddress().GetMutualLockSeed().ToAddress();
+                }
+                else
+                    this.tb_seedAddress.Text = string.Empty;
             }
         }
 
