@@ -24,16 +24,16 @@
                                     <Tabs DefaultActiveKey="@((i*100+1).ToString())">
                                         <TabPane Key="@((i*100+1).ToString())">
                                             <TabTemplate><Badge Dot><a>@this.WebLocalString("挖矿信息","Mining Information")</a></Badge></TabTemplate>
-                                        <ChildContent>
-                                            <div>
-                                                <ul>
-                                                    <li><Paragraph>@this.WebLocalString("资产Id","Asset Id")  :  <Text Strong Copyable>@d.Key.ToString()</Text></Paragraph></li>
+                                         <ChildContent>
+                                             <div>
+                                                 <ul>
+                                                     <li><Paragraph>@this.WebLocalString("资产Id","Asset Id")  :  <Text Strong Copyable>@d.Key.ToString()</Text></Paragraph></li>
 
-                                                    <li><Paragraph>@this.WebLocalString($"最大发行量:{cap}", $"Issue Cap:{cap}")</Paragraph></li>
+                                                     <li><Paragraph>@this.WebLocalString($"最大发行量:{cap}", $"Issue Cap:{cap}")</Paragraph></li>
 
-                                                    <li><Paragraph>@this.WebLocalString($"已发行量:{havecap}", $"Issued:{havecap}")  </Paragraph></li>
-                                                </ul>
-                                                @foreach (var l in d.Value.AssetInfos.OrderByDescending(m => m.Item1.IssueIndex))
+                                                     <li><Paragraph>@this.WebLocalString($"已发行量:{havecap}", $"Issued:{havecap}")  </Paragraph></li>
+                                                 </ul>
+                                                 @foreach (var l in d.Value.AssetInfos.OrderByDescending(m => m.Item1.IssueIndex))
                                                     {
                                                         <Divider Orientation="left" Style="font-weight:bold">@this.WebLocalString($"参数发布区块:{l.Item1.IssueIndex}", $"Parameter issue height:{l.Item1.IssueIndex}")</Divider>
                                                         <ul>
@@ -42,14 +42,31 @@
                                                             <li>@this.WebLocalString($"出矿率:{l.Item2.AirdropAmount}/100", $"Airdrop Ratio:{l.Item2.AirdropAmount}/100")</li>
                                                         </ul>
                                                     }
-                                                </div>
-                                            </ChildContent>
-                                        </TabPane>
-                                        <TabPane Key="@((i*100+2).ToString())">
-                                            <TabTemplate>@this.WebLocalString("质押买入记录", "Level Lock Buy Records")</TabTemplate>
-                                            <ChildContent>
-                                                <div>
-                                                    @if (d.Value.LevelLockInRecords.IsNotNullAndEmpty())
+                                                    <Divider Orientation="left" Style="font-weight:bold">@this.WebLocalString("罚金池", "Penalty pool")</Divider>
+                                                    @{
+                                                        var oxc_balance = string.Empty;
+                                                        var llm_balance = string.Empty;
+                                                        var acts = Blockchain.Singleton.CurrentSnapshot.Accounts.GetAndChange(invest.LockMiningAccountAddress, () => null);
+                                                        if (acts.IsNotNull())
+                                                        {
+                                                            oxc_balance = acts.GetBalance(Blockchain.OXC).ToString();
+                                                            llm_balance = acts.GetBalance(invest.LLM_Asset).ToString();
+                                                        }
+                                                    }
+                                                    <Paragraph><Text Code>@this.WebLocalString("LLM 余额", "LLM Balance")</Text>@llm_balance</Paragraph>
+                                                 <Paragraph><Text Code>@this.WebLocalString("OXC 余额", "OXC Balance")</Text>@oxc_balance</Paragraph>
+                                                 <Divider Orientation="left" Style="font-weight:bold">@this.WebLocalString("章程","Charter")</Divider>
+                                                 <Paragraph>
+                                                     @this.WebLocalString("罚金池内的OXC资产仅用于从DEX的LLM代币交易对中不定时地进行单向的LLM资产回购，以平抑LLM资产价格，罚金池OXC资产主要来源于级锁挖矿中质押过期的罚没收入，也可以接受任意来源的资产捐献。","The OXC token in the penalty pool are only used for one-way LLM token buy-back from DEX's LLM token main pool exchange pair from time to time to stabilize the price of LLM token. The OXC token in the penalty pool mainly come from the confiscated income of expired pledges in level-lock-mining, and can also accept asset donations from any source.")
+                                                 </Paragraph>
+                                             </div>
+                                         </ChildContent>
+                                     </TabPane>
+                                     <TabPane Key="@((i*100+2).ToString())">
+                                         <TabTemplate>@this.WebLocalString("质押买入记录", "Level Lock Buy Records")</TabTemplate>
+                                         <ChildContent>
+                                             <div>
+                                                 @if (d.Value.LevelLockInRecords.IsNotNullAndEmpty())
                                                     {
                                                         Fixed8 spend = Fixed8.Zero;
                                                         Fixed8 unspend = Fixed8.Zero;
