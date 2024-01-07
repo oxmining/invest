@@ -42,7 +42,7 @@ namespace OX.Mining
         public static bool VerifyRegSideSwap(this SideTransaction tx, out UInt256 Asset)
         {
             Asset = default;
-            if (!tx.Recipient.Equals(invest.SidePoolAccountPubKey) || tx.Flag != 1 || tx.SideType != SideType.AssetID || !tx.AuthContract.Equals(Blockchain.SideAssetContractScriptHash)) return false;
+            if (!tx.Recipient.Equals(invest.SlaveSidePoolAccountPubKey) || tx.Flag != 1 || tx.SideType != SideType.AssetID || !tx.AuthContract.Equals(Blockchain.SideAssetContractScriptHash)) return false;
             try
             {
                 var assetId = tx.Data.AsSerializable<UInt256>();
@@ -63,7 +63,7 @@ namespace OX.Mining
         }
         public static bool VerifyRegSideSwapFee(this SideTransaction tx, Fixed8 SidePoolFeeSetting)
         {
-            var outputs = tx.Outputs.Where(m => m.AssetId.Equals(Blockchain.OXC) && m.ScriptHash.Equals(invest.SidePoolAccountAddress));
+            var outputs = tx.Outputs.Where(m => m.AssetId.Equals(Blockchain.OXC) && m.ScriptHash.Equals(invest.SlaveSidePoolAccountAddress));
             if (outputs.IsNullOrEmpty()) return false;
             if (outputs.Sum(m => m.Value) < SidePoolFeeSetting) return false;
             return true;

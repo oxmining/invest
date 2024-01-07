@@ -22,7 +22,10 @@ namespace OX.Mining
         "021c4d1fe831fded3e57b7bc954bacc3e1a66060557aca378e02638bcf6cdfe0df",
         "02aade56ee0d4e40a18fb939ab6c3d1eff3f84ea2681134536c3d2126c6029ac83",
         "02ea34b278a3812ee869ba7e06a815ab4a6e2b9c33c1bad6b91ef914f0f22a920e",
-        "032bc82546381ed634c7940cf7a63b7c8dc972fae142d82d4d84d871524b75b1a4"
+        "032bc82546381ed634c7940cf7a63b7c8dc972fae142d82d4d84d871524b75b1a4",
+        "02f3a117fd8a2ba5483ba3599edd53ddf58e075bf495ea4c9e78e57f0d092c2fa1",
+        "03529db24e1006e8153d1ae50cfd59de5b8daed7ae87bef8402c1d467957243316",
+        "02d957c68656b3b9c1316551cc9851fee327ba8a92ee127c2ca1585151df932015"
         };
         public static ECPoint[] BizPublicKeys { get; private set; }
 
@@ -54,8 +57,13 @@ namespace OX.Mining
         public static ECPoint OTCAccountPubKey = ECPoint.DecodePoint(PubKeys[6].HexToBytes(), ECCurve.Secp256r1);
         public static UInt160 OTCAccountAddress = Contract.CreateSignatureRedeemScript(OTCAccountPubKey).ToScriptHash();
 
-        
-         public static UInt256 USDX_Asset
+        public static ECPoint SlaveSidePoolAccountPubKey = ECPoint.DecodePoint(PubKeys[7].HexToBytes(), ECCurve.Secp256r1);
+        public static UInt160 SlaveSidePoolAccountAddress = Contract.CreateSignatureRedeemScript(SlaveSidePoolAccountPubKey).ToScriptHash();
+
+        public static ECPoint TrustFundWitnessPubKey = ECPoint.DecodePoint(PubKeys[8].HexToBytes(), ECCurve.Secp256r1);
+        public static UInt160 TrustFundWitnessAddress = Contract.CreateSignatureRedeemScript(TrustFundWitnessPubKey).ToScriptHash();
+
+        public static UInt256 USDX_Asset
         { get; private set; } = UInt256.Parse("0x7035ea8f10c4209340aafc6f826c969be9ce2ab3e168feb067303c1dc05a1573");
         public static UInt256 MLM_Asset
         { get; private set; } = UInt256.Parse("0x80c531d84f1f1fd04c3be5fe8a2ce8b50831b60e145035ac1ed18281e2133608");
