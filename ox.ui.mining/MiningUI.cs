@@ -8,6 +8,7 @@ using OX.UI.Swap;
 using OX.UI.LAM;
 using OX.Mining;
 using OX.UI.Mining.DEX;
+using OX.UI.Mining.DTF;
 
 namespace OX.UI.Mining
 {
@@ -25,6 +26,8 @@ namespace OX.UI.Mining
             _modules[dexmodule.ModuleName] = dexmodule;
             OTCModule otcmodule = new OTCModule(bapp);
             _modules[otcmodule.ModuleName] = otcmodule;
+            DTFModule dtfmodule = new DTFModule(bapp);
+            _modules[dtfmodule.ModuleName] = dtfmodule;
         }
         public void OnBappEvent(BappEvent bappEvent)
         {

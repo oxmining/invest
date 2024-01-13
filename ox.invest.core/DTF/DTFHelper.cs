@@ -57,12 +57,20 @@ namespace OX.Mining.DTF
             trustee = default;
             if (att.IsNull()) return false;
             var fundContract = att.Trustee.BuildFund();
-            if (att.GetContract().ScriptHash.Equals(fundContract.GetContract().ScriptHash))
+            var sh = att.GetContract().ScriptHash;
+            if (sh == fundContract.GetContract().ScriptHash)
             {
-                trustee = att.Trustee;
-                return true;
+                if (att.Outputs.Any(m => m.ScriptHash.Equals(sh) && m.AssetId == Blockchain.OXC && m.Value >= Fixed8.One * 10000))
+                {
+                    if (att.GetPublicKeys().Contains(att.Trustee))
+                    {
+                        trustee = att.Trustee;
+                        return true;
+                    }
+                }
             }
             return false;
         }
+
     }
 }

@@ -57,5 +57,9 @@
         public const byte TotalMutualLockSpaceTimeLockVolume = 0x37;
         public const byte MarkMiningCount = 0x38;
         public const byte TrustFundRequest = 0x39;
+        public const byte TrustFundMember = 0x3A;
+        public const byte TrustFundIDORecord = 0x3B;
+        public const byte DTF_LockAsset_Record = 0x3C;
+        public const byte TrustFundIDOSummary = 0x3D;
     }
 }

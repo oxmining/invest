@@ -86,7 +86,7 @@ namespace OX.UI.Swap
                 this.lb_assetMsg.Text = $"{assetState.GetName()}   /   {owner.ToAddress()}";
                 var tx = new SideTransaction()
                 {
-                    Recipient = invest.SidePoolAccountPubKey,
+                    Recipient = invest.SlaveSidePoolAccountPubKey,
                     SideType = SideType.AssetID,
                     Data = this.AssetId.ToArray(),
                     Flag = 1,
@@ -123,7 +123,7 @@ namespace OX.UI.Swap
                 if (this.AssetId.IsNull()) return;
                 var tx = new SideTransaction()
                 {
-                    Recipient = invest.SidePoolAccountPubKey,
+                    Recipient = invest.SlaveSidePoolAccountPubKey,
                     SideType = SideType.AssetID,
                     Data = this.AssetId.ToArray(),
                     Flag = 1,
@@ -151,7 +151,7 @@ namespace OX.UI.Swap
                 });
                 outputs.Add(new TransactionOutput
                 {
-                    ScriptHash = invest.SidePoolAccountAddress,
+                    ScriptHash = invest.SlaveSidePoolAccountAddress,
                     AssetId = Blockchain.OXC,
                     Value = fee
                 });

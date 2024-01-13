@@ -6,6 +6,7 @@ using OX.IO.Data.LevelDB;
 using OX.Ledger;
 using OX.Mining.CheckinMining;
 using OX.Mining.DEX;
+using OX.Mining.DTF;
 using OX.Mining.OTC;
 using OX.Mining.StakingMining;
 using OX.Mining.Trade;
@@ -43,7 +44,10 @@ namespace OX.Mining
         public MiningProvider(Bapp bapp) : base(bapp)
         {
             Db = DB.Open(Path.GetFullPath($"{WalletIndexDirectory}\\mng_{Message.Magic.ToString("X8")}"), new Options { CreateIfMissing = true });
-            OTCDealers = new Dictionary<UInt160, OTC.OTCDealerMerge>(this.GetAll<UInt160, OTCDealerMerge>(InvestBizPersistencePrefixes.OTC_Dealer));
+            OTCDealers = new Dictionary<UInt160, OTCDealerMerge>(this.GetAll<UInt160, OTCDealerMerge>(InvestBizPersistencePrefixes.OTC_Dealer));
+            TrustFunds = new Dictionary<UInt160, TrustFundModel>(this.GetAll<UInt160, TrustFundModel>(InvestBizPersistencePrefixes.TrustFundRequest));
+            DTFLockAssets = new Dictionary<OutputKey, LockAssetMerge>(this.GetAllDTFLockAssets());
+            DTFIDOSummary = new Dictionary<DTFIDOSummaryKey, Fixed8>(this.GetAllDTFIDOSummary());
             SwapPairs = new Dictionary<UInt160, SwapPairMerge>(this.GetAll<UInt160, SwapPairMerge>(InvestBizPersistencePrefixes.SwapPair));
             Side_SwapPairs = new Dictionary<UInt160, SideSwapPairKeyMerge>(this.GetAll<SideSwapPairKey, SideTransaction>(InvestBizPersistencePrefixes.SideSwapPair).Select(m => new KeyValuePair<UInt160, SideSwapPairKeyMerge>(m.Key.PoolAddress, new SideSwapPairKeyMerge { Key = m.Key, Value = m.Value })));
             SwapPairStates = new Dictionary<UInt160, SwapPairStateReply>(this.GetAll<UInt160, SwapPairStateReply>(InvestBizPersistencePrefixes.SwapPairState));
@@ -147,6 +151,7 @@ namespace OX.Mining
                 else if (tx is LockAssetTransaction lat)
                 {
                     OnLockAssetTransaction(batch, block, lat);
+                    batch.Save_DTFLockAssetTransaction(this, block, lat, i);
                 }
                 else if (tx is EthereumMapTransaction emt)
                 {
@@ -163,6 +168,10 @@ namespace OX.Mining
                 else if (tx is RangeTransaction rt)
                 {
                     OnRangeTransaction(batch, block, rt);
+                }
+                else if (tx is AssetTrustTransaction att)
+                {
+                    OnAssetTrustTransaction(batch, block, att);
                 }
                 else if (tx is EventTransaction eventTx)
                 {
@@ -197,9 +206,19 @@ namespace OX.Mining
                             batch.Update_LevelLockValue_spend(this, LevelLockTx, llv);
                         }
                     }
+                    foreach (KeyValuePair<CoinReference, TransactionOutput> kp in tx.References)
+                    {
+                        OutputKey outputkey = new OutputKey { TxId = kp.Key.PrevHash, N = kp.Key.PrevIndex };
+                        if (this.DTFLockAssets.ContainsKey(outputkey))
+                        {
+                            this.DTFLockAssets.Remove(outputkey);
+                            batch.Delete(SliceBuilder.Begin(InvestBizPersistencePrefixes.DTF_LockAsset_Record).Add(outputkey));
+                        }
+                    }
                 }
                 batch.Save_SwapPairExchange(this, block, i, tx, bizshs);
                 batch.Save_SideSwapPairExchange(this, block, i, tx, bizshs);
+                batch.Watch_DTFTransaction(this, block, i, tx, bizshs);
             }
             this.Db.Write(WriteOptions.Default, batch);
         }
@@ -458,7 +477,7 @@ namespace OX.Mining
                 return nonce;
             }, out string ethAddress, out uint markIndex))
             {
-                batch.UpdateCheckinMiningCount(this,ethAddress,markIndex);
+                batch.UpdateCheckinMiningCount(this, ethAddress, markIndex);
             }
         }
         public void OnSideTransaction(WriteBatch batch, Block block, SideTransaction st)

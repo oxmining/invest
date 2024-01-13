@@ -32,7 +32,11 @@ namespace OX.UI.Mining
             return new SideScope[] {
              new SideScope {
               MasterAddress=invest.SidePoolAccountAddress,
-               Description=UIHelper.LocalString("兑换边际信托","Swap Side Trust")
+               Description=UIHelper.LocalString("主池交易对边际信托","Master Swap Side Trust")
+             },
+             new SideScope {
+              MasterAddress=invest.SlaveSidePoolAccountAddress,
+               Description=UIHelper.LocalString("边池交易对边际信托","Slave Swap Side Trust")
              }
             };
         }
