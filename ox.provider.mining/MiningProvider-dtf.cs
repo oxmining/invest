@@ -27,7 +27,7 @@ namespace OX.Mining
         public Dictionary<UInt160, TrustFundModel> TrustFunds { get; set; } = new Dictionary<UInt160, TrustFundModel>();
         public Dictionary<OutputKey, LockAssetMerge> DTFLockAssets { get; set; } = new Dictionary<OutputKey, LockAssetMerge>();
         public Dictionary<DTFIDOSummaryKey, Fixed8> DTFIDOSummary { get; set; } = new Dictionary<DTFIDOSummaryKey, Fixed8>();
-        public void OnAssetTrustTransaction(WriteBatch batch, Block block, AssetTrustTransaction att)
+        public void OnAssetTrustTransaction(WriteBatch batch, Block block, ushort txN, AssetTrustTransaction att)
         {
             if (att.TryVerifyRegTrustFund(out ECPoint trustee))
             {
@@ -41,7 +41,9 @@ namespace OX.Mining
                         TrustAddress = att.GetContract().ScriptHash,
                         DividendAddress = trustee.BuildWitnessAddress(),
                         SubscribeAddress = trustee.BuildWitnessAddress(1),
-                        ArbitrateAddress = trustee.BuildWitnessAddress(2)
+                        ArbitrateAddress = trustee.BuildWitnessAddress(2),
+                        Index = block.Index,
+                        TxN = txN
                     };
                     batch.Put(SliceBuilder.Begin(InvestBizPersistencePrefixes.TrustFundRequest).Add(sh), SliceBuilder.Begin().Add(model));
                     this.TrustFunds[sh] = model;

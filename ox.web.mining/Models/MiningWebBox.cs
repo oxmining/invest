@@ -53,7 +53,7 @@ namespace OX.Web.Models
             {
                 list.Add(new MenuDataItem
                 {
-                    Path = "/mining",
+                    Path = "/_pc/mining",
                     Name = UIHelper.WebLocalString(language, "挖矿", "Mining"),
                     Key = "mining",
                     //Icon = "smile",
@@ -95,6 +95,27 @@ namespace OX.Web.Models
                         Key = "buybacktrusst"
                     }
                 }
+                });
+                list.Add(new MenuDataItem
+                {
+                    Path = "/_pc/fund",
+                    Name = UIHelper.WebLocalString(language, "基金", "Fund"),
+                    Key = "fund",
+                    //Icon = "smile",
+                    Children = new MenuDataItem[] {
+                        new MenuDataItem
+                        {
+                        Path = "/_pc/fund/alltrustfunds",
+                        Name =UIHelper.WebLocalString(language,"所有信托基金", "All Trust Funds"),
+                        Key = "alltrustfunds"
+                        },
+                        new MenuDataItem
+                        {
+                        Path = "/_pc/mining/subscribedfunds",
+                        Name =  UIHelper.WebLocalString(language,"我认筹的的基金", "My Subscribed Funds"),
+                        Key = "subscribedfunds"
+                        }
+                    }
                 });
             }
             return list.ToArray();

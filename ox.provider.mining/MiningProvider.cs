@@ -171,7 +171,7 @@ namespace OX.Mining
                 }
                 else if (tx is AssetTrustTransaction att)
                 {
-                    OnAssetTrustTransaction(batch, block, att);
+                    OnAssetTrustTransaction(batch, block,i, att);
                 }
                 else if (tx is EventTransaction eventTx)
                 {

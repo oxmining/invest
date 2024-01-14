@@ -46,25 +46,15 @@ namespace OX.Web.Pages
         string HS = string.Empty;
         protected override void OnMiningInit()
         {
-            if (this.Valid)
-            {
-                Provider = Bapp.GetBappProvider<MiningBapp, IMiningProvider>() as MiningProvider;
-                if (Provider.IsNotNull())
-                {
-                    SeedAddress = this.EthID.MapAddress.GetMutualLockSeed();
-                    Provider.MutualLockNodes.TryGetValue(SeedAddress, out Miner);
-                    var lfs = Provider.MutualLockNodes.Values.Where(m => m.ParentHolder == this.EthID.MapAddress);
-                    Leafs = new UInt160[0];
-                    if (lfs.IsNotNullAndEmpty())
-                    {
-                        Leafs = lfs.Select(m => m.HolderAddress).ToArray();
-                    }
-                }
-            }
+            Init();
         }
         protected override async Task MetaMaskService_AccountChangedEvent(string arg)
         {
             await base.MetaMaskService_AccountChangedEvent(arg);
+            Init();
+        }
+        void Init()
+        {
             if (this.Valid)
             {
                 Provider = Bapp.GetBappProvider<MiningBapp, IMiningProvider>() as MiningProvider;

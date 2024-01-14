@@ -39,13 +39,14 @@
             bt_copyTrustAddress = new Wallets.UI.Controls.DarkButton();
             lb_trustAddress = new Wallets.UI.Controls.DarkLabel();
             lb_myTotalSubscribe = new Wallets.UI.Controls.DarkLabel();
+            lb_fundId = new Wallets.UI.Controls.DarkLabel();
             SuspendLayout();
             // 
             // lb_trusteeAddress
             // 
             lb_trusteeAddress.AutoSize = true;
             lb_trusteeAddress.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
-            lb_trusteeAddress.Location = new System.Drawing.Point(28, 18);
+            lb_trusteeAddress.Location = new System.Drawing.Point(28, 63);
             lb_trusteeAddress.Name = "lb_trusteeAddress";
             lb_trusteeAddress.Size = new System.Drawing.Size(106, 24);
             lb_trusteeAddress.TabIndex = 7;
@@ -55,7 +56,7 @@
             // 
             lb_totalSubscribe.AutoSize = true;
             lb_totalSubscribe.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
-            lb_totalSubscribe.Location = new System.Drawing.Point(29, 143);
+            lb_totalSubscribe.Location = new System.Drawing.Point(29, 188);
             lb_totalSubscribe.Name = "lb_totalSubscribe";
             lb_totalSubscribe.Size = new System.Drawing.Size(106, 24);
             lb_totalSubscribe.TabIndex = 8;
@@ -64,7 +65,7 @@
             // 
             // bt_copySubscibeAddress
             // 
-            bt_copySubscibeAddress.Location = new System.Drawing.Point(355, 322);
+            bt_copySubscibeAddress.Location = new System.Drawing.Point(355, 367);
             bt_copySubscibeAddress.Name = "bt_copySubscibeAddress";
             bt_copySubscibeAddress.Padding = new System.Windows.Forms.Padding(5);
             bt_copySubscibeAddress.Size = new System.Drawing.Size(227, 34);
@@ -77,7 +78,7 @@
             // 
             // bt_trustAssetDetail
             // 
-            bt_trustAssetDetail.Location = new System.Drawing.Point(598, 322);
+            bt_trustAssetDetail.Location = new System.Drawing.Point(598, 367);
             bt_trustAssetDetail.Name = "bt_trustAssetDetail";
             bt_trustAssetDetail.Padding = new System.Windows.Forms.Padding(5);
             bt_trustAssetDetail.Size = new System.Drawing.Size(227, 34);
@@ -92,7 +93,7 @@
             // 
             lb_totalDivident.AutoSize = true;
             lb_totalDivident.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
-            lb_totalDivident.Location = new System.Drawing.Point(29, 182);
+            lb_totalDivident.Location = new System.Drawing.Point(29, 227);
             lb_totalDivident.Name = "lb_totalDivident";
             lb_totalDivident.Size = new System.Drawing.Size(106, 24);
             lb_totalDivident.TabIndex = 17;
@@ -102,7 +103,7 @@
             // 
             lb_trustOXC.AutoSize = true;
             lb_trustOXC.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
-            lb_trustOXC.Location = new System.Drawing.Point(28, 225);
+            lb_trustOXC.Location = new System.Drawing.Point(28, 270);
             lb_trustOXC.Name = "lb_trustOXC";
             lb_trustOXC.Size = new System.Drawing.Size(106, 24);
             lb_trustOXC.TabIndex = 18;
@@ -112,7 +113,7 @@
             // 
             lb_subscribeAddress.AutoSize = true;
             lb_subscribeAddress.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
-            lb_subscribeAddress.Location = new System.Drawing.Point(29, 97);
+            lb_subscribeAddress.Location = new System.Drawing.Point(29, 142);
             lb_subscribeAddress.Name = "lb_subscribeAddress";
             lb_subscribeAddress.Size = new System.Drawing.Size(106, 24);
             lb_subscribeAddress.TabIndex = 19;
@@ -120,7 +121,7 @@
             // 
             // bt_refresh
             // 
-            bt_refresh.Location = new System.Drawing.Point(17, 322);
+            bt_refresh.Location = new System.Drawing.Point(17, 367);
             bt_refresh.Name = "bt_refresh";
             bt_refresh.Padding = new System.Windows.Forms.Padding(5);
             bt_refresh.Size = new System.Drawing.Size(81, 34);
@@ -133,7 +134,7 @@
             // 
             // bt_copyTrustAddress
             // 
-            bt_copyTrustAddress.Location = new System.Drawing.Point(113, 322);
+            bt_copyTrustAddress.Location = new System.Drawing.Point(113, 367);
             bt_copyTrustAddress.Name = "bt_copyTrustAddress";
             bt_copyTrustAddress.Padding = new System.Windows.Forms.Padding(5);
             bt_copyTrustAddress.Size = new System.Drawing.Size(227, 34);
@@ -148,7 +149,7 @@
             // 
             lb_trustAddress.AutoSize = true;
             lb_trustAddress.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
-            lb_trustAddress.Location = new System.Drawing.Point(29, 58);
+            lb_trustAddress.Location = new System.Drawing.Point(29, 103);
             lb_trustAddress.Name = "lb_trustAddress";
             lb_trustAddress.Size = new System.Drawing.Size(106, 24);
             lb_trustAddress.TabIndex = 22;
@@ -158,17 +159,28 @@
             // 
             lb_myTotalSubscribe.AutoSize = true;
             lb_myTotalSubscribe.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
-            lb_myTotalSubscribe.Location = new System.Drawing.Point(29, 265);
+            lb_myTotalSubscribe.Location = new System.Drawing.Point(29, 310);
             lb_myTotalSubscribe.Name = "lb_myTotalSubscribe";
             lb_myTotalSubscribe.Size = new System.Drawing.Size(106, 24);
             lb_myTotalSubscribe.TabIndex = 23;
             lb_myTotalSubscribe.Text = "darkLabel1";
+            // 
+            // lb_fundId
+            // 
+            lb_fundId.AutoSize = true;
+            lb_fundId.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
+            lb_fundId.Location = new System.Drawing.Point(28, 22);
+            lb_fundId.Name = "lb_fundId";
+            lb_fundId.Size = new System.Drawing.Size(106, 24);
+            lb_fundId.TabIndex = 24;
+            lb_fundId.Text = "darkLabel1";
             // 
             // FundPairControl
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            Controls.Add(lb_fundId);
             Controls.Add(lb_myTotalSubscribe);
             Controls.Add(lb_trustAddress);
             Controls.Add(bt_copyTrustAddress);
@@ -181,7 +193,7 @@
             Controls.Add(lb_totalSubscribe);
             Controls.Add(lb_trusteeAddress);
             Name = "FundPairControl";
-            Size = new System.Drawing.Size(840, 371);
+            Size = new System.Drawing.Size(840, 416);
             Load += SideSwapPairControl_Load;
             ResumeLayout(false);
             PerformLayout();
@@ -200,5 +212,6 @@
         private Wallets.UI.Controls.DarkButton bt_copyTrustAddress;
         private Wallets.UI.Controls.DarkLabel lb_trustAddress;
         private Wallets.UI.Controls.DarkLabel lb_myTotalSubscribe;
+        private Wallets.UI.Controls.DarkLabel lb_fundId;
     }
 }

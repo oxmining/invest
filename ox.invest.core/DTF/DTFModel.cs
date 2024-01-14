@@ -4,6 +4,7 @@ using System.IO;
 using OX.Ledger;
 using OX.Network.P2P.Payloads;
 using OX.Mining.OTC;
+using System.Security.Principal;
 //using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace OX.Mining.DTF
@@ -18,6 +19,8 @@ namespace OX.Mining.DTF
         public AssetTrustTransaction AssetTrustTransaction;
         public Fixed8 TotalDividendAmount;
         public Fixed8 TotalSubscribeAmount;
+        public uint Index;
+        public ushort TxN;
         public virtual int Size => Trustee.Size
                                            + TrustAddress.Size
                                            + DividendAddress.Size
@@ -25,7 +28,9 @@ namespace OX.Mining.DTF
                                            + ArbitrateAddress.Size
                                            + AssetTrustTransaction.Size
                                            + TotalDividendAmount.Size
-                                           + TotalSubscribeAmount.Size;
+                                           + TotalSubscribeAmount.Size
+                                           + sizeof(uint)
+                                           + sizeof(ushort);
         public TrustFundModel()
         {
             this.TotalDividendAmount = Fixed8.Zero;
@@ -41,6 +46,8 @@ namespace OX.Mining.DTF
             writer.Write(AssetTrustTransaction);
             writer.Write(TotalDividendAmount);
             writer.Write(TotalSubscribeAmount);
+            writer.Write(Index);
+            writer.Write(TxN);
         }
         public void Deserialize(BinaryReader reader)
         {
@@ -52,6 +59,12 @@ namespace OX.Mining.DTF
             AssetTrustTransaction = reader.ReadSerializable<AssetTrustTransaction>();
             TotalDividendAmount = reader.ReadSerializable<Fixed8>();
             TotalSubscribeAmount = reader.ReadSerializable<Fixed8>();
+            Index = reader.ReadUInt32();
+            TxN = reader.ReadUInt16();
+        }
+        public string ToId()
+        {
+            return $"{Index}-{TxN}";
         }
     }
     public class DTFIDOKey : ISerializable

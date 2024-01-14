@@ -44,7 +44,7 @@ namespace OX.UI.Mining.DTF
 
         private void FundAssetDetail_Load(object sender, EventArgs e)
         {
-            this.lb_commonAsset.Text = UIHelper.LocalString("未锁资产", "Unlocked Asset");
+            this.lb_commonAsset.Text = UIHelper.LocalString("未锁仓资产", "Unlocked Asset");
             this.lb_lockAsset.Text = UIHelper.LocalString("锁仓资产", "Locked Asset");
             var acts = Blockchain.Singleton.CurrentSnapshot.Accounts.GetAndChange(this.TFModel.TrustAddress, () => null);
             if (acts.IsNotNull())

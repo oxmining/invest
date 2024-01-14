@@ -1,0 +1,114 @@
+﻿@page "/_pc/mining/fundassetdetails/{trusteeaddress}"
+@using OX.Bapps
+@using OX.UI.Mining
+@inherits MiningComponentBase
+<Microsoft.AspNetCore.Components.Web.Extensions.Head.Title Value=@PageTitle />
+<PageContainer Title=@PageTitle>
+    <ChildContent>
+        @{
+            var s = string.Empty;
+            var bizPlugin = Bapp.GetBappProvider<MiningBapp, IMiningProvider>();
+            if (this.Valid && bizPlugin != default && this.TrustFundModel.IsNotNull() && this.TrusteeScriptHash.IsNotNull())
+            {
+                var idos = bizPlugin.GetAll<DTFIDOKey, DTFIDORecord>(InvestBizPersistencePrefixes.TrustFundIDORecord, this.TrusteeScriptHash);
+                if (idos.IsNotNullAndEmpty())
+                {
+                    decimal totalRatio = 0;
+                    var total = idos.Sum(m => m.Value.IdoAmount.GetInternalValue());
+                    long t = 0;
+                    foreach (var ido in idos.OrderBy(m => (long)m.Value.BlockIndex * 10000 + (long)m.Value.TxN))
+                    {
+                        var f = ido.Value.IdoAmount.GetInternalValue();
+                        var ratio = DividentSlope.Big_5.ComputeBonusRatio(total, t, f);
+                        t += f;
+                        if (this.EthID.MapAddress.Equals(ido.Value.IdoOwner))
+                        {
+                            totalRatio += ratio;
+                        }
+                    }
+                    s = UIHelper.LocalString($"合计分红率  :   {totalRatio.ToString("f6")}", $"Total dividend rate  :   {totalRatio.ToString("f6")}");
+                }
+            }
+        }
+        <Card Class="tabsCard">
+            <Extra>
+                @s
+            </Extra>
+            <CardTabs>
+                <Tabs DefaultActiveKey="1">
+                    <TabPane Key="1">
+                        <TabTemplate><Badge Dot><a>@this.WebLocalString("未锁仓资产", "Unlocked Asset")</a></Badge></TabTemplate>
+                        <ChildContent>
+                            <div>
+                                <ul>
+                                    @{
+                                        if (this.TrustFundModel.IsNotNull())
+                                        {
+                                            var acts = Blockchain.Singleton.CurrentSnapshot.Accounts.GetAndChange(this.TrustFundModel.TrustAddress, () => null);
+                                            if (acts.IsNotNull())
+                                            {
+                                                foreach (var b in acts.Balances)
+                                                {
+                                                    var assetId = b.Key;
+                                                    var assetname = string.Empty;
+
+                                                    if (assetId.Equals(Blockchain.OXS))
+                                                        assetname = "OXS";
+                                                    else if (assetId.Equals(Blockchain.OXC))
+                                                        assetname = "OXC";
+                                                    else
+                                                    {
+                                                        var state = Blockchain.Singleton.Store.GetAssets().TryGet(assetId);
+                                                        assetname = state.GetName();
+                                                    }
+                                                    var s = $"{assetname}    ({assetId.ToString()})          :           {b.Value}";
+                                                    <li><Paragraph>@s</Paragraph></li>
+                                                }
+                                            }
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </ChildContent>
+                    </TabPane>
+                    <TabPane Key="2">
+                        <TabTemplate>@this.WebLocalString("锁仓资产", "Locked Asset")</TabTemplate>
+                        <ChildContent>
+                            <div>
+                                <ul>
+                                    @{
+                                        var bizPlugin = Bapp.GetBappProvider<MiningBapp, IMiningProvider>();
+                                        if (bizPlugin != default && this.TrustFundModel.IsNotNull())
+                                        {
+                                            foreach (var la in bizPlugin.GetAllDTFLockAssets())
+                                            {
+                                                if (la.Value.TargetAddress == this.TrustFundModel.TrustAddress)
+                                                {
+                                                    var assetId = la.Value.Output.AssetId;
+                                                    var assetname = string.Empty;
+
+                                                    if (assetId.Equals(Blockchain.OXS))
+                                                        assetname = "OXS";
+                                                    else if (assetId.Equals(Blockchain.OXC))
+                                                        assetname = "OXC";
+                                                    else
+                                                    {
+                                                        var state = Blockchain.Singleton.Store.GetAssets().TryGet(assetId);
+                                                        assetname = state.GetName();
+                                                    }
+                                                    var s = $"{assetname}    ({assetId.ToString()})          :          {la.Value.Output.Value}   ->{la.Value.Tx.LockExpiration}";
+                                                    <li><Paragraph>@s</Paragraph></li>
+                                                }
+                                            }
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </ChildContent>
+                    </TabPane>
+
+                </Tabs>
+            </CardTabs>
+        </Card>
+    </ChildContent>
+</PageContainer>

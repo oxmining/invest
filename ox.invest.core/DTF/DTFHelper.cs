@@ -22,18 +22,13 @@ namespace OX.Mining.DTF
 
         public static AssetTrustTransaction BuildFund(this ECPoint Trustee)
         {
-            List<UInt160> targets = new List<UInt160>();
-            for (byte flag = 0; flag < 5; flag++)
-            {
-                targets.Add(Trustee.BuildWitnessAddress(flag));
-            }
             return new AssetTrustTransaction
             {
                 TrustContract = Blockchain.TrustAssetContractScriptHash,
                 IsMustRelateTruster = true,
                 Truster = invest.TrustFundWitnessPubKey,
                 Trustee = Trustee,
-                Targets = targets.ToArray(),
+                Targets = new UInt160[] { Trustee.BuildWitnessAddress() },
                 SideScopes = new UInt160[] { invest.SidePoolAccountAddress, CasinoSettleAccountAddress, CasinoWitnessAccountAddress }
             };
         }

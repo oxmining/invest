@@ -97,22 +97,23 @@ namespace OX.UI.DTF
                 if (acts.IsNotNull())
                 {
                     var targetBalance = acts.GetBalance(Blockchain.OXC);
-                    this.lb_trustOXC.Text = UIHelper.LocalString($"信托 OXC 余额:{targetBalance}", $"Trust OXC Balance:{targetBalance}");
+                    this.lb_trustOXC.Text = UIHelper.LocalString($"信托 OXC 余额  :  {targetBalance}", $"Trust OXC Balance  :  {targetBalance}");
                 }
             });
         }
         void RefreshTotal()
         {
             RefreshTrustBalance();
-            this.lb_totalDivident.Text = UIHelper.LocalString($"分红 OXC 总额  :    {this.TFModel.TotalDividendAmount}", $"Total dividend OXC:{this.TFModel.TotalDividendAmount}");
-            this.lb_totalSubscribe.Text = UIHelper.LocalString($"认筹 OXC 总额  :    {this.TFModel.TotalSubscribeAmount}", $"Total subscribed OXC:{this.TFModel.TotalSubscribeAmount}");
+            this.lb_totalDivident.Text = UIHelper.LocalString($"分红 OXC 总额  :    {this.TFModel.TotalDividendAmount}", $"Total dividend OXC  :  {this.TFModel.TotalDividendAmount}");
+            this.lb_totalSubscribe.Text = UIHelper.LocalString($"认筹 OXC 总额  :    {this.TFModel.TotalSubscribeAmount}", $"Total subscribed OXC  :  {this.TFModel.TotalSubscribeAmount}");
         }
 
         private void SideSwapPairControl_Load(object sender, EventArgs e)
         {
-            this.lb_trusteeAddress.Text = UIHelper.LocalString($"受托人地址  :  {this.TrusteeAddress.ToAddress()}", $"Trustee Address:{this.TrusteeAddress.ToAddress()}");
-            this.lb_trustAddress.Text = UIHelper.LocalString($"信托地址  :  {this.TFModel.TrustAddress.ToAddress()}", $"Trust Address:{this.TFModel.TrustAddress.ToAddress()}");
-            this.lb_subscribeAddress.Text = UIHelper.LocalString($"认筹地址  :  {this.TFModel.SubscribeAddress.ToAddress()}", $"Subscribe Address:{this.TFModel.SubscribeAddress.ToAddress()}");
+            this.lb_fundId.Text = UIHelper.LocalString($"基金ID  :  {this.TFModel.ToId()}", $"Fund ID  :  {this.TFModel.ToId()}");
+            this.lb_trusteeAddress.Text = UIHelper.LocalString($"受托人地址  :  {this.TrusteeAddress.ToAddress()}", $"Trustee Address  :  {this.TrusteeAddress.ToAddress()}");
+            this.lb_trustAddress.Text = UIHelper.LocalString($"信托地址  :  {this.TFModel.TrustAddress.ToAddress()}", $"Trust Address  :  {this.TFModel.TrustAddress.ToAddress()}");
+            this.lb_subscribeAddress.Text = UIHelper.LocalString($"认筹地址  :  {this.TFModel.SubscribeAddress.ToAddress()}", $"Subscribe Address  :  {this.TFModel.SubscribeAddress.ToAddress()}");
             this.bt_copySubscibeAddress.Text = UIHelper.LocalString("复制认筹地址", "Copy Subscribe Address");
             this.bt_copyTrustAddress.Text = UIHelper.LocalString("复制信托地址", "Copy Trust Address");
             this.bt_trustAssetDetail.Text = UIHelper.LocalString("信托资产明细", "Trust Asset Details");
@@ -120,7 +121,7 @@ namespace OX.UI.DTF
             this.lb_myTotalSubscribe.Text = string.Empty;
             if (this.TotalSubscribeAmount != default)
             {
-                this.lb_myTotalSubscribe.Text = UIHelper.LocalString($"我累计认筹 OXC  :  {this.TotalSubscribeAmount}", $"Myself Total Subscribe OXC :{this.TotalSubscribeAmount}");
+                this.lb_myTotalSubscribe.Text = UIHelper.LocalString($"我累计认筹 OXC  :  {this.TotalSubscribeAmount}", $"Myself Total Subscribe OXC :  {this.TotalSubscribeAmount}");
             }
             this.MouseDown += SwapPairControl_MouseDown;
 
