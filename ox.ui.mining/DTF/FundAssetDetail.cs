@@ -46,6 +46,7 @@ namespace OX.UI.Mining.DTF
         {
             this.lb_commonAsset.Text = UIHelper.LocalString("未锁仓资产", "Unlocked Asset");
             this.lb_lockAsset.Text = UIHelper.LocalString("锁仓资产", "Locked Asset");
+            this.lb_rateList.Text = UIHelper.LocalString("分红率排行", "Dividend Rate Sorting");
             var acts = Blockchain.Singleton.CurrentSnapshot.Accounts.GetAndChange(this.TFModel.TrustAddress, () => null);
             if (acts.IsNotNull())
             {
@@ -69,6 +70,7 @@ namespace OX.UI.Mining.DTF
             var bizPlugin = Bapp.GetBappProvider<MiningBapp, IMiningProvider>();
             if (bizPlugin != default && this.Operater.IsNotNull() && this.Operater.Wallet.IsNotNull())
             {
+                Dictionary<UInt160, decimal> rates = new Dictionary<UInt160, decimal>();
                 var idos = bizPlugin.GetAll<DTFIDOKey, DTFIDORecord>(InvestBizPersistencePrefixes.TrustFundIDORecord, this.TrusteeAddress);
                 if (idos.IsNotNullAndEmpty())
                 {
@@ -84,8 +86,16 @@ namespace OX.UI.Mining.DTF
                         {
                             totalRatio += ratio;
                         }
+                        decimal r = ratio;
+                        if (rates.TryGetValue(ido.Value.IdoOwner, out decimal d))
+                            r += d;
+                        rates[ido.Value.IdoOwner] = r;
                     }
                     this.lb_myRatio.Text = UIHelper.LocalString($"合计分红率: {totalRatio.ToString("f6")}", $"Total dividend rate: {totalRatio.ToString("f6")}");
+                }
+                foreach (var rp in rates.OrderByDescending(m => m.Value))
+                {
+                    this.dlv_rateList.Items.Add(new DarkListItem { Text = $"{rp.Key.ToAddress()}  :    {rp.Value.ToString("f6")}" });
                 }
                 foreach (var la in bizPlugin.GetAllDTFLockAssets())
                 {

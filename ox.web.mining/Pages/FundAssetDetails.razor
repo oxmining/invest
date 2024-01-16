@@ -5,34 +5,10 @@
 <Microsoft.AspNetCore.Components.Web.Extensions.Head.Title Value=@PageTitle />
 <PageContainer Title=@PageTitle>
     <ChildContent>
-        @{
-            var s = string.Empty;
-            var bizPlugin = Bapp.GetBappProvider<MiningBapp, IMiningProvider>();
-            if (this.Valid && bizPlugin != default && this.TrustFundModel.IsNotNull() && this.TrusteeScriptHash.IsNotNull())
-            {
-                var idos = bizPlugin.GetAll<DTFIDOKey, DTFIDORecord>(InvestBizPersistencePrefixes.TrustFundIDORecord, this.TrusteeScriptHash);
-                if (idos.IsNotNullAndEmpty())
-                {
-                    decimal totalRatio = 0;
-                    var total = idos.Sum(m => m.Value.IdoAmount.GetInternalValue());
-                    long t = 0;
-                    foreach (var ido in idos.OrderBy(m => (long)m.Value.BlockIndex * 10000 + (long)m.Value.TxN))
-                    {
-                        var f = ido.Value.IdoAmount.GetInternalValue();
-                        var ratio = DividentSlope.Big_5.ComputeBonusRatio(total, t, f);
-                        t += f;
-                        if (this.EthID.MapAddress.Equals(ido.Value.IdoOwner))
-                        {
-                            totalRatio += ratio;
-                        }
-                    }
-                    s = UIHelper.LocalString($"合计分红率  :   {totalRatio.ToString("f6")}", $"Total dividend rate  :   {totalRatio.ToString("f6")}");
-                }
-            }
-        }
+
         <Card Class="tabsCard">
             <Extra>
-                @s
+                @RateTitle
             </Extra>
             <CardTabs>
                 <Tabs DefaultActiveKey="1">
@@ -106,7 +82,23 @@
                             </div>
                         </ChildContent>
                     </TabPane>
+                    <TabPane Key="3">
+                        <TabTemplate>@this.WebLocalString("分红率排行", "Dividend Rate Sorting")</TabTemplate>
+                        <ChildContent>
+                            <div>
+                                <ul>
+                                    @{
+                                        foreach (var rp in Rates.OrderByDescending(m => m.Value))
+                                        {
+                                            var s = $"{rp.Key.ToAddress()}          :          {rp.Value.ToString("f6")} ";
+                                            <li><Paragraph>@s</Paragraph></li>
+                                        }
 
+                                    }
+                                </ul>
+                            </div>
+                        </ChildContent>
+                    </TabPane>
                 </Tabs>
             </CardTabs>
         </Card>

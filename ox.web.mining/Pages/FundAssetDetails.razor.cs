@@ -34,6 +34,7 @@ using NuGet.Protocol.Plugins;
 using OX.IO.Data.LevelDB;
 using OX.Mining.DTF;
 using OX.Wallets.UI.Controls;
+using OX.Mining.DEX;
 
 namespace OX.Web.Pages
 {
@@ -44,6 +45,8 @@ namespace OX.Web.Pages
         public string trusteeaddress { get; set; }
         public TrustFundModel TrustFundModel;
         public UInt160 TrusteeScriptHash;
+        Dictionary<UInt160, decimal> Rates = new Dictionary<UInt160, decimal>();
+        string RateTitle = string.Empty;
         protected override void OnMiningInit()
         {
             Init();
@@ -61,7 +64,29 @@ namespace OX.Web.Pages
                     if (bizPlugin.TrustFunds.TryGetValue(sh, out TrustFundModel))
                     {
                         TrusteeScriptHash = sh;
-                       
+                        var idos = bizPlugin.GetAll<DTFIDOKey, DTFIDORecord>(InvestBizPersistencePrefixes.TrustFundIDORecord, this.TrusteeScriptHash);
+                        if (idos.IsNotNullAndEmpty())
+                        {
+                            decimal totalRatio = 0;
+                            var total = idos.Sum(m => m.Value.IdoAmount.GetInternalValue());
+                            long t = 0;
+                            foreach (var ido in idos.OrderBy(m => (long)m.Value.BlockIndex * 10000 + (long)m.Value.TxN))
+                            {
+                                var f = ido.Value.IdoAmount.GetInternalValue();
+                                var ratio = DividentSlope.Big_5.ComputeBonusRatio(total, t, f);
+                                t += f;
+                                if (this.Valid && this.EthID.MapAddress.Equals(ido.Value.IdoOwner))
+                                {
+                                    totalRatio += ratio;
+                                }
+                                decimal r = ratio;
+                                if (Rates.TryGetValue(ido.Value.IdoOwner, out decimal d))
+                                    r += d;
+                                Rates[ido.Value.IdoOwner] = r;
+                            }
+                            if (this.Valid)
+                                RateTitle= UIHelper.LocalString($"我的合计分红率  :   {totalRatio.ToString("f6")}", $"My total dividend rate  :   {totalRatio.ToString("f6")}");
+                        }
                     }
                 }
                 catch
