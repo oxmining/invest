@@ -91,7 +91,7 @@ namespace OX.UI.Mining.DTF
                             r += d;
                         rates[ido.Value.IdoOwner] = r;
                     }
-                    this.lb_myRatio.Text = UIHelper.LocalString($"合计分红率: {totalRatio.ToString("f6")}", $"Total dividend rate: {totalRatio.ToString("f6")}");
+                    this.lb_myRatio.Text = UIHelper.LocalString($"我合计的分红率: {totalRatio.ToString("f6")}", $"My Total dividend rate: {totalRatio.ToString("f6")}");
                 }
                 foreach (var rp in rates.OrderByDescending(m => m.Value))
                 {

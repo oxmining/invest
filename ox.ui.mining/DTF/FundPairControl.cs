@@ -93,12 +93,13 @@ namespace OX.UI.DTF
         {
             this.DoInvoke(() =>
             {
+                var targetBalance = Fixed8.Zero;
                 var acts = Blockchain.Singleton.CurrentSnapshot.Accounts.GetAndChange(this.TFModel.TrustAddress, () => null);
                 if (acts.IsNotNull())
                 {
-                    var targetBalance = acts.GetBalance(Blockchain.OXC);
-                    this.lb_trustOXC.Text = UIHelper.LocalString($"信托 OXC 余额  :  {targetBalance}", $"Trust OXC Balance  :  {targetBalance}");
+                     targetBalance = acts.GetBalance(Blockchain.OXC);
                 }
+                this.lb_trustOXC.Text = UIHelper.LocalString($"信托 OXC 余额  :  {targetBalance}", $"Trust OXC Balance  :  {targetBalance}");
             });
         }
         void RefreshTotal()
