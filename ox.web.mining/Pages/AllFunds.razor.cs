@@ -23,17 +23,19 @@ using OX.Wallets.Authentication;
 using Microsoft.DotNet.Scaffolding.Shared.CodeModifier.CodeChange;
 using OX.Wallets.States;
 using OX.Bapps;
+using static NBitcoin.Scripting.OutputDescriptor;
 using OX.Wallets.Eths;
 using OX.Mining;
 using OX.UI.Mining;
 using OX.Mining.DTF;
+using System.Collections.Specialized;
 
 namespace OX.Web.Pages
 {
     public partial class AllFunds
     {
         public override string PageTitle => this.WebLocalString("所有信托基金", "All Trust Funds");
-        Dictionary<UInt160, TrustFundModel> TrustFunds = new Dictionary<UInt160, TrustFundModel>();
+        IOrderedEnumerable<KeyValuePair<UInt160, TrustFundModel>> TrustFunds =default;
         protected override void OnMiningInit()
         {
             Init();
@@ -44,7 +46,7 @@ namespace OX.Web.Pages
             var bizPlugin = Bapp.GetBappProvider<MiningBapp, IMiningProvider>() as MiningProvider;
             if (bizPlugin.IsNotNull())
             {
-                TrustFunds = bizPlugin.TrustFunds;
+                TrustFunds = bizPlugin.TrustFunds.OrderByDescending(m => m.Value.TotalSubscribeAmount);
             }
         }
     }
