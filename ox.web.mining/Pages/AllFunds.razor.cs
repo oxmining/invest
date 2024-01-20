@@ -23,7 +23,6 @@ using OX.Wallets.Authentication;
 using Microsoft.DotNet.Scaffolding.Shared.CodeModifier.CodeChange;
 using OX.Wallets.States;
 using OX.Bapps;
-using static NBitcoin.Scripting.OutputDescriptor;
 using OX.Wallets.Eths;
 using OX.Mining;
 using OX.UI.Mining;
