@@ -304,19 +304,20 @@ namespace OX.UI.Swap
                     var account = LockAssetHelper.CreateAccount(openWallet, from.AssetTrustContract.GetContract(), trustee.GetKey());//lock asset account have a some private key with master account
                     if (account != null)
                     {
-                        List<UTXO> utxos = new List<UTXO>();
-                        foreach (var r in openWallet.GetAssetTrustUTXO().Where(m => m.Value.AssetId.Equals(assetId) && m.Value.ScriptHash.Equals(from.TrustAddress)))
+                        List<AssetTrustUTXO> utxos = new List<AssetTrustUTXO>();
+                        foreach (var r in openWallet.GetAssetTrustUTXO().Where(m =>!m.Value.WaitSpent&& m.Value.OutPut.AssetId.Equals(assetId) && m.Value.OutPut.ScriptHash.Equals(from.TrustAddress)))
                         {
-                            utxos.Add(new UTXO
+                            utxos.Add(new AssetTrustUTXO
                             {
-                                Address = r.Value.ScriptHash,
-                                Value = r.Value.Value.GetInternalValue(),
+                                 AssetTrustOutput=r.Value,
+                                Address = r.Value.OutPut.ScriptHash,
+                                Value = r.Value.OutPut.Value.GetInternalValue(),
                                 TxId = r.Key.TxId,
                                 N = r.Key.N
                             });
                         }
                         List<string> excludedUtxoKeys = new List<string>();
-                        if (utxos.SortSearch(amount.GetInternalValue(), excludedUtxoKeys, out UTXO[] selectedUtxos, out long remainder))
+                        if (utxos.SortSearch(amount.GetInternalValue(), excludedUtxoKeys, out AssetTrustUTXO[] selectedUtxos, out long remainder))
                         {
                             List<TransactionOutput> outputs = new List<TransactionOutput>();
                             outputs.Add(new TransactionOutput { AssetId = assetId, Value = amount, ScriptHash = this.HostSH });
@@ -344,7 +345,10 @@ namespace OX.UI.Swap
                             {
                                 this.Operater.Wallet.ApplyTransaction(tx);
                                 this.Operater.Relay(tx);
-                                from.AssetTrustContract.LastTransferIndex = Blockchain.Singleton.Height;
+                                foreach (var u in selectedUtxos)
+                                {
+                                    u.AssetTrustOutput.WaitSpent = true;
+                                }
                                 if (this.Operater != default)
                                 {
                                     string msg = UIHelper.LocalString($"广播信托下注交易成功  {tx.Hash}", $"Relay  trust bet transaction completed  {tx.Hash}");
