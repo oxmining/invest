@@ -4,7 +4,7 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<Copyright>gt</Copyright>
 		<AssemblyTitle>OX</AssemblyTitle>
-		<Version>1.0.2</Version>
+	<Version>1.2.0</Version>
 		<Authors>gt</Authors>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<AssemblyName>ox.invest.core</AssemblyName>

@@ -4,6 +4,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <RootNamespace>OX.Web</RootNamespace>
     <OutputType>Library</OutputType>
+    <Version>1.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
