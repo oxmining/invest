@@ -46,7 +46,7 @@ namespace OX.Mining
             Db = DB.Open(Path.GetFullPath($"{WalletIndexDirectory}\\mng_{Message.Magic.ToString("X8")}"), new Options { CreateIfMissing = true });
             OTCDealers = new Dictionary<UInt160, OTCDealerMerge>(this.GetAll<UInt160, OTCDealerMerge>(InvestBizPersistencePrefixes.OTC_Dealer));
             TrustFunds = new Dictionary<UInt160, TrustFundModel>(this.GetAll<UInt160, TrustFundModel>(InvestBizPersistencePrefixes.TrustFundRequest));
-            DTFLockAssets = new Dictionary<OutputKey, LockAssetMerge>(this.GetAllDTFLockAssets());
+            DTFLockAssets = new Dictionary<CoinReference, DTFLockAssetMerge>(this.GetAllDTFLockAssets());
             DTFIDOSummary = new Dictionary<DTFIDOSummaryKey, Fixed8>(this.GetAllDTFIDOSummary());
             SwapPairs = new Dictionary<UInt160, SwapPairMerge>(this.GetAll<UInt160, SwapPairMerge>(InvestBizPersistencePrefixes.SwapPair));
             Side_SwapPairs = new Dictionary<UInt160, SideSwapPairKeyMerge>(this.GetAll<SideSwapPairKey, SideTransaction>(InvestBizPersistencePrefixes.SideSwapPair).Select(m => new KeyValuePair<UInt160, SideSwapPairKeyMerge>(m.Key.PoolAddress, new SideSwapPairKeyMerge { Key = m.Key, Value = m.Value })));
@@ -171,7 +171,7 @@ namespace OX.Mining
                 }
                 else if (tx is AssetTrustTransaction att)
                 {
-                    OnAssetTrustTransaction(batch, block,i, att);
+                    OnAssetTrustTransaction(batch, block, i, att);
                 }
                 else if (tx is EventTransaction eventTx)
                 {
@@ -208,11 +208,10 @@ namespace OX.Mining
                     }
                     foreach (KeyValuePair<CoinReference, TransactionOutput> kp in tx.References)
                     {
-                        OutputKey outputkey = new OutputKey { TxId = kp.Key.PrevHash, N = kp.Key.PrevIndex };
-                        if (this.DTFLockAssets.ContainsKey(outputkey))
+                        if (this.DTFLockAssets.ContainsKey(kp.Key))
                         {
-                            this.DTFLockAssets.Remove(outputkey);
-                            batch.Delete(SliceBuilder.Begin(InvestBizPersistencePrefixes.DTF_LockAsset_Record).Add(outputkey));
+                            this.DTFLockAssets.Remove(kp.Key);
+                            batch.Delete(SliceBuilder.Begin(InvestBizPersistencePrefixes.DTF_LockAsset_Record).Add(kp.Key));
                         }
                     }
                 }

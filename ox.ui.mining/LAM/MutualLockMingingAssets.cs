@@ -53,7 +53,7 @@ namespace OX.UI.LAM
                 if (nodes != null && nodes.Length == 1)
                 {
                     var node = nodes.FirstOrDefault();
-                    var sm = new ToolStripMenuItem(UIHelper.LocalString($"自主锁定该资产", $"Self Lock Asset"));
+                    var sm = new ToolStripMenuItem(UIHelper.LocalString($"自主锁仓该资产", $"Self Lock Asset"));
                     sm.Tag = node.Tag;
                     sm.Click += Sm_Click1;
                     menu.Items.Add(sm);
@@ -77,7 +77,7 @@ namespace OX.UI.LAM
                 var output = dialog.GetOutput(out ECPoint ecp, out uint expiration);
                 if (expiration - Blockchain.Singleton.Height < 1001000)
                 {
-                    string msg = $"{UIHelper.LocalString("锁定的区块高度太低", "Locked block height is too low")}";
+                    string msg = $"{UIHelper.LocalString("锁仓的区块高度太低", "Locked block height is too low")}";
                     Bapp.PushCrossBappMessage(new CrossBappMessage() { Content = msg, From = this.Module.Bapp });
                     DarkMessageBox.ShowInformation(msg, "");
                     return;

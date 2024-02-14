@@ -29,199 +29,203 @@ namespace OX.UI.Swap
         /// </summary>
         private void InitializeComponent()
         {
-            this.darkLabel1 = new OX.Wallets.UI.Controls.DarkLabel();
-            this.darkLabel2 = new OX.Wallets.UI.Controls.DarkLabel();
-            this.darkLabel4 = new OX.Wallets.UI.Controls.DarkLabel();
-            this.rbTargetAsset = new OX.Wallets.UI.Controls.DarkRadioButton();
-            this.rbPriceAsset = new OX.Wallets.UI.Controls.DarkRadioButton();
-            this.textBox3 = new OX.Wallets.UI.Controls.DarkTextBox();
-            this.textBox2 = new OX.Wallets.UI.Controls.DarkTextBox();
-            this.cb_accounts = new OX.Wallets.UI.Controls.DarkComboBox();
-            this.lb_accounts = new OX.Wallets.UI.Controls.DarkLabel();
-            this.SuspendLayout();
+            lb_asset = new Wallets.UI.Controls.DarkLabel();
+            lb_balance = new Wallets.UI.Controls.DarkLabel();
+            lb_amount = new Wallets.UI.Controls.DarkLabel();
+            rbTargetAsset = new Wallets.UI.Controls.DarkRadioButton();
+            rbPriceAsset = new Wallets.UI.Controls.DarkRadioButton();
+            textBox3 = new Wallets.UI.Controls.DarkTextBox();
+            textBox2 = new Wallets.UI.Controls.DarkTextBox();
+            cb_accounts = new Wallets.UI.Controls.DarkComboBox();
+            lb_accounts = new Wallets.UI.Controls.DarkLabel();
+            SuspendLayout();
             // 
             // btnOk
             // 
-            this.btnOk.Margin = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.btnOk.Click += new System.EventHandler(this.btnYes_Click);
+            btnOk.Margin = new System.Windows.Forms.Padding(0, 0, 10, 0);
+            btnOk.Click += btnYes_Click;
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(166, 18);
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            btnCancel.Location = new System.Drawing.Point(152, 19);
+            btnCancel.Padding = new System.Windows.Forms.Padding(7, 10, 7, 10);
+            btnCancel.Click += btnCancel_Click;
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(18, 18);
+            btnClose.Location = new System.Drawing.Point(16, 19);
+            btnClose.Padding = new System.Windows.Forms.Padding(7, 10, 7, 10);
             // 
             // btnYes
             // 
-            this.btnYes.Location = new System.Drawing.Point(18, 18);
-            this.btnYes.Margin = new System.Windows.Forms.Padding(0, 0, 10, 0);
-         
+            btnYes.Location = new System.Drawing.Point(16, 19);
+            btnYes.Margin = new System.Windows.Forms.Padding(0, 0, 9, 0);
+            btnYes.Padding = new System.Windows.Forms.Padding(7, 10, 7, 10);
             // 
             // btnNo
             // 
-            this.btnNo.Location = new System.Drawing.Point(18, 18);
-            this.btnNo.Margin = new System.Windows.Forms.Padding(0, 0, 10, 0);
+            btnNo.Location = new System.Drawing.Point(16, 19);
+            btnNo.Margin = new System.Windows.Forms.Padding(0, 0, 9, 0);
+            btnNo.Padding = new System.Windows.Forms.Padding(7, 10, 7, 10);
             // 
             // btnRetry
             // 
-            this.btnRetry.Location = new System.Drawing.Point(708, 18);
+            btnRetry.Location = new System.Drawing.Point(644, 19);
+            btnRetry.Padding = new System.Windows.Forms.Padding(7, 10, 7, 10);
             // 
             // btnIgnore
             // 
-            this.btnIgnore.Location = new System.Drawing.Point(708, 18);
+            btnIgnore.Location = new System.Drawing.Point(644, 19);
+            btnIgnore.Padding = new System.Windows.Forms.Padding(7, 10, 7, 10);
             // 
-            // darkLabel1
+            // lb_asset
             // 
-            this.darkLabel1.AutoSize = true;
-            this.darkLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.darkLabel1.Location = new System.Drawing.Point(42, 111);
-            this.darkLabel1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.darkLabel1.Name = "darkLabel1";
-            this.darkLabel1.Size = new System.Drawing.Size(50, 24);
-            this.darkLabel1.TabIndex = 2;
-            this.darkLabel1.Text = "资产:";
+            lb_asset.AutoSize = true;
+            lb_asset.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
+            lb_asset.Location = new System.Drawing.Point(38, 116);
+            lb_asset.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            lb_asset.Name = "lb_asset";
+            lb_asset.Size = new System.Drawing.Size(54, 25);
+            lb_asset.TabIndex = 2;
+            lb_asset.Text = "资产:";
             // 
-            // darkLabel2
+            // lb_balance
             // 
-            this.darkLabel2.AutoSize = true;
-            this.darkLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.darkLabel2.Location = new System.Drawing.Point(42, 173);
-            this.darkLabel2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.darkLabel2.Name = "darkLabel2";
-            this.darkLabel2.Size = new System.Drawing.Size(50, 24);
-            this.darkLabel2.TabIndex = 3;
-            this.darkLabel2.Text = "余额:";
+            lb_balance.AutoSize = true;
+            lb_balance.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
+            lb_balance.Location = new System.Drawing.Point(38, 180);
+            lb_balance.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            lb_balance.Name = "lb_balance";
+            lb_balance.Size = new System.Drawing.Size(54, 25);
+            lb_balance.TabIndex = 3;
+            lb_balance.Text = "余额:";
             // 
-            // darkLabel4
+            // lb_amount
             // 
-            this.darkLabel4.AutoSize = true;
-            this.darkLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.darkLabel4.Location = new System.Drawing.Point(42, 250);
-            this.darkLabel4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.darkLabel4.Name = "darkLabel4";
-            this.darkLabel4.Size = new System.Drawing.Size(50, 24);
-            this.darkLabel4.TabIndex = 5;
-            this.darkLabel4.Text = "金额:";
+            lb_amount.AutoSize = true;
+            lb_amount.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
+            lb_amount.Location = new System.Drawing.Point(38, 260);
+            lb_amount.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            lb_amount.Name = "lb_amount";
+            lb_amount.Size = new System.Drawing.Size(54, 25);
+            lb_amount.TabIndex = 5;
+            lb_amount.Text = "金额:";
             // 
             // rbTargetAsset
             // 
-            this.rbTargetAsset.AutoSize = true;
-            this.rbTargetAsset.Location = new System.Drawing.Point(275, 107);
-            this.rbTargetAsset.Margin = new System.Windows.Forms.Padding(6);
-            this.rbTargetAsset.Name = "rbTargetAsset";
-            this.rbTargetAsset.Size = new System.Drawing.Size(72, 28);
-            this.rbTargetAsset.SpecialBorderColor = null;
-            this.rbTargetAsset.SpecialFillColor = null;
-            this.rbTargetAsset.SpecialTextColor = null;
-            this.rbTargetAsset.TabIndex = 6;
-            this.rbTargetAsset.Text = "OXS";
-            this.rbTargetAsset.CheckedChanged += new System.EventHandler(this.rbGTC_CheckedChanged);
+            rbTargetAsset.AutoSize = true;
+            rbTargetAsset.Location = new System.Drawing.Point(354, 111);
+            rbTargetAsset.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            rbTargetAsset.Name = "rbTargetAsset";
+            rbTargetAsset.Size = new System.Drawing.Size(72, 29);
+            rbTargetAsset.SpecialBorderColor = null;
+            rbTargetAsset.SpecialFillColor = null;
+            rbTargetAsset.SpecialTextColor = null;
+            rbTargetAsset.TabIndex = 6;
+            rbTargetAsset.Text = "OXS";
+            rbTargetAsset.CheckedChanged += rbGTC_CheckedChanged;
             // 
             // rbPriceAsset
             // 
-            this.rbPriceAsset.AutoSize = true;
-            this.rbPriceAsset.Checked = true;
-            this.rbPriceAsset.Location = new System.Drawing.Point(134, 107);
-            this.rbPriceAsset.Margin = new System.Windows.Forms.Padding(6);
-            this.rbPriceAsset.Name = "rbPriceAsset";
-            this.rbPriceAsset.Size = new System.Drawing.Size(74, 28);
-            this.rbPriceAsset.SpecialBorderColor = null;
-            this.rbPriceAsset.SpecialFillColor = null;
-            this.rbPriceAsset.SpecialTextColor = null;
-            this.rbPriceAsset.TabIndex = 7;
-            this.rbPriceAsset.TabStop = true;
-            this.rbPriceAsset.Text = "OXC";
-            this.rbPriceAsset.CheckedChanged += new System.EventHandler(this.rbGTC_CheckedChanged);
+            rbPriceAsset.AutoSize = true;
+            rbPriceAsset.Checked = true;
+            rbPriceAsset.Location = new System.Drawing.Point(226, 111);
+            rbPriceAsset.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            rbPriceAsset.Name = "rbPriceAsset";
+            rbPriceAsset.Size = new System.Drawing.Size(73, 29);
+            rbPriceAsset.SpecialBorderColor = null;
+            rbPriceAsset.SpecialFillColor = null;
+            rbPriceAsset.SpecialTextColor = null;
+            rbPriceAsset.TabIndex = 7;
+            rbPriceAsset.TabStop = true;
+            rbPriceAsset.Text = "OXC";
+            rbPriceAsset.CheckedChanged += rbGTC_CheckedChanged;
             // 
             // textBox3
             // 
-            this.textBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
-            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.textBox3.Location = new System.Drawing.Point(130, 165);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(6);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.ReadOnly = true;
-            this.textBox3.Size = new System.Drawing.Size(600, 30);
-            this.textBox3.TabIndex = 8;
+            textBox3.BackColor = System.Drawing.Color.FromArgb(69, 73, 74);
+            textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            textBox3.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
+            textBox3.Location = new System.Drawing.Point(222, 172);
+            textBox3.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            textBox3.Name = "textBox3";
+            textBox3.ReadOnly = true;
+            textBox3.Size = new System.Drawing.Size(546, 31);
+            textBox3.TabIndex = 8;
             // 
             // textBox2
             // 
-            this.textBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.textBox2.Location = new System.Drawing.Point(130, 242);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(6);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(600, 30);
-            this.textBox2.TabIndex = 10;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox_TextChanged);
+            textBox2.BackColor = System.Drawing.Color.FromArgb(69, 73, 74);
+            textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            textBox2.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
+            textBox2.Location = new System.Drawing.Point(222, 252);
+            textBox2.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new System.Drawing.Size(546, 31);
+            textBox2.TabIndex = 10;
+            textBox2.TextChanged += textBox_TextChanged;
             // 
             // cb_accounts
             // 
-            this.cb_accounts.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.cb_accounts.FormattingEnabled = true;
-            this.cb_accounts.Location = new System.Drawing.Point(134, 43);
-            this.cb_accounts.Name = "cb_accounts";
-            this.cb_accounts.Size = new System.Drawing.Size(596, 31);
-            this.cb_accounts.SpecialBorderColor = null;
-            this.cb_accounts.SpecialFillColor = null;
-            this.cb_accounts.SpecialTextColor = null;
-            this.cb_accounts.TabIndex = 12;
-            this.cb_accounts.SelectedIndexChanged += new System.EventHandler(this.cb_accounts_SelectedIndexChanged);
+            cb_accounts.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            cb_accounts.FormattingEnabled = true;
+            cb_accounts.Location = new System.Drawing.Point(226, 45);
+            cb_accounts.Name = "cb_accounts";
+            cb_accounts.Size = new System.Drawing.Size(542, 32);
+            cb_accounts.SpecialBorderColor = null;
+            cb_accounts.SpecialFillColor = null;
+            cb_accounts.SpecialTextColor = null;
+            cb_accounts.TabIndex = 12;
+            cb_accounts.SelectedIndexChanged += cb_accounts_SelectedIndexChanged;
             // 
             // lb_accounts
             // 
-            this.lb_accounts.AutoSize = true;
-            this.lb_accounts.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.lb_accounts.Location = new System.Drawing.Point(42, 46);
-            this.lb_accounts.Name = "lb_accounts";
-            this.lb_accounts.Size = new System.Drawing.Size(50, 24);
-            this.lb_accounts.TabIndex = 11;
-            this.lb_accounts.Text = "账户:";
+            lb_accounts.AutoSize = true;
+            lb_accounts.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
+            lb_accounts.Location = new System.Drawing.Point(38, 48);
+            lb_accounts.Name = "lb_accounts";
+            lb_accounts.Size = new System.Drawing.Size(54, 25);
+            lb_accounts.TabIndex = 11;
+            lb_accounts.Text = "账户:";
             // 
             // SideSwapRecharge
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(742, 379);
-            this.Controls.Add(this.cb_accounts);
-            this.Controls.Add(this.lb_accounts);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.rbPriceAsset);
-            this.Controls.Add(this.rbTargetAsset);
-            this.Controls.Add(this.darkLabel4);
-            this.Controls.Add(this.darkLabel2);
-            this.Controls.Add(this.darkLabel1);
-            this.DialogButtons = OX.Wallets.UI.Forms.DarkDialogButton.OkCancel;
-            this.Margin = new System.Windows.Forms.Padding(11, 12, 11, 12);
-            this.Name = "SideSwapRecharge";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "转账";
-            this.Load += new System.EventHandler(this.PayToDialog_Load);
-            this.Controls.SetChildIndex(this.darkLabel1, 0);
-            this.Controls.SetChildIndex(this.darkLabel2, 0);
-            this.Controls.SetChildIndex(this.darkLabel4, 0);
-            this.Controls.SetChildIndex(this.rbTargetAsset, 0);
-            this.Controls.SetChildIndex(this.rbPriceAsset, 0);
-            this.Controls.SetChildIndex(this.textBox3, 0);
-            this.Controls.SetChildIndex(this.textBox2, 0);
-            this.Controls.SetChildIndex(this.lb_accounts, 0);
-            this.Controls.SetChildIndex(this.cb_accounts, 0);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(796, 395);
+            Controls.Add(cb_accounts);
+            Controls.Add(lb_accounts);
+            Controls.Add(textBox2);
+            Controls.Add(textBox3);
+            Controls.Add(rbPriceAsset);
+            Controls.Add(rbTargetAsset);
+            Controls.Add(lb_amount);
+            Controls.Add(lb_balance);
+            Controls.Add(lb_asset);
+            DialogButtons = Wallets.UI.Forms.DarkDialogButton.OkCancel;
+            Margin = new System.Windows.Forms.Padding(10, 12, 10, 12);
+            Name = "SideSwapRecharge";
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            Text = "转账";
+            Load += PayToDialog_Load;
+            Controls.SetChildIndex(lb_asset, 0);
+            Controls.SetChildIndex(lb_balance, 0);
+            Controls.SetChildIndex(lb_amount, 0);
+            Controls.SetChildIndex(rbTargetAsset, 0);
+            Controls.SetChildIndex(rbPriceAsset, 0);
+            Controls.SetChildIndex(textBox3, 0);
+            Controls.SetChildIndex(textBox2, 0);
+            Controls.SetChildIndex(lb_accounts, 0);
+            Controls.SetChildIndex(cb_accounts, 0);
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private OX.Wallets.UI.Controls.DarkLabel darkLabel1;
-        private OX.Wallets.UI.Controls.DarkLabel darkLabel2;
-        private OX.Wallets.UI.Controls.DarkLabel darkLabel4;
+        private OX.Wallets.UI.Controls.DarkLabel lb_asset;
+        private OX.Wallets.UI.Controls.DarkLabel lb_balance;
+        private OX.Wallets.UI.Controls.DarkLabel lb_amount;
         private OX.Wallets.UI.Controls.DarkRadioButton rbTargetAsset;
         private OX.Wallets.UI.Controls.DarkRadioButton rbPriceAsset;
         private OX.Wallets.UI.Controls.DarkTextBox textBox3;

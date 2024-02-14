@@ -25,7 +25,7 @@ namespace OX.Mining
     public partial class MiningProvider
     {
         public Dictionary<UInt160, TrustFundModel> TrustFunds { get; set; } = new Dictionary<UInt160, TrustFundModel>();
-        public Dictionary<OutputKey, LockAssetMerge> DTFLockAssets { get; set; } = new Dictionary<OutputKey, LockAssetMerge>();
+        public Dictionary<CoinReference, DTFLockAssetMerge> DTFLockAssets { get; set; } = new Dictionary<CoinReference, DTFLockAssetMerge>();
         public Dictionary<DTFIDOSummaryKey, Fixed8> DTFIDOSummary { get; set; } = new Dictionary<DTFIDOSummaryKey, Fixed8>();
         public void OnAssetTrustTransaction(WriteBatch batch, Block block, ushort txN, AssetTrustTransaction att)
         {
@@ -50,7 +50,7 @@ namespace OX.Mining
                 }
             }
         }
-        public IEnumerable<KeyValuePair<OutputKey, LockAssetMerge>> GetAllDTFLockAssets()
+        public IEnumerable<KeyValuePair<CoinReference, DTFLockAssetMerge>> GetAllDTFLockAssets()
         {
             return this.Db.Find(ReadOptions.Default, SliceBuilder.Begin(InvestBizPersistencePrefixes.DTF_LockAsset_Record), (k, v) =>
             {
@@ -58,7 +58,7 @@ namespace OX.Mining
                 var length = ks.Length - sizeof(byte);
                 ks = ks.TakeLast(length).ToArray();
                 byte[] data = v.ToArray();
-                return new KeyValuePair<OutputKey, LockAssetMerge>(ks.AsSerializable<OutputKey>(), data.AsSerializable<LockAssetMerge>());
+                return new KeyValuePair<CoinReference, DTFLockAssetMerge>(ks.AsSerializable<CoinReference>(), data.AsSerializable<DTFLockAssetMerge>());
             });
         }
         public IEnumerable<KeyValuePair<DTFIDOSummaryKey, Fixed8>> GetAllDTFIDOSummary(UInt160 IDOOwner = default)
@@ -134,16 +134,16 @@ namespace OX.Mining
                     var tf = miningProvider.TrustFunds.Where(m => m.Value.SubscribeAddress.Equals(output.ScriptHash)).FirstOrDefault();
                     if (!tf.Equals(new KeyValuePair<UInt160, TrustFundModel>()))
                     {
-                        var rfsOutput = tx.References.Values.Where(m => m.AssetId == Blockchain.OXC).OrderByDescending(m => m.Value).FirstOrDefault();
-                        if (rfsOutput.IsNotNull())
+                        var fromshs = tx.References.Values.Select(m => m.ScriptHash);
+                        if (!fromshs.Contains(tf.Value.TrustAddress) && !fromshs.Contains(tf.Value.SubscribeAddress))
                         {
-                            var fromsh = rfsOutput.ScriptHash;
-                            if (!fromsh.Equals(tf.Value.TrustAddress) && !fromsh.Equals(tf.Value.SubscribeAddress))
+                            var originAddress = tx.GetBestOriginAddress(out string ethAddress);
+                            if (originAddress.IsNotNull())
                             {
-                                DTFIDOKey key = new DTFIDOKey { TrusteeAddress = tf.Key, IDOOwner = rfsOutput.ScriptHash, TxId = tx.Hash };
-                                DTFIDORecord record = new DTFIDORecord { TrusteeAddress = tf.Key, IdoOwner = rfsOutput.ScriptHash, IdoAmount = output.Value, BlockIndex = block.Index, TxN = TxN };
+                                DTFIDOKey key = new DTFIDOKey { TrusteeAddress = tf.Key, IDOOwner =originAddress, TxId = tx.Hash };
+                                DTFIDORecord record = new DTFIDORecord { TrusteeAddress = tf.Key, IdoOwner = originAddress, IdoAmount = output.Value, BlockIndex = block.Index, TxN = TxN };
                                 batch.Put(SliceBuilder.Begin(InvestBizPersistencePrefixes.TrustFundIDORecord).Add(key), SliceBuilder.Begin().Add(record));
-                                DTFIDOSummaryKey summaryKey = new DTFIDOSummaryKey { IDOOwner = rfsOutput.ScriptHash, TrusteeAddress = tf.Key };
+                                DTFIDOSummaryKey summaryKey = new DTFIDOSummaryKey { IDOOwner = originAddress, TrusteeAddress = tf.Key };
                                 var amount = output.Value;
                                 if (miningProvider.DTFIDOSummary.TryGetValue(summaryKey, out var value))
                                 {
@@ -171,8 +171,8 @@ namespace OX.Mining
                         var output = lat.Outputs[n];
                         if (output.ScriptHash.Equals(sh))
                         {
-                            var key = new OutputKey { TxId = lat.Hash, N = n };
-                            var LockAssetMerge = new LockAssetMerge { TargetAddress = targetSH, Tx = lat, Output = output };
+                            var key = new CoinReference { PrevHash = lat.Hash, PrevIndex = n };
+                            var LockAssetMerge = new DTFLockAssetMerge { TargetAddress = targetSH, Tx = lat, Output = output };
 
                             batch.Put(SliceBuilder.Begin(InvestBizPersistencePrefixes.DTF_LockAsset_Record).Add(key), SliceBuilder.Begin().Add(LockAssetMerge));
                             provider.DTFLockAssets[key] = LockAssetMerge;

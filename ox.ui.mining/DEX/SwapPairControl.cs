@@ -39,7 +39,7 @@ namespace OX.UI.Swap
             this.SwapPairMerge = swapPairMerge;
             InitializeComponent();
             this.lb_pairname.Text = $"{swapPairMerge.TargetAssetState.GetName()}  <=>  OXC";
-            this.lb_lockinfo.Text = UIHelper.LocalString($"锁定 {SwapPairMerge.SwapPairReply.LockPercent}%, {SwapPairMerge.SwapPairReply.LockExpire} 区块", $"Lock {SwapPairMerge.SwapPairReply.LockPercent}%, {SwapPairMerge.SwapPairReply.LockExpire} blocks");
+            this.lb_lockinfo.Text = UIHelper.LocalString($"锁仓 {SwapPairMerge.SwapPairReply.LockPercent}%, {SwapPairMerge.SwapPairReply.LockExpire} 区块", $"Lock {SwapPairMerge.SwapPairReply.LockPercent}%, {SwapPairMerge.SwapPairReply.LockExpire} blocks");
             this.bt_showKLine.Text = UIHelper.LocalString("查看K线", "View K-line");
             this.bt_goSwap.Text = UIHelper.LocalString("去交易", "Go Swap");
             this.bt_detail.Text = UIHelper.LocalString("详情", "Details");

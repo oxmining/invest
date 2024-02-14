@@ -85,7 +85,7 @@ namespace OX.Web.Pages
                                 Rates[ido.Value.IdoOwner] = r;
                             }
                             if (this.Valid)
-                                RateTitle = this.WebLocalString($"我的合计分红率  :   {totalRatio.ToString("f6")}", $"My total dividend rate  :   {totalRatio.ToString("f6")}");
+                                RateTitle=this.WebLocalString($"我的合计分红率  :   {totalRatio.ToString("f6")}", $"My total dividend rate  :   {totalRatio.ToString("f6")}");
                         }
                     }
                 }

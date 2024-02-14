@@ -102,8 +102,8 @@ namespace OX.UI.Swap
             this.lb_PricingAsset.Text = $"OXC:";
             this.lb_price.Text = UIHelper.LocalString("现价:", "Price:");
             this.lb_stamp.Text = UIHelper.LocalString("首次开盘:", "First Open:");
-            this.lb_lockpercent.Text = UIHelper.LocalString("锁定比例:", "Lock Percent:");
-            this.lb_lockexpire.Text = UIHelper.LocalString("锁定区块:", "Lock Blocks:");
+            this.lb_lockpercent.Text = UIHelper.LocalString("锁仓比例:", "Lock Percent:");
+            this.lb_lockexpire.Text = UIHelper.LocalString("锁仓区块:", "Lock Blocks:");
             this.tb_stamp.Text = this.SwapPairMerge.SwapPairReply.Stamp.ToString();
             this.tb_lockpercent.Text = $"{this.SwapPairMerge.SwapPairReply.LockPercent}%";
             this.tb_lockexpire.Text = this.SwapPairMerge.SwapPairReply.LockExpire.ToString();
@@ -124,7 +124,7 @@ namespace OX.UI.Swap
             this.groupBox4.Text = UIHelper.LocalString("IDO预售", "IDO Sale");
             this.lb_ido_price.Text = UIHelper.LocalString("IDO价格:", "IDO Price:");
             this.lb_ido_MinLiquidity.Text = UIHelper.LocalString("底池下限:", "Min Pool:");
-            this.lb_ido_IDOLockExpire.Text = UIHelper.LocalString("预售锁定:", "IDO Lock:");
+            this.lb_ido_IDOLockExpire.Text = UIHelper.LocalString("预售锁仓:", "IDO Lock:");
             this.lb_ido_DividentSlope.Text = UIHelper.LocalString("分红坡度:", "Bonus Slope:");
             if (this.IDO.IsNotNull())
             {

@@ -31,7 +31,7 @@ namespace OX.Mining
         Dictionary<string, LevelLockValue> LevelLockInTx { get; set; }
         Dictionary<UInt160, OTCDealerMerge> OTCDealers { get; set; }
         Dictionary<UInt160, TrustFundModel> TrustFunds { get; set; }
-        Dictionary<OutputKey, LockAssetMerge> DTFLockAssets { get; set; }
+        Dictionary<CoinReference, DTFLockAssetMerge> DTFLockAssets { get; set; }
         Dictionary<DTFIDOSummaryKey, Fixed8> DTFIDOSummary { get; set; }
         bool TryGetHashAccount(UInt256 PubkeyHash, out AccountPack pack);
         IEnumerable<KeyValuePair<byte[], InvestSettingRecord>> GetAllInvestSettings();
@@ -41,7 +41,7 @@ namespace OX.Mining
         //IEnumerable<KeyValuePair<UInt160, MinerData>> GetMyMiners();
         //MinerData GetMinerData(UInt160 MinerHolder);
         //IEnumerable<KeyValuePair<MiningHolderKey, MinerParentPrivatePublish>> GetMyLeafMiners();
-        IEnumerable<KeyValuePair<OutputKey, LockAssetMerge>> GetAllDTFLockAssets();
+        IEnumerable<KeyValuePair<CoinReference, DTFLockAssetMerge>> GetAllDTFLockAssets();
         IEnumerable<KeyValuePair<DTFIDOSummaryKey, Fixed8>> GetAllDTFIDOSummary(UInt160 IDOOwner=default);
     }
 }

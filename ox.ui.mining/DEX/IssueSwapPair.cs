@@ -43,7 +43,7 @@ namespace OX.UI.Swap
             this.lb_targetAssetId.Text = UIHelper.LocalString("交易资产Id:", "Swap Asset Id:");
             this.lb_targetBalance.Text = UIHelper.LocalString("交易资产初始量:", "Swap Asset Init:");
             this.lb_oxcBalance.Text = UIHelper.LocalString("OXC初始量:", "OXC Init:");
-            this.lb_lockexpire.Text = UIHelper.LocalString("锁定区块数:", "Lock Blocks:");
+            this.lb_lockexpire.Text = UIHelper.LocalString("锁仓区块数:", "Lock Blocks:");
             this.lb_swapstamp.Text = UIHelper.LocalString("首次交易区块:", "First Swap Block:");
             this.lb_idoPrice.Text = UIHelper.LocalString("IDO价格:", "IDO Price:");
             this.lb_MinLiquidity.Text = UIHelper.LocalString("最少底池量:", "Min Base Pool:");

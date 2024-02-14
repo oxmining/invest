@@ -47,6 +47,10 @@ namespace OX.UI.Swap
             InitializeComponent();
             btnOk.Text = UIHelper.LocalString("确定", "OK");
             btnOk.Enabled = false;
+            this.lb_accounts.Text = UIHelper.LocalString("账户:", "Account:");
+            this.lb_asset.Text = UIHelper.LocalString("资产:", "Asset:");
+            this.lb_balance.Text = UIHelper.LocalString("信托余额:", "Trust Balance:");
+            this.lb_amount.Text = UIHelper.LocalString("金额:", "Amount:");
         }
         SideTransaction SideTransaction;
         public SideSwapTrustRecharge(INotecase operater, SideTransaction sideTx) : this()
@@ -255,7 +259,7 @@ namespace OX.UI.Swap
                     if (account != null)
                     {
                         List<AssetTrustUTXO> utxos = new List<AssetTrustUTXO>();
-                        foreach (var r in openWallet.GetAssetTrustUTXO().Where(m => m.Value.SpendIndex==0 && m.Value.OutPut.AssetId.Equals(assetId) && m.Value.OutPut.ScriptHash.Equals(from.TrustAddress)))
+                        foreach (var r in openWallet.GetAssetTrustUTXO().Where(m => m.Value.SpentIndex==0 && m.Value.OutPut.AssetId.Equals(assetId) && m.Value.OutPut.ScriptHash.Equals(from.TrustAddress)))
                         {
                             utxos.Add(new AssetTrustUTXO
                             {
@@ -297,7 +301,7 @@ namespace OX.UI.Swap
                                 this.Operater.Relay(tx);
                                 foreach (var u in selectedUtxos)
                                 {
-                                    u.AssetTrustOutput.SpendIndex = Blockchain.Singleton.HeaderHeight;
+                                    u.AssetTrustOutput.SpentIndex = Blockchain.Singleton.HeaderHeight;
                                 }
                                 if (this.Operater != default)
                                 {

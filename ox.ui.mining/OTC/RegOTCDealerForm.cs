@@ -40,7 +40,7 @@ namespace OX.UI.OTC
             this.btnCancel.Text = UIHelper.LocalString("取消", "Cancel");
             this.lb_balance.Text = UIHelper.LocalString("USDX 余额:", "USDX Balance:");
             this.lb_amount.Text = UIHelper.LocalString("USDX 充值金额:", "USDX Recharge Amount:");
-            this.lb_accounts.Text = UIHelper.LocalString("签名账户:", "签名账户:");
+            this.lb_accounts.Text = UIHelper.LocalString("签名账户:", "Sign Account:");
             this.lb_ethAddress.Text = UIHelper.LocalString("Eth兑换地址:", "Eth Exchange Address:");
             this.lb_infeerate.Text = UIHelper.LocalString("入金手续费率:", "Deposits Commission Ratio:");
             this.lb_State.Text = UIHelper.LocalString("状态设置:", "State Set:");

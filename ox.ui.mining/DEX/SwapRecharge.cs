@@ -30,6 +30,10 @@ namespace OX.UI.Swap
             InitializeComponent();
             btnOk.Text = UIHelper.LocalString("确定", "OK");
             btnOk.Enabled = false;
+            this.lb_accounts.Text = UIHelper.LocalString("账户:", "Account:");
+            this.lb_asset.Text = UIHelper.LocalString("资产:", "Asset:");
+            this.lb_balance.Text = UIHelper.LocalString("可用余额:", "Available Balance:");
+            this.lb_amount.Text = UIHelper.LocalString("金额:", "Amount:");
         }
         public SwapPairMerge SwapPairMerge;
         public SwapPairIDO IDO;
@@ -134,7 +138,11 @@ namespace OX.UI.Swap
             if (this.cb_accounts.Text.IsNullOrEmpty()) return;
             var assetId = this.rbPriceAsset.Checked ? Blockchain.OXC : this.SwapPairMerge.TargetAssetState.AssetId;
             var from = this.cb_accounts.SelectedItem as AccountListItem;
-            textBox3.Text = this.Operater.Wallet.GeAccountAvailable(from.Account.ScriptHash, assetId).ToString();
+            textBox3.Text = "0";
+            if (this.Operater.Wallet.TryGetWalletAccountBalance(from.Account.ScriptHash, out Dictionary<UInt256, WalletAccountBalance> balances) && balances.TryGetValue(assetId, out WalletAccountBalance balance))
+            {
+                textBox3.Text = balance.AvailableBalance.ToString();
+            }
             textBox_TextChanged(this, EventArgs.Empty);
         }
         decimal forecast(UInt256 assetId, Fixed8 amount)
@@ -247,26 +255,14 @@ namespace OX.UI.Swap
             var from = this.cb_accounts.SelectedItem as AccountListItem;
             var fromAddress = from.Account.ScriptHash;
             var assetId = this.rbPriceAsset.Checked ? Blockchain.OXC : this.SwapPairMerge.TargetAssetState.AssetId;
-            SingleTransactionWrapper<ContractTransaction> stw = new SingleTransactionWrapper<ContractTransaction>(fromAddress, new TransactionOutput { AssetId = assetId, ScriptHash = this.HostSH, Value = amount });
 
-            var tx = this.Operater.Wallet.MakeSingleTransaction(stw);
-            if (tx != null)
+            ContractTransaction ct = new ContractTransaction { Outputs = new TransactionOutput[] { new TransactionOutput { AssetId = assetId, ScriptHash = this.HostSH, Value = amount } } };
+            this.Operater.Wallet.MixBuildAndRelaySingleOutputTransaction(ct, fromAddress, tx =>
             {
-                if (tx.Inputs.Count() > 20)
-                {
-                    string msg = $"{UIHelper.LocalString("交易输入项太多,请分为多次转账", "There are too many transaction input. Please transfer multiple times")}";
-                    //Bapp.PushCrossBappMessage(new CrossBappMessage() { Content = msg, From = this.Module.Bapp });
-                    DarkMessageBox.ShowInformation(msg, "");
-                    return;
-                }
-                this.Operater.SignAndSendTx(tx);
-                if (this.Operater != default)
-                {
-                    string msg = $"{UIHelper.LocalString("交易已广播", "Relay transaction completed")}   {tx.Hash}";
-                    //Bapp.PushCrossBappMessage(new CrossBappMessage() { Content = msg, From = this.Module.Bapp });
-                    DarkMessageBox.ShowInformation(msg, "");
-                }
-            }
+                string msg = $"{UIHelper.LocalString("交易已广播", "Relay transaction completed")}   {tx.Hash}";
+                //Bapp.PushCrossBappMessage(new CrossBappMessage() { Content = msg, From = this.Module.Bapp });
+                DarkMessageBox.ShowInformation(msg, "");
+            });
         }
 
         private void cb_accounts_SelectedIndexChanged(object sender, EventArgs e)

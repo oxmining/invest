@@ -17,7 +17,7 @@ namespace OX.Mining.StakingMining
         public static bool IsSelfLock(this LockAssetTransaction lat, out UInt160 sh)
         {
             sh = Contract.CreateSignatureRedeemScript(lat.Recipient).ToScriptHash();
-            return lat.Witnesses.Select(m => m.ScriptHash).Contains(sh);
+            return lat.Witnesses.Select(m => m.ScriptHash).Contains(sh) || lat.GetPublicKeys().Contains(lat.Recipient);
         }
         public static bool IsSelfLock(this EthereumMapTransaction emt)
         {
