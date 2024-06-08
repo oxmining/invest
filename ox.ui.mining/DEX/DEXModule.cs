@@ -53,7 +53,7 @@ namespace OX.UI.Mining.DEX
             //viewPairMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
             //viewPairMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             //viewPairMenu.Name = "viewPairMenu";
-            //viewPairMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            //viewPairMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control| System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.P)));
             //viewPairMenu.Size = new System.Drawing.Size(170, 22);
             //viewPairMenu.Text = UIHelper.LocalString("链上交易", "On-Chain Swap");
 
@@ -62,7 +62,7 @@ namespace OX.UI.Mining.DEX
             viewMainPairMenu.BackColor = System.Drawing.Color.FromArgb(60, 63, 65);
             viewMainPairMenu.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
             viewMainPairMenu.Name = "viewMainPairMenu";
-            viewMainPairMenu.ShortcutKeys = Keys.Control | Keys.M;
+            viewMainPairMenu.ShortcutKeys = Keys.Control| Keys.Alt| Keys.M;
             viewMainPairMenu.Size = new System.Drawing.Size(170, 22);
             viewMainPairMenu.Text = UIHelper.LocalString("主池交易对", "Main Swap Pair");
             viewMainPairMenu.Click += ViewPairMenu_Click;
@@ -72,7 +72,7 @@ namespace OX.UI.Mining.DEX
             viewSidePairMenu.BackColor = System.Drawing.Color.FromArgb(60, 63, 65);
             viewSidePairMenu.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
             viewSidePairMenu.Name = "viewSidePairMenu";
-            viewSidePairMenu.ShortcutKeys = Keys.Control | Keys.S;
+            viewSidePairMenu.ShortcutKeys = Keys.Control| Keys.Alt| Keys.S;
             viewSidePairMenu.Size = new System.Drawing.Size(170, 22);
             viewSidePairMenu.Text = UIHelper.LocalString("边池交易对", "Side Swap Pair");
             viewSidePairMenu.Click += ViewSidePairMenu_Click;
@@ -83,7 +83,7 @@ namespace OX.UI.Mining.DEX
             regSidePairMenu.BackColor = System.Drawing.Color.FromArgb(60, 63, 65);
             regSidePairMenu.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
             regSidePairMenu.Name = "regSidePairMenu";
-            regSidePairMenu.ShortcutKeys = Keys.Control | Keys.G;
+            regSidePairMenu.ShortcutKeys = Keys.Control| Keys.Alt| Keys.G;
             regSidePairMenu.Size = new System.Drawing.Size(170, 22);
             regSidePairMenu.Text = UIHelper.LocalString("注册边池交易对", "Register Side Exchange Pair");
             regSidePairMenu.Click += RegSidePairMenu_Click;
@@ -94,7 +94,7 @@ namespace OX.UI.Mining.DEX
             ruleSettingMenu.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
             //exitmenu.Image = global::Example.Icons.NewFile_6276;
             ruleSettingMenu.Name = "custodyAccountsMenu";
-            ruleSettingMenu.ShortcutKeys = Keys.Control | Keys.R;
+            ruleSettingMenu.ShortcutKeys = Keys.Control| Keys.Alt| Keys.R;
             ruleSettingMenu.Size = new System.Drawing.Size(170, 22);
             ruleSettingMenu.Text = UIHelper.LocalString("兑换规则", "Swap Rule");
             ruleSettingMenu.Click += RuleSettingMenu_Click;
@@ -105,7 +105,7 @@ namespace OX.UI.Mining.DEX
             swapCommunityMenu.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
             //swapCommunityMenu.Image = global::Example.Icons.NewFile_6276;
             swapCommunityMenu.Name = "swapCommunityMenu";
-            swapCommunityMenu.ShortcutKeys = Keys.Control | Keys.C;
+            swapCommunityMenu.ShortcutKeys = Keys.Control| Keys.Alt| Keys.C;
             swapCommunityMenu.Size = new System.Drawing.Size(170, 22);
             swapCommunityMenu.Text = UIHelper.LocalString("兑换社区", "Swap Community");
             swapCommunityMenu.Click += SwapCommunityMenu_Click;
@@ -249,6 +249,19 @@ namespace OX.UI.Mining.DEX
                 k.AfterOnBlock(block);
             foreach (var k in SideKLines.Values)
                 k.AfterOnBlock(block);
+        }
+        public override void OnFlashMessage(FlashMessage flashMessage)
+        {
+            if (PairView != default)
+                PairView.OnFlashMessage(flashMessage);
+            if (SidePairView != default)
+                SidePairView.OnFlashMessage(flashMessage);
+            if (SwapRule != default)
+                SwapRule.OnFlashMessage(flashMessage);
+            foreach (var k in KLines.Values)
+                k.OnFlashMessage(flashMessage);
+            foreach (var k in SideKLines.Values)
+                k.OnFlashMessage(flashMessage);
         }
         public override void ChangeWallet(INotecase operater)
         {

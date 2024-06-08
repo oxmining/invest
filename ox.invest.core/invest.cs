@@ -12,33 +12,25 @@ namespace OX.Mining
 {
     public class invest
     {
-        public const string Name = "invest";
-        public const string LockMiningOfficalEventBoardId = "105753-1";
-        public const string DEXOfficalEventBoardId = "105764-1";
+        public const string Name = "mining";
+        public const string LockMiningOfficalEventBoardId = "171735-1";
+        public const string DEXOfficalEventBoardId = "171746-1";
         public static string[] PubKeys = new string[] {
-        "02a829c4171ff79c581097abd1f6de90223a7f053f955e16d8f0749d4fe4440aa4",
-        "03f58b8373b85e9fc54ab09bfff5741423b7aaf277d6c70cebf7d04db18ed55ad4",
-        "03d03c73dce48f5a8c93e25a5172aebbadc511768eab807cfebaf47353ea0bb6b0",
-        "021c4d1fe831fded3e57b7bc954bacc3e1a66060557aca378e02638bcf6cdfe0df",
-        "02aade56ee0d4e40a18fb939ab6c3d1eff3f84ea2681134536c3d2126c6029ac83",
-        "02ea34b278a3812ee869ba7e06a815ab4a6e2b9c33c1bad6b91ef914f0f22a920e",
-        "032bc82546381ed634c7940cf7a63b7c8dc972fae142d82d4d84d871524b75b1a4",
-        "02f3a117fd8a2ba5483ba3599edd53ddf58e075bf495ea4c9e78e57f0d092c2fa1",
-        "03529db24e1006e8153d1ae50cfd59de5b8daed7ae87bef8402c1d467957243316",
-        "02d957c68656b3b9c1316551cc9851fee327ba8a92ee127c2ca1585151df932015"
+        "0281f5df26e72bcf48e7378d33bf280b88fb51dd7e73f196d6f07a8d125a2f7c98",
+        "022e5d9efad9b521d8cf4e5ce1b53c3520542d73a57f1bcc8d50a17fb9a9213a5e",
+        "02a2915a9ef5ac069d7a6912a0b6a7a6bc6fa9cfd10994bbb80bbb027cb0c463a3",
+        "031f59c5b11d0a7dc865efd31ddb6cb13f946cc32c714b5d8baa1c8d2cadf644c6",
+        "03bdcd89b6e24a2f7e2beff79aefa460b22716d1d83846ae0df2e1c2f6cc8a7eed",
+        "03f2e255acd0b2641fec0bf4f348544c94fca18526681814b16ec62b8cae776d28",
+        "031210e335f143c2a6300741210efaea87c3632cd265cf9dbdace1fb9411709f23",
+        "03dda536fa3c26e749bec80b47588a60523db2d778c24dd65bf67170c0b2f693dc",
+        "024e84200ee49934bb0d63ce8a0f9862bb81bd609ef7fcd2e3328e16b6e1a94512",
+        "0215dad3056b04b6d43da274af560a68fee82b67312ac260416f114ad9ecd81597"
         };
         public static ECPoint[] BizPublicKeys { get; private set; }
 
         public static Dictionary<UInt160, ECPoint> BizAddresses { get; private set; }
-        public static string[] SettingAccounts = new string[] {
-        "AH1a5t7N7csjunnRxAAbtVoh35Q1aLG6UR",
-        "ANg8pku2SoBRY7v62YEyFYV1jkhHs2qeqq",
-        "AY64o5DbkHuY5oeUefuqk3cRNwDAsqRDdh",
-        "AHyxwA5Wxwh5Dxu3Xo3xmMS64hhLLAcBpb",
-        "ANdiYeezEZ3TA9q3ps7KSo6ovE9vizJrHG",
-        "AFzmGz1iqaf1PyR9TSkFJm77wg7xhhXvvX",
-        "AFqfGhapKPGqx34Pk2gqHwh6mZLzQrwDfN"
-        };
+        
         public static ECPoint MasterAccountPubKey = ECPoint.DecodePoint(PubKeys[0].HexToBytes(), ECCurve.Secp256r1);
         public static UInt160 MasterAccountAddress = Contract.CreateSignatureRedeemScript(MasterAccountPubKey).ToScriptHash();
        
@@ -53,35 +45,30 @@ namespace OX.Mining
 
         public static ECPoint LockMiningAccountPubKey = ECPoint.DecodePoint(PubKeys[5].HexToBytes(), ECCurve.Secp256r1);
         public static UInt160 LockMiningAccountAddress = Contract.CreateSignatureRedeemScript(LockMiningAccountPubKey).ToScriptHash();
-
-        public static ECPoint OTCAccountPubKey = ECPoint.DecodePoint(PubKeys[6].HexToBytes(), ECCurve.Secp256r1);
-        public static UInt160 OTCAccountAddress = Contract.CreateSignatureRedeemScript(OTCAccountPubKey).ToScriptHash();
-
+ 
         public static ECPoint SlaveSidePoolAccountPubKey = ECPoint.DecodePoint(PubKeys[7].HexToBytes(), ECCurve.Secp256r1);
         public static UInt160 SlaveSidePoolAccountAddress = Contract.CreateSignatureRedeemScript(SlaveSidePoolAccountPubKey).ToScriptHash();
 
-        public static ECPoint TrustFundWitnessPubKey = ECPoint.DecodePoint(PubKeys[8].HexToBytes(), ECCurve.Secp256r1);
-        public static UInt160 TrustFundWitnessAddress = Contract.CreateSignatureRedeemScript(TrustFundWitnessPubKey).ToScriptHash();
-
-        public static UInt256 USDX_Asset
-        { get; private set; } = UInt256.Parse("0x7035ea8f10c4209340aafc6f826c969be9ce2ab3e168feb067303c1dc05a1573");
+      
+        public static UInt256 USDT_Asset
+        { get; private set; } = UInt256.Parse("0xb2858d485532ec422d7e82371945cf384563adbf8bc934982ecd3ca557fb6f74");
         public static UInt256 MLM_Asset
-        { get; private set; } = UInt256.Parse("0x80c531d84f1f1fd04c3be5fe8a2ce8b50831b60e145035ac1ed18281e2133608");
+        { get; private set; } = UInt256.Parse("0x41a5e60f3a44d562cc544ef6fcfbc217bbd67475a63783d19676147af696f89e");
 
         public static UInt256 SLM_Asset
-        { get; private set; } = UInt256.Parse("0x1e953288acd127a066110ca9e6bbfc2ce8821cd0e10a94fd0a6b3138b452434d");
+        { get; private set; } = UInt256.Parse("0x24d60cdd3624f006d7237e3bc1eae2604453a23a77d66c0013298e3ac357cd7b");
 
         public static UInt256 LLM_Asset
-        { get; private set; } = UInt256.Parse("0xb6be9c0e8e8360eceb44f1fa503332f9f63418204757f21e34cf10769d6fd5e4");
+        { get; private set; } = UInt256.Parse("0xfbf06dcdf304bbfbf7b0f2303ac5e9b2ffd06afa0d09246ca5b23fd1a0d678a5");
 
         public static UInt256 BNS_Asset
-        { get; private set; } = UInt256.Parse("0xb11e03edb58288218f5e9e12da3ab77cfadaf046cae5b547bd402c6f5b452725");
+        { get; private set; } = UInt256.Parse("0x1714b263a281e8931a24c4cf9bbd575f75a73214b2fedfc7f208c9d01307d751");
         public static UInt256 ML2_Asset
-        { get; private set; } = UInt256.Parse("0x70955c804f4263513b671cf18b5ff10a80b5088c08c5aceaa55cdfae44acb2ea");
+        { get; private set; } = UInt256.Parse("0xc0e7a5416f620ca317ce1ecb89ec090abbf8722bee2807d72e26995f97850480");
         public static UInt256 SL2_Asset
-        { get; private set; } = UInt256.Parse("0xcbb321f3db6dddb1b7311f57a8219d3bd822a4a1ea61657d9e5ccdfd7e5696be");
+        { get; private set; } = UInt256.Parse("0x15fcfd80c8da7db8b5f8028af2f4072fb815431319a89681be3bd664528918ca");
         public static UInt256 LL2_Asset
-        { get; private set; } = UInt256.Parse("0x3a1788400daaa7b489dd498154cc2bf1a2c456c91a5d01f086e1712a072ddffc");
+        { get; private set; } = UInt256.Parse("0xdd2bc7bb1335b94a3d11280ef541901b243c7932565fa5975eb06d8cedafc8de");
 
 
 
@@ -95,12 +82,6 @@ namespace OX.Mining
             BizPublicKeys = PubKeys.Select(p => ECPoint.DecodePoint(p.HexToBytes(), ECCurve.Secp256r1)).ToArray();
             BizAddresses = BizPublicKeys.ToDictionary(n => Contract.CreateSignatureRedeemScript(n).ToScriptHash());
         }
-        public static bool AllowSetting(uint SettingIndex)
-        {
-            if (SettingIndex >= SettingAccounts.Length) return false;
-            var acts = Blockchain.Singleton.CurrentSnapshot.Accounts.GetAndChange(SettingAccounts[SettingIndex].ToScriptHash(), () => null);
-            if (acts.IsNull()) return false;
-            return acts.GetBalance(Blockchain.OXC) > Fixed8.Zero;
-        }
+         
     }
 }

@@ -387,7 +387,7 @@ namespace OX.Mining.DEX
     public class SideSwapPairKeyMerge : ISerializable
     {
         public SideSwapPairKey Key;
-        public SideTransaction Value;
+        public SlotSideTransaction Value;
         public virtual int Size => Key.Size + Value.Size;
         public void Serialize(BinaryWriter writer)
         {
@@ -397,7 +397,7 @@ namespace OX.Mining.DEX
         public void Deserialize(BinaryReader reader)
         {
             Key = reader.ReadSerializable<SideSwapPairKey>();
-            Value = reader.ReadSerializable<SideTransaction>();
+            Value = reader.ReadSerializable<SlotSideTransaction>();
         }
     }
 }

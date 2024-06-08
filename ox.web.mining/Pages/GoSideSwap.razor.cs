@@ -16,7 +16,7 @@ using OX.Cryptography.ECC;
 using OX.Mining;
 using OX.Ledger;
 using OX.SmartContract;
-using OX.Cryptography.AES;
+using OX.Cryptography;
 using OX.Web.Models;
 using OX.Wallets.Hubs;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -161,7 +161,7 @@ namespace OX.Web.Pages
             this.Provider = Bapp.GetBappProvider<MiningBapp, IMiningProvider>();
             if (Provider.IsNotNull())
             {
-                foreach (var p in Provider.GetAll<SideSwapPairKey, SideTransaction>(InvestBizPersistencePrefixes.SideSwapPair))
+                foreach (var p in Provider.GetAll<SideSwapPairKey, SlotSideTransaction>(InvestBizPersistencePrefixes.SideSwapPair))
                 {
                     if (p.Key.PoolAddress == this.PoolSH)
                     {

@@ -52,7 +52,7 @@ namespace OX.UI.Mining.DTF
             viewAllFundsMenu.BackColor = System.Drawing.Color.FromArgb(60, 63, 65);
             viewAllFundsMenu.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
             viewAllFundsMenu.Name = "viewAllFundsMenu";
-            viewAllFundsMenu.ShortcutKeys = Keys.Control | Keys.A;
+            viewAllFundsMenu.ShortcutKeys = Keys.Control| Keys.Alt| Keys.A;
             viewAllFundsMenu.Size = new System.Drawing.Size(170, 22);
             viewAllFundsMenu.Text = UIHelper.LocalString("所有基金", "All Funds");
             viewAllFundsMenu.Click += ViewFundsMenu_Click;
@@ -62,7 +62,7 @@ namespace OX.UI.Mining.DTF
             myEntrustedFundsMenu.BackColor = System.Drawing.Color.FromArgb(60, 63, 65);
             myEntrustedFundsMenu.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
             myEntrustedFundsMenu.Name = "myEntrustedFundsMenu";
-            myEntrustedFundsMenu.ShortcutKeys = Keys.Control | Keys.M;
+            myEntrustedFundsMenu.ShortcutKeys = Keys.Control| Keys.Alt| Keys.M;
             myEntrustedFundsMenu.Size = new System.Drawing.Size(170, 22);
             myEntrustedFundsMenu.Text = UIHelper.LocalString("我受托的基金", "My Be Entrusted Funds");
             myEntrustedFundsMenu.Click += MyEntrustedFundsMenu_Click;
@@ -72,7 +72,7 @@ namespace OX.UI.Mining.DTF
             mySubscribedFundsMenu.BackColor = System.Drawing.Color.FromArgb(60, 63, 65);
             mySubscribedFundsMenu.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
             mySubscribedFundsMenu.Name = "mySubscribedFundsMenu";
-            mySubscribedFundsMenu.ShortcutKeys = Keys.Control | Keys.S;
+            mySubscribedFundsMenu.ShortcutKeys = Keys.Control| Keys.Alt| Keys.S;
             mySubscribedFundsMenu.Size = new System.Drawing.Size(170, 22);
             mySubscribedFundsMenu.Text = UIHelper.LocalString("我认筹的的基金", "My Subscribed Funds");
             mySubscribedFundsMenu.Click += MySubscribedFundsMenu_Click;
@@ -82,7 +82,7 @@ namespace OX.UI.Mining.DTF
             regTrustFundMenu.BackColor = System.Drawing.Color.FromArgb(60, 63, 65);
             regTrustFundMenu.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
             regTrustFundMenu.Name = "regTrustFundMenu";
-            regTrustFundMenu.ShortcutKeys = Keys.Control | Keys.R;
+            regTrustFundMenu.ShortcutKeys = Keys.Control| Keys.Alt| Keys.R;
             regTrustFundMenu.Size = new System.Drawing.Size(170, 22);
             regTrustFundMenu.Text = UIHelper.LocalString("注册信托基金", "Register Trust Fund");
             regTrustFundMenu.Click += RegTrustFundMenu_Click;
@@ -199,6 +199,15 @@ namespace OX.UI.Mining.DTF
                 this.EntrustedFundsView.AfterOnBlock(block);
             if (this.SubscribedFundsView.IsNotNull())
                 this.SubscribedFundsView.AfterOnBlock(block);
+        }
+        public override void OnFlashMessage(FlashMessage flashMessage)
+        {
+            if (this.FundsView.IsNotNull())
+                this.FundsView.OnFlashMessage(flashMessage);
+            if (this.EntrustedFundsView.IsNotNull())
+                this.EntrustedFundsView.OnFlashMessage(flashMessage);
+            if (this.SubscribedFundsView.IsNotNull())
+                this.SubscribedFundsView.OnFlashMessage(flashMessage);
         }
         public override void ChangeWallet(INotecase operater)
         {

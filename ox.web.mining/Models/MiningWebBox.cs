@@ -22,33 +22,43 @@ namespace OX.Web.Models
         public override MenuDataItem[] GetMemus(string language)
         {
             List<MenuDataItem> list = new List<MenuDataItem>();
-            list.Add(new MenuDataItem
+            var tradeMenu = new MenuDataItem
             {
                 Path = "/_pc/invest",
                 Name = UIHelper.WebLocalString(language, "交易", "Exchange"),
                 Key = "exchange",
-                //Icon = "smile",
-                Children = new MenuDataItem[] {
-                    new MenuDataItem
-                    {
-                        Path = "/_pc/invest/deposit",
-                        Name = UIHelper.WebLocalString(language,"场外入金", "OTC Buy"),
-                        Key = "deposit"
-                    },
-                     new MenuDataItem
-                    {
-                        Path = "/_pc/invest/otcsale",
-                        Name =UIHelper.WebLocalString(language,"场外出金", "OTC Sale"),
-                        Key = "otcsale"
-                    },
-                     new MenuDataItem
-                    {
-                        Path = "/_pc/invest/swap",
-                        Name = UIHelper.WebLocalString(language,"兑换", "Swap"),
-                        Key = "swap"
-                    }
-                }
+                //Icon = "smile",                
+            };
+            List<MenuDataItem> subMenus = new List<MenuDataItem>();
+            subMenus.Add(new MenuDataItem
+            {
+                Path = "/_pc/invest/anchorcasting",
+                Name = UIHelper.WebLocalString(language, "锚定铸造USDT", "Anchor Casting USDT"),
+                Key = "anchorcasting"
             });
+            subMenus.Add(new MenuDataItem
+            {
+                Path = "/_pc/invest/deposit",
+                Name = UIHelper.WebLocalString(language, "场外入金", "OTC Buy"),
+                Key = "deposit"
+            });
+            if (OXRunTime.RunMode == RunMode.Server)
+            {
+                subMenus.Add(new MenuDataItem
+                {
+                    Path = "/_pc/invest/otcsale",
+                    Name = UIHelper.WebLocalString(language, "场外出金", "OTC Sale"),
+                    Key = "otcsale"
+                });
+                subMenus.Add(new MenuDataItem
+                {
+                    Path = "/_pc/invest/swap",
+                    Name = UIHelper.WebLocalString(language, "兑换", "Swap"),
+                    Key = "swap"
+                });
+            }
+            tradeMenu.Children = subMenus.ToArray();
+            list.Add(tradeMenu);
             if (OXRunTime.RunMode == RunMode.Server)
             {
                 list.Add(new MenuDataItem

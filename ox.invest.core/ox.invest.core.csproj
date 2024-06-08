@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>net7.0</TargetFramework>
 		<Copyright>gt</Copyright>
 		<AssemblyTitle>OX</AssemblyTitle>
-	<Version>1.2.0</Version>
+	<Version>3.0.0</Version>
 		<Authors>gt</Authors>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<AssemblyName>ox.invest.core</AssemblyName>
@@ -73,7 +73,7 @@
 
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	  <Exec Command="copy $(TargetPath)  E:\Data\Source\AU-X\OX\OX-Wallets\ox.notecase\bin\Debug\net6.0-windows\bapps\mining\&#xD;&#xA;copy $(TargetPath)  E:\Data\Source\AU-X\OX\OX-Wallets\ox.mix\bin\Debug\net6.0-windows\bapps\mining\&#xD;&#xA;copy $(TargetPath)  E:\Data\Source\AU-X\OX\OX-Wallets\ox.web\bin\Debug\net6.0-windows\bapps\mining\&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;" />
+	  <Exec Command="copy $(TargetPath)  E:\Data\Source\AU-X\OX\OX-Wallets\ox.notecase\bin\Debug\net7.0-windows\bapps\mining\&#xD;&#xA;copy $(TargetPath)  E:\Data\Source\AU-X\OX\OX-Wallets\ox.mix\bin\Debug\net7.0-windows\bapps\mining\&#xD;&#xA;copy $(TargetPath)  E:\Data\Source\AU-X\OX\OX-Wallets\ox.web\bin\Debug\net7.0-windows\bapps\mining\&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;" />
 	</Target>
 
 </Project>

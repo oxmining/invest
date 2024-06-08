@@ -13,6 +13,7 @@ using System.Linq;
 using System.Windows.Forms;
 using OX.UI.Mining;
 using OX.Mining.DEX;
+using NBitcoin.Secp256k1;
 
 namespace OX.UI.Swap
 {
@@ -133,6 +134,11 @@ namespace OX.UI.Swap
             foreach (var p in this.Pairs.Values)
                 p.HeartBeat(context);
         }
+        public   void OnFlashMessage(FlashMessage flashMessage)
+        {
+            foreach (var p in this.Pairs.Values)
+                p.OnFlashMessage(flashMessage);
+        }
         public void BeforeOnBlock(Block block)
         {
             foreach (var p in this.Pairs.Values)
@@ -151,7 +157,7 @@ namespace OX.UI.Swap
         {
             foreach (var tx in block.Transactions)
             {
-                if (tx is SideTransaction st)
+                if (tx is SlotSideTransaction st)
                 {
                     if (st.VerifyRegMainSwap(out UInt256 _, out SwapPairReply swapPairReply))
                     {
@@ -190,7 +196,7 @@ namespace OX.UI.Swap
                 var bizPlugin = Bapp.GetBappProvider<MiningBapp, IMiningProvider>();
                 if (bizPlugin != default)
                 {
-                    foreach (var p in bizPlugin.GetAll<UInt160, SwapPairMerge>(InvestBizPersistencePrefixes.SwapPair).OrderByDescending(m => m.Value.SwapPairReply.TargetAssetId.Equals(Blockchain.OXS)).ThenByDescending(m => m.Value.SwapPairReply.TargetAssetId==invest.USDX_Asset).ThenByDescending(m => m.Value.Index))
+                    foreach (var p in bizPlugin.GetAll<UInt160, SwapPairMerge>(InvestBizPersistencePrefixes.SwapPair).OrderByDescending(m => m.Value.SwapPairReply.TargetAssetId.Equals(Blockchain.OXS)).ThenByDescending(m => m.Value.SwapPairReply.TargetAssetId==invest.USDT_Asset).ThenByDescending(m => m.Value.Index))
                     {
                         if (bizPlugin.SwapPairStates.TryGetValue(p.Key, out SwapPairStateReply stateReply) && stateReply.Flag != 1)
                             continue;

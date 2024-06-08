@@ -126,7 +126,7 @@ namespace OX.UI.LAM
 
         private void Lammenu_Click(object sender, EventArgs e)
         {
-            var sh = invest.BizAddresses.Keys.FirstOrDefault();
+            var sh = invest.MasterAccountAddress;
             var account = this.Operater.Wallet.GetAccount(sh);
             new IssueLockMiningAssetcs(this.Operater, account, sh).ShowDialog();
         }
@@ -144,6 +144,10 @@ namespace OX.UI.LAM
         {
         }
         public void HeartBeat(HeartBeatContext context)
+        {
+
+        }
+        public   void OnFlashMessage(FlashMessage flashMessage)
         {
 
         }

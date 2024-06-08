@@ -11,7 +11,6 @@ using OX.Network.P2P.Payloads;
 using OX.SmartContract;
 using OX.Cryptography.ECC;
 using OX.Wallets;
-using OX.Cryptography.AES;
 using OX.Cryptography;
 using OX.Mining.StakingMining;
 using OX.Mining.DEX;
@@ -20,6 +19,7 @@ using OX.Mining.OTC;
 using Org.BouncyCastle.Cms;
 using Nethereum.Signer.Crypto;
 using System.Reflection;
+using StringWrapper = OX.Mining.StakingMining.StringWrapper;
 
 namespace OX.Mining
 {
@@ -58,7 +58,7 @@ namespace OX.Mining
                 }
             }
         }
-        public static void Save_MainSwapPair(this WriteBatch batch, MiningProvider miningProvider, Block block, SideTransaction st, SwapPairReply reply)
+        public static void Save_MainSwapPair(this WriteBatch batch, MiningProvider miningProvider, Block block, SlotSideTransaction st, SwapPairReply reply)
         {
             if (reply.IsNotNull())
             {
@@ -288,9 +288,9 @@ namespace OX.Mining
                 }
             }
         }
-        public static void Save_SideSwapPair(this WriteBatch batch, MiningProvider miningProvider, Block block, SideTransaction st, UInt256 assetId)
+        public static void Save_SideSwapPair(this WriteBatch batch, MiningProvider miningProvider, Block block, SlotSideTransaction st, UInt256 assetId)
         {
-            SideSwapPairKey key = new SideSwapPairKey { Owner = Contract.CreateSignatureRedeemScript(st.Recipient).ToScriptHash(), PoolAddress = st.GetContract().ScriptHash, AssetId = assetId, Index = block.Index };
+            SideSwapPairKey key = new SideSwapPairKey { Owner = Contract.CreateSignatureRedeemScript(st.Slot).ToScriptHash(), PoolAddress = st.GetContract().ScriptHash, AssetId = assetId, Index = block.Index };
             batch.Put(SliceBuilder.Begin(InvestBizPersistencePrefixes.SideSwapPair).Add(key), SliceBuilder.Begin().Add(st));
             miningProvider.Side_SwapPairs[key.PoolAddress] = new SideSwapPairKeyMerge { Key = key, Value = st };
         }

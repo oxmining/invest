@@ -17,7 +17,7 @@ using OX.Mining;
 using OX.Ledger;
 using OX.IO;
 using OX.SmartContract;
-using OX.Cryptography.AES;
+using OX.Cryptography;
 using OX.Cryptography.ECC;
 using OX.UI.Mining;
 
@@ -84,9 +84,9 @@ namespace OX.UI.Swap
                 var oxcbalance = this.Operater.Wallet.GeAccountAvailable(owner, Blockchain.OXC).ToString();
                 this.tb_oxc_balance.Text = oxcbalance;
                 this.lb_assetMsg.Text = $"{assetState.GetName()}   /   {owner.ToAddress()}";
-                var tx = new SideTransaction()
+                var tx = new SlotSideTransaction()
                 {
-                    Recipient = invest.SlaveSidePoolAccountPubKey,
+                     Slot = invest.SlaveSidePoolAccountPubKey,
                     SideType = SideType.AssetID,
                     Data = this.AssetId.ToArray(),
                     Flag = 1,
@@ -121,9 +121,9 @@ namespace OX.UI.Swap
                 if (!Fixed8.TryParse(this.tb_target_amount.Text, out Fixed8 targetamount) || targetamount < SideTransactionHelper.MinSidePoolOXC) return;
                 if (!Fixed8.TryParse(this.tb_oxc_amount.Text, out Fixed8 oxcamount) || oxcamount < SideTransactionHelper.MinSidePoolOXC) return;
                 if (this.AssetId.IsNull()) return;
-                var tx = new SideTransaction()
+                var tx = new SlotSideTransaction()
                 {
-                    Recipient = invest.SlaveSidePoolAccountPubKey,
+                     Slot = invest.SlaveSidePoolAccountPubKey,
                     SideType = SideType.AssetID,
                     Data = this.AssetId.ToArray(),
                     Flag = 1,

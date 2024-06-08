@@ -30,6 +30,7 @@ namespace OX.UI.Swap
                 AddSetting(settings, InvestSettingTypes.SwapExternalToken, UIHelper.LocalString("兑换代币名称", "Swap token name"), "");
                 AddSetting(settings, InvestSettingTypes.DEXBonusToken, UIHelper.LocalString("交易奖励资产", "DEX Bonus Asset Id"), "");
                 AddSetting(settings, InvestSettingTypes.SidePairRegFee, UIHelper.LocalString("边池交易对注册费", "Side Exchange Pair Reg Fee"), "OXC");
+                AddSetting(settings, InvestSettingTypes.AnchorIssuePool, UIHelper.LocalString("USDT锚地抵押发行池", "USDT anchor mortgage issuance pool"), "");
             }
         }
         void AddSetting(IEnumerable<KeyValuePair<byte[], InvestSettingRecord>> settings, byte settingKey, string name, string suffix)
@@ -53,6 +54,10 @@ namespace OX.UI.Swap
         {
         }
         public void HeartBeat(HeartBeatContext context)
+        {
+
+        }
+        public  void OnFlashMessage(FlashMessage flashMessage)
         {
 
         }

@@ -16,7 +16,7 @@ using OX.Cryptography.ECC;
 using OX.Mining;
 using OX.Ledger;
 using OX.SmartContract;
-using OX.Cryptography.AES;
+using OX.Cryptography;
 using OX.Web.Models;
 using OX.Wallets.Hubs;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -35,13 +35,13 @@ namespace OX.Web.Pages
     {
         public override string PageTitle => this.WebLocalString("兑换", "Swap");
         Dictionary<UInt160, SwapPairMerge> ExchangePairs = new Dictionary<UInt160, SwapPairMerge>();
-        SideTransaction[] SideExchangePaires = new SideTransaction[0];
+        SlotSideTransaction[] SideExchangePaires = new SlotSideTransaction[0];
         protected override void OnMiningInit()
         {
             var bizPlugin = Bapp.GetBappProvider<MiningBapp, IMiningProvider>();
             if (bizPlugin != default)
             {
-                foreach (var p in bizPlugin.GetAll<UInt160, SwapPairMerge>(InvestBizPersistencePrefixes.SwapPair).OrderByDescending(m => m.Value.SwapPairReply.TargetAssetId.Equals(Blockchain.OXS)).ThenByDescending(m => m.Value.SwapPairReply.TargetAssetId==invest.USDX_Asset).ThenByDescending(m => m.Value.Index))
+                foreach (var p in bizPlugin.GetAll<UInt160, SwapPairMerge>(InvestBizPersistencePrefixes.SwapPair).OrderByDescending(m => m.Value.SwapPairReply.TargetAssetId.Equals(Blockchain.OXS)).ThenByDescending(m => m.Value.SwapPairReply.TargetAssetId==invest.USDT_Asset).ThenByDescending(m => m.Value.Index))
                 {
                     if (bizPlugin.SwapPairStates.TryGetValue(p.Key, out SwapPairStateReply stateReply) && stateReply.Flag != 1)
                         continue;
@@ -49,8 +49,8 @@ namespace OX.Web.Pages
                         continue;
                     ExchangePairs[p.Key] = p.Value;
                 }
-                List<SideTransaction> list = new List<SideTransaction>();
-                foreach (var p in bizPlugin.GetAll<SideSwapPairKey, SideTransaction>(InvestBizPersistencePrefixes.SideSwapPair))
+                List<SlotSideTransaction> list = new List<SlotSideTransaction>();
+                foreach (var p in bizPlugin.GetAll<SideSwapPairKey, SlotSideTransaction>(InvestBizPersistencePrefixes.SideSwapPair))
                 {
                     list.Add(p.Value);
                 }

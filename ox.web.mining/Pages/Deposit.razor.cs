@@ -16,7 +16,7 @@ using OX.Cryptography.ECC;
 using OX.Mining;
 using OX.Ledger;
 using OX.SmartContract;
-using OX.Cryptography.AES;
+using OX.Cryptography;
 using OX.Web.Models;
 using OX.Wallets.Hubs;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -43,7 +43,7 @@ namespace OX.Web.Pages
                 foreach (var r in bizPlugin.OTCDealers.Select(m => m.Value).Where(m => m.Setting.State == OTCStatus.Open))
                 {
                     var account = Blockchain.Singleton.CurrentSnapshot.Accounts.TryGet(r.InPoolAddress);
-                    if (account.IsNotNull() && account.Balances.TryGetValue(invest.USDX_Asset, out Fixed8 OTCDealerOXPoolBalance))
+                    if (account.IsNotNull() && account.Balances.TryGetValue(invest.USDT_Asset, out Fixed8 OTCDealerOXPoolBalance))
                     {
                         list.Add(new OTCDealerViewModel
                         {

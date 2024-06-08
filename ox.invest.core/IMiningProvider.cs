@@ -10,6 +10,7 @@ using OX.Mining.DEX;
 using OX.Mining.Trade;
 using OX.Mining.OTC;
 using OX.Mining.DTF;
+using System.Collections;
 
 namespace OX.Mining
 {
@@ -43,5 +44,6 @@ namespace OX.Mining
         //IEnumerable<KeyValuePair<MiningHolderKey, MinerParentPrivatePublish>> GetMyLeafMiners();
         IEnumerable<KeyValuePair<CoinReference, DTFLockAssetMerge>> GetAllDTFLockAssets();
         IEnumerable<KeyValuePair<DTFIDOSummaryKey, Fixed8>> GetAllDTFIDOSummary(UInt160 IDOOwner=default);
+        string GetAnchorMortgageIssuePoolAddress();
     }
 }

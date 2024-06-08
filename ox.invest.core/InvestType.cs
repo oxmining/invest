@@ -28,5 +28,6 @@ namespace OX.Mining
         OTCDepositRequest = 0x29,
         OTCWithdrawalRequest = 0x2A,
         OTCRegisterRequest = 0x40,
+        OTCExchangeRequest = 0x41
     }
 }

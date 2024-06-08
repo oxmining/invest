@@ -17,7 +17,7 @@ using OX.Mining;
 using OX.Ledger;
 using OX.IO;
 using OX.SmartContract;
-using OX.Cryptography.AES;
+using OX.Cryptography;
 using OX.Cryptography.ECC;
 using OX.Mining.StakingMining;
 

@@ -88,8 +88,7 @@ namespace OX.UI.Swap
 
         private void Sm_Click1(object sender, EventArgs e)
         {
-            var sh = invest.BizAddresses.Keys.FirstOrDefault();
-            var account = this.Operater.Wallet.GetAccount(sh);
+            var account = this.Operater.Wallet.GetAccount(invest.MasterAccountAddress);
             if (account.IsNotNull())
             {
                 SwapPairStateReply reply = new SwapPairStateReply
@@ -205,6 +204,9 @@ namespace OX.UI.Swap
         public void HeartBeat(HeartBeatContext context)
         {
 
+        }
+        public void OnFlashMessage(FlashMessage flashMessage)
+        {
         }
         public void BeforeOnBlock(Block block)
         {

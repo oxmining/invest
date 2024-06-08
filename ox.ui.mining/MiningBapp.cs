@@ -11,7 +11,10 @@ namespace OX.UI.Mining
     {
         public override string MatchKernelVersion => "1.0.2";
         public override ECPoint[] BizPublicKeys => invest.BizPublicKeys;
-
+        public override IFlashMessageProvider BuildFlashMessageProvider()
+        {
+            return default;
+        }
         public override IBappProvider BuildBappProvider()
         {
             return new MiningProvider(this);

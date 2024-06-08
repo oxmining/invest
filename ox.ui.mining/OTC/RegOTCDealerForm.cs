@@ -17,7 +17,7 @@ using OX.Mining;
 using OX.Ledger;
 using OX.IO;
 using OX.SmartContract;
-using OX.Cryptography.AES;
+using OX.Cryptography;
 using OX.UI.Mining;
 using OX.Mining.Trade;
 using OX.Mining.OTC;
@@ -104,7 +104,7 @@ namespace OX.UI.OTC
             this.lb_inpool_addr_v.Text = sh.ToAddress();
             var account = Blockchain.Singleton.CurrentSnapshot.Accounts.TryGet(sh);
             if (account == null) return;
-            if (account.Balances.TryGetValue(invest.USDX_Asset, out Fixed8 balance))
+            if (account.Balances.TryGetValue(invest.USDT_Asset, out Fixed8 balance))
             {
                 this.lb_inpool_balance_v.Text = balance.ToString();
             }
@@ -117,7 +117,7 @@ namespace OX.UI.OTC
             var from = this.cb_accounts.SelectedItem as AccountListItem;
             var account = Blockchain.Singleton.CurrentSnapshot.Accounts.TryGet(from.Account.ScriptHash);
             if (account == null) return;
-            if (account.Balances.TryGetValue(invest.USDX_Asset, out Fixed8 balance))
+            if (account.Balances.TryGetValue(invest.USDT_Asset, out Fixed8 balance))
             {
                 this.tb_balance.Text = balance.ToString();
             }
@@ -152,7 +152,7 @@ namespace OX.UI.OTC
                     outputs.Add(new TransactionOutput
                     {
                         ScriptHash = sh,
-                        AssetId = invest.USDX_Asset,
+                        AssetId = invest.USDT_Asset,
                         Value = amount
                     });
                 }

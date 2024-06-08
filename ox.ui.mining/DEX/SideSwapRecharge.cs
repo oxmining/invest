@@ -40,8 +40,8 @@ namespace OX.UI.Swap
             this.lb_balance.Text = UIHelper.LocalString("可用余额:", "Available Balance:");
             this.lb_amount.Text = UIHelper.LocalString("金额:", "Amount:");
         }
-        SideTransaction SideTransaction;
-        public SideSwapRecharge(INotecase operater, SideTransaction sideTx) : this()
+        SlotSideTransaction SideTransaction;
+        public SideSwapRecharge(INotecase operater, SlotSideTransaction sideTx) : this()
         {
             this.Operater = operater;
             this.SideTransaction = sideTx;

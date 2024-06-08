@@ -13,6 +13,7 @@ using OX.Bapps;
 using OX.Mining;
 using OX.IO.Json;
 using OX.UI.LAM;
+using NBitcoin.Secp256k1;
 
 namespace OX.UI.LAM
 {
@@ -56,7 +57,7 @@ namespace OX.UI.LAM
             MinerMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             //exitmenu.Image = global::Example.Icons.NewFile_6276;
             MinerMenu.Name = "MinerMenu";
-            MinerMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
+            MinerMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control| System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.M)));
             MinerMenu.Size = new System.Drawing.Size(170, 22);
             MinerMenu.Text = UIHelper.LocalString("矿机", "Miner");
 
@@ -66,7 +67,7 @@ namespace OX.UI.LAM
             viewMutualNodeSeedMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             //exitmenu.Image = global::Example.Icons.NewFile_6276;
             viewMutualNodeSeedMenu.Name = "viewMutualNodeSeedMenu";
-            viewMutualNodeSeedMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            viewMutualNodeSeedMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control| System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.R)));
             viewMutualNodeSeedMenu.Size = new System.Drawing.Size(170, 22);
             viewMutualNodeSeedMenu.Text = UIHelper.LocalString("计算矿机种子", "Calculation Miner  Seed");
             viewMutualNodeSeedMenu.Click += ViewMutualNodeSeedMenu_Click;
@@ -78,7 +79,7 @@ namespace OX.UI.LAM
             viewTotalLockVolumeMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             //exitmenu.Image = global::Example.Icons.NewFile_6276;
             viewTotalLockVolumeMenu.Name = "viewTotalLockVolumeMenu";
-            viewTotalLockVolumeMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+            viewTotalLockVolumeMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control| System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.V)));
             viewTotalLockVolumeMenu.Size = new System.Drawing.Size(170, 22);
             viewTotalLockVolumeMenu.Text = UIHelper.LocalString("查询总锁仓量", "View Total Lock Volume");
             viewTotalLockVolumeMenu.Click += ViewTotalLockVolumeMenu_Click;
@@ -90,7 +91,7 @@ namespace OX.UI.LAM
             myMutualLockNodeMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             //exitmenu.Image = global::Example.Icons.NewFile_6276;
             myMutualLockNodeMenu.Name = "myMutualLockNodeMenu";
-            myMutualLockNodeMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
+            myMutualLockNodeMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control| System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.M)));
             myMutualLockNodeMenu.Size = new System.Drawing.Size(170, 22);
             myMutualLockNodeMenu.Text = UIHelper.LocalString("我的矿机", "My Miner");
             myMutualLockNodeMenu.Click += MyMutualLockNodeMenu_Click;
@@ -101,7 +102,7 @@ namespace OX.UI.LAM
             selfLockMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             //exitmenu.Image = global::Example.Icons.NewFile_6276;
             selfLockMenu.Name = "selfLockMenu";
-            selfLockMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            selfLockMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control| System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.S)));
             selfLockMenu.Size = new System.Drawing.Size(170, 22);
             selfLockMenu.Text = UIHelper.LocalString("自锁挖矿", "Self Lock Mining");
             //互锁挖矿
@@ -110,7 +111,7 @@ namespace OX.UI.LAM
             mutalLockMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             //exitmenu.Image = global::Example.Icons.NewFile_6276;
             mutalLockMenu.Name = "mutualLockMenu";
-            mutalLockMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
+            mutalLockMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control| System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.M)));
             mutalLockMenu.Size = new System.Drawing.Size(170, 22);
             mutalLockMenu.Text = UIHelper.LocalString("互锁挖矿", "Mutual Lock Mining");
             //级锁挖矿
@@ -119,7 +120,7 @@ namespace OX.UI.LAM
             LevelLockMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             //exitmenu.Image = global::Example.Icons.NewFile_6276;
             LevelLockMenu.Name = "LevelLockMenu";
-            LevelLockMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
+            LevelLockMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control| System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.L)));
             LevelLockMenu.Size = new System.Drawing.Size(170, 22);
             LevelLockMenu.Text = UIHelper.LocalString("级锁挖矿", "Level Lock Mining");
 
@@ -130,7 +131,7 @@ namespace OX.UI.LAM
             miningAssetListMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             //exitmenu.Image = global::Example.Icons.NewFile_6276;
             miningAssetListMenu.Name = "miningAssetListMenu";
-            miningAssetListMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
+            miningAssetListMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control| System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.L)));
             miningAssetListMenu.Size = new System.Drawing.Size(170, 22);
             miningAssetListMenu.Text = UIHelper.LocalString("自锁挖矿资产列表", "Self Lock Mining Assets");
             miningAssetListMenu.Click += MiningAssetListMenu_Click;
@@ -142,7 +143,7 @@ namespace OX.UI.LAM
             myLockMiningRecordsMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             //exitmenu.Image = global::Example.Icons.NewFile_6276;
             myLockMiningRecordsMenu.Name = "myLockMiningRecordsMenu";
-            myLockMiningRecordsMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            myLockMiningRecordsMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control| System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.R)));
             myLockMiningRecordsMenu.Size = new System.Drawing.Size(170, 22);
             myLockMiningRecordsMenu.Text = UIHelper.LocalString("我的自锁挖矿记录", " My Self Lock Mining Records");
             myLockMiningRecordsMenu.Click += MyLockMiningRecordsMenu_Click;
@@ -153,7 +154,7 @@ namespace OX.UI.LAM
             myLockInterestRecordsMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             //exitmenu.Image = global::Example.Icons.NewFile_6276;
             myLockInterestRecordsMenu.Name = "myLockInterestRecordsMenu";
-            myLockInterestRecordsMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
+            myLockInterestRecordsMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control| System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.I)));
             myLockInterestRecordsMenu.Size = new System.Drawing.Size(170, 22);
             myLockInterestRecordsMenu.Text = UIHelper.LocalString("我的自锁出矿记录", " My Self Lock Interest Records");
             myLockInterestRecordsMenu.Click += MyLockInterestRecordsMenu_Click;
@@ -165,7 +166,7 @@ namespace OX.UI.LAM
             mutualLockMiningAssetListMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             //exitmenu.Image = global::Example.Icons.NewFile_6276;
             mutualLockMiningAssetListMenu.Name = "mutualLockMiningAssetListMenu";
-            mutualLockMiningAssetListMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
+            mutualLockMiningAssetListMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control| System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.L)));
             mutualLockMiningAssetListMenu.Size = new System.Drawing.Size(170, 22);
             mutualLockMiningAssetListMenu.Text = UIHelper.LocalString("互锁挖矿资产列表", "Mutual Lock Mining Asset List");
             mutualLockMiningAssetListMenu.Click += MutualLockMiningAssetListMenu_Click;
@@ -178,7 +179,7 @@ namespace OX.UI.LAM
             myMutualLockMininRecordsMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             //exitmenu.Image = global::Example.Icons.NewFile_6276;
             myMutualLockMininRecordsMenu.Name = "myMutualLockMininRecordsMenu";
-            myMutualLockMininRecordsMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.K)));
+            myMutualLockMininRecordsMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control| System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.K)));
             myMutualLockMininRecordsMenu.Size = new System.Drawing.Size(170, 22);
             myMutualLockMininRecordsMenu.Text = UIHelper.LocalString("我的互锁挖矿记录", " My Mutual Lock Mining Records");
             myMutualLockMininRecordsMenu.Click += MyMutualLockMininRecordsMenu_Click;
@@ -189,7 +190,7 @@ namespace OX.UI.LAM
             myMutualLockInterestRecordsMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             //exitmenu.Image = global::Example.Icons.NewFile_6276;
             myMutualLockInterestRecordsMenu.Name = "myMutualLockInterestRecordsMenu";
-            myMutualLockInterestRecordsMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            myMutualLockInterestRecordsMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control| System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.R)));
             myMutualLockInterestRecordsMenu.Size = new System.Drawing.Size(170, 22);
             myMutualLockInterestRecordsMenu.Text = UIHelper.LocalString("我的互锁出矿记录", " My Mutual Lock Interest Records");
             myMutualLockInterestRecordsMenu.Click += MyMutualLockInterestRecordsMenu_Click;
@@ -201,7 +202,7 @@ namespace OX.UI.LAM
             levelLockMiningAssetListMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             //exitmenu.Image = global::Example.Icons.NewFile_6276;
             levelLockMiningAssetListMenu.Name = "levelLockMiningAssetListMenu";
-            levelLockMiningAssetListMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
+            levelLockMiningAssetListMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control| System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.L)));
             levelLockMiningAssetListMenu.Size = new System.Drawing.Size(170, 22);
             levelLockMiningAssetListMenu.Text = UIHelper.LocalString("级锁挖矿资产列表", "Level Lock Mining Asset List");
             levelLockMiningAssetListMenu.Click += LevelLockMiningAssetListMenu_Click;
@@ -212,7 +213,7 @@ namespace OX.UI.LAM
             myLevelLockInterestRecordsMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             //exitmenu.Image = global::Example.Icons.NewFile_6276;
             myLevelLockInterestRecordsMenu.Name = "myLevelLockInterestRecordsMenu";
-            myLevelLockInterestRecordsMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
+            myLevelLockInterestRecordsMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control| System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.I)));
             myLevelLockInterestRecordsMenu.Size = new System.Drawing.Size(170, 22);
             myLevelLockInterestRecordsMenu.Text = UIHelper.LocalString("我的级锁出矿记录", " My Level Lock Interest Records");
             myLevelLockInterestRecordsMenu.Click += MyLevelLockInterestRecordsMenu_Click;
@@ -223,7 +224,7 @@ namespace OX.UI.LAM
             myLevelLockInRecordsMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             //exitmenu.Image = global::Example.Icons.NewFile_6276;
             myLevelLockInRecordsMenu.Name = "myLevelLockInRecordsMenu";
-            myLevelLockInRecordsMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
+            myLevelLockInRecordsMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control| System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.B)));
             myLevelLockInRecordsMenu.Size = new System.Drawing.Size(170, 22);
             myLevelLockInRecordsMenu.Text = UIHelper.LocalString("我的质押买入记录", "My Level Lock Buy Records");
             myLevelLockInRecordsMenu.Click += MyLevelLockInRecordsMenu_Click;
@@ -234,7 +235,7 @@ namespace OX.UI.LAM
             myLevelLockOutRecordsMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             //exitmenu.Image = global::Example.Icons.NewFile_6276;
             myLevelLockOutRecordsMenu.Name = "myLevelLockOutRecordsMenu";
-            myLevelLockOutRecordsMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            myLevelLockOutRecordsMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control| System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.S)));
             myLevelLockOutRecordsMenu.Size = new System.Drawing.Size(170, 22);
             myLevelLockOutRecordsMenu.Text = UIHelper.LocalString("我的质押卖出记录", "My Level Lock Sell Records");
             myLevelLockOutRecordsMenu.Click += MyLevelLockOutRecordsMenu_Click;
@@ -248,7 +249,7 @@ namespace OX.UI.LAM
             ruleSettingMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             //exitmenu.Image = global::Example.Icons.NewFile_6276;
             ruleSettingMenu.Name = "custodyAccountsMenu";
-            ruleSettingMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            ruleSettingMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control| System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.R)));
             ruleSettingMenu.Size = new System.Drawing.Size(170, 22);
             ruleSettingMenu.Text = UIHelper.LocalString("锁仓挖矿规则", "Lock Mining Rule");
             ruleSettingMenu.Click += RuleSettingMenu_Click;
@@ -258,7 +259,7 @@ namespace OX.UI.LAM
             miningCommunityMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             //miningCommunityMenu.Image = global::Example.Icons.NewFile_6276;
             miningCommunityMenu.Name = "miningCommunityMenu";
-            miningCommunityMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            miningCommunityMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control| System.Windows.Forms.Keys.Alt| System.Windows.Forms.Keys.C)));
             miningCommunityMenu.Size = new System.Drawing.Size(170, 22);
             miningCommunityMenu.Text = UIHelper.LocalString("质押挖矿社区", "Staking Mining Community"); ;
             miningCommunityMenu.Click += MiningCommunityMenu_Click;
@@ -558,7 +559,21 @@ namespace OX.UI.LAM
             if (this.MyLevelLockInMingingRecords.IsNotNull()) this.MyLevelLockInMingingRecords.HeartBeat(context);
             if (this.MyLevelLockOutMingingRecords.IsNotNull()) this.MyLevelLockOutMingingRecords.HeartBeat(context);
         }
-
+        public override void OnFlashMessage(FlashMessage flashMessage)
+        {
+            if (this.LockMingingAssets.IsNotNull()) this.LockMingingAssets.OnFlashMessage(flashMessage);
+            if (this.MyLockMingingRecords.IsNotNull()) this.MyLockMingingRecords.OnFlashMessage(flashMessage);
+            if (this.MyLockInterestRecords.IsNotNull()) this.MyLockInterestRecords.OnFlashMessage(flashMessage);
+            if (this.MyMutualLockNodes.IsNotNull()) this.MyMutualLockNodes.OnFlashMessage(flashMessage);
+            if (this.MutualLockMingingAssets.IsNotNull()) this.MutualLockMingingAssets.OnFlashMessage(flashMessage);
+            if (this.RuleSetting.IsNotNull()) this.RuleSetting.OnFlashMessage(flashMessage);
+            if (this.MyMutualLockMingingRecords.IsNotNull()) this.MyMutualLockMingingRecords.OnFlashMessage(flashMessage);
+            if (this.MyMutualLockInterestRecords.IsNotNull()) this.MyMutualLockInterestRecords.OnFlashMessage(flashMessage);
+            if (this.LevelLockMingingAssets.IsNotNull()) this.LevelLockMingingAssets.OnFlashMessage(flashMessage);
+            if (this.MyLevelLockInterestRecords.IsNotNull()) this.MyLevelLockInterestRecords.OnFlashMessage(flashMessage);
+            if (this.MyLevelLockInMingingRecords.IsNotNull()) this.MyLevelLockInMingingRecords.OnFlashMessage(flashMessage);
+            if (this.MyLevelLockOutMingingRecords.IsNotNull()) this.MyLevelLockOutMingingRecords.OnFlashMessage(flashMessage);
+        }
         public override void ChangeWallet(INotecase operater)
         {
             this.Operater = operater;

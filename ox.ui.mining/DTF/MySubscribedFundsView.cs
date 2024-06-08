@@ -19,6 +19,7 @@ using OX.Mining.DTF;
 using System.Windows.Forms.VisualStyles;
 using OX.IO.Data.LevelDB;
 using System.Runtime.CompilerServices;
+using NBitcoin.Secp256k1;
 
 namespace OX.UI.DTF
 {
@@ -114,6 +115,11 @@ namespace OX.UI.DTF
             }
             foreach (var p in this.Funds.Values)
                 p.AfterOnBlock(block);
+        }
+        public void OnFlashMessage(FlashMessage flashMessage)
+        {
+            foreach (var p in this.Funds.Values)
+                p.OnFlashMessage(flashMessage);
         }
         public void ChangeWallet(INotecase operater)
         {

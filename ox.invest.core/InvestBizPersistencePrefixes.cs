@@ -61,5 +61,8 @@
         public const byte TrustFundIDORecord = 0x3B;
         public const byte DTF_LockAsset_Record = 0x3C;
         public const byte TrustFundIDOSummary = 0x3D;
+        public const byte AMI_USDTCastRecord = 0x3E;
+        public const byte AMI_USDTDestroyRecord = 0x3F;
+        public const byte OTC_ExchangeRequest = 0x40;
     }
 }

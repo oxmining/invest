@@ -46,18 +46,18 @@ namespace OX.UI.Swap
             regOTCDealerMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
             regOTCDealerMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             regOTCDealerMenu.Name = "regOTCDealerMenu";
-            regOTCDealerMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            regOTCDealerMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control| System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.S)));
             regOTCDealerMenu.Size = new System.Drawing.Size(170, 22);
             regOTCDealerMenu.Text = UIHelper.LocalString("场外出金", "OTC sale");
             regOTCDealerMenu.Click += NewTraderMenu_Click;
 
-            if (OXRunTime.RunMode == RunMode.Server|| OXRunTime.RunMode == RunMode.Mix)
+            if (OXRunTime.RunMode == RunMode.Server || OXRunTime.RunMode == RunMode.Mix)
             {
                 ToolStripMenuItem depositMenu = new ToolStripMenuItem();
                 depositMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
                 depositMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
                 depositMenu.Name = "depositMenu";
-                depositMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
+                depositMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control| System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.B)));
                 depositMenu.Size = new System.Drawing.Size(170, 22);
                 depositMenu.Text = UIHelper.LocalString("场外入金", "OTC buy");
                 depositMenu.Click += DepositMenu_Click;
@@ -117,6 +117,10 @@ namespace OX.UI.Swap
 
         }
         public override void OnRebuild()
+        {
+
+        }
+        public override void OnFlashMessage(FlashMessage flashMessage)
         {
 
         }

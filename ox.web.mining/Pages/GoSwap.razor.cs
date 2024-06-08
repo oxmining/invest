@@ -16,7 +16,7 @@ using OX.Cryptography.ECC;
 using OX.Mining;
 using OX.Ledger;
 using OX.SmartContract;
-using OX.Cryptography.AES;
+using OX.Cryptography;
 using OX.Web.Models;
 using OX.Wallets.Hubs;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -165,7 +165,7 @@ namespace OX.Web.Pages
             this.Provider = Bapp.GetBappProvider<MiningBapp, IMiningProvider>();
             if (Provider.IsNotNull())
             {
-                foreach (var p in Provider.GetAll<UInt160, SwapPairMerge>(InvestBizPersistencePrefixes.SwapPair).OrderByDescending(m => m.Value.SwapPairReply.TargetAssetId.Equals(Blockchain.OXS)).ThenByDescending(m => m.Value.SwapPairReply.TargetAssetId == invest.USDX_Asset).ThenByDescending(m => m.Value.Index))
+                foreach (var p in Provider.GetAll<UInt160, SwapPairMerge>(InvestBizPersistencePrefixes.SwapPair).OrderByDescending(m => m.Value.SwapPairReply.TargetAssetId.Equals(Blockchain.OXS)).ThenByDescending(m => m.Value.SwapPairReply.TargetAssetId == invest.USDT_Asset).ThenByDescending(m => m.Value.Index))
                 {
                     if (PoolSH == p.Key)
                     {

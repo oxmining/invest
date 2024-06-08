@@ -72,6 +72,10 @@ namespace OX.UI.LAM
         {
 
         }
+        public void OnFlashMessage(FlashMessage flashMessage)
+        {
+
+        }
         public void BeforeOnBlock(Block block)
         {
             if (needReload)

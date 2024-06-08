@@ -13,11 +13,11 @@ namespace OX.Mining
     public static class SideTransactionHelper
     {
         public static readonly Fixed8 MinSidePoolOXC = Fixed8.One * 1000;
-        public static bool VerifyRegMainSwap(this SideTransaction tx, out UInt256 Asset,out SwapPairReply swapPairReply)
+        public static bool VerifyRegMainSwap(this SlotSideTransaction tx, out UInt256 Asset,out SwapPairReply swapPairReply)
         {
             Asset = default;
             swapPairReply = default;
-            if (!tx.Recipient.Equals(invest.SidePoolAccountPubKey) || tx.Flag != 0 || tx.SideType != SideType.AssetID || !tx.AuthContract.Equals(Blockchain.SideAssetContractScriptHash)) return false;
+            if (!tx.Slot.Equals(invest.SidePoolAccountPubKey) || tx.Flag != 0 || tx.SideType != SideType.AssetID || !tx.AuthContract.Equals(Blockchain.SideAssetContractScriptHash)) return false;
             if (!tx.GetPublicKeys().Contains(invest.MasterAccountPubKey)) return false;
             if (tx.Attach.IsNullOrEmpty()) return false;
             try
@@ -39,10 +39,10 @@ namespace OX.Mining
             }
             return true;
         }
-        public static bool VerifyRegSideSwap(this SideTransaction tx, out UInt256 Asset)
+        public static bool VerifyRegSideSwap(this SlotSideTransaction tx, out UInt256 Asset)
         {
             Asset = default;
-            if (!tx.Recipient.Equals(invest.SlaveSidePoolAccountPubKey) || tx.Flag != 1 || tx.SideType != SideType.AssetID || !tx.AuthContract.Equals(Blockchain.SideAssetContractScriptHash)) return false;
+            if (!tx.Slot.Equals(invest.SlaveSidePoolAccountPubKey) || tx.Flag != 1 || tx.SideType != SideType.AssetID || !tx.AuthContract.Equals(Blockchain.SideAssetContractScriptHash)) return false;
             try
             {
                 var assetId = tx.Data.AsSerializable<UInt256>();
@@ -61,7 +61,7 @@ namespace OX.Mining
             }
             return true;
         }
-        public static bool VerifyRegSideSwapFee(this SideTransaction tx, Fixed8 SidePoolFeeSetting)
+        public static bool VerifyRegSideSwapFee(this SlotSideTransaction tx, Fixed8 SidePoolFeeSetting)
         {
             var outputs = tx.Outputs.Where(m => m.AssetId.Equals(Blockchain.OXC) && m.ScriptHash.Equals(invest.SlaveSidePoolAccountAddress));
             if (outputs.IsNullOrEmpty()) return false;

@@ -70,6 +70,8 @@ namespace OX.UI.DTF
         {
 
         }
+        public void OnFlashMessage(FlashMessage flashMessage)
+        { }
         public void BeforeOnBlock(Block block)
         {
 

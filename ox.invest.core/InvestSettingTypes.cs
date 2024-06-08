@@ -20,5 +20,6 @@
         public const byte MutualLockNodeFee = 0x0F;
         public const byte NodeTeamBonusOXSLockVolume = 0x10;
         public const byte NodeTeamBonusOXSMinLock = 0x11;
+        public const byte AnchorIssuePool = 0x12;
     }
 }

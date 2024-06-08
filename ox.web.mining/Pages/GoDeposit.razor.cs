@@ -16,7 +16,7 @@ using OX.Cryptography.ECC;
 using OX.Mining;
 using OX.Ledger;
 using OX.SmartContract;
-using OX.Cryptography.AES;
+using OX.Cryptography;
 using OX.Web.Models;
 using OX.Wallets.Hubs;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -29,6 +29,7 @@ using OX.UI.Mining;
 using AntDesign;
 using OX.Wallets.Eths;
 using OX.MetaMask;
+using Akka.Actor.Dsl;
 
 namespace OX.Web.Pages
 {
@@ -47,8 +48,12 @@ namespace OX.Web.Pages
 
         string msg;
         DepositModel model { get; set; } = new DepositModel();
+        UInt160 OTCDealerOXPoolScriptHash;
         string OTCDealerOXPoolAddress;
         Fixed8 OTCDealerOXPoolBalance = Fixed8.Zero;
+        bool success = false;
+        string ethtxid = string.Empty;
+        string revertEthHash = string.Empty;
         private readonly FormItemLayout _formItemLayout = new FormItemLayout
         {
             LabelCol = new ColLayoutParam
@@ -73,7 +78,34 @@ namespace OX.Web.Pages
                 Sm = new EmbeddedProperty { Span = 10, Offset = 7 },
             }
         };
-
+        void Revert()
+        {
+            if (this.Valid)
+            {
+                var act = Box.Notecase.Wallet.GetHeldAccounts().First();
+                if (UInt256.TryParse(revertEthHash, out UInt256 ethId))
+                {
+                    var Provider = Bapp.GetBappProvider<MiningBapp, IMiningProvider>() as MiningProvider;
+                    if (Provider.IsNotNull())
+                    {
+                        if (!Provider.ContainEthExchangeRequest(ethId))
+                         {
+                            ethtxid = revertEthHash;
+                            if (Box.Notecase.DoSimpleDeposit(act, ethtxid))
+                            {
+                                this.success = true;
+                            }
+                        }
+                        else
+                        {
+                            this.msg = this.WebLocalString("之前提交已经生效，无需再提交", "The previous submission has already taken effect, there is no need to submit again");
+                        }
+                    }
+                }
+                this.revertEthHash = string.Empty;
+                StateHasChanged();
+            }
+        }
         protected override async void OnMiningInit()
         {
             if (dealerethaddressHex.IsNotNullAndEmpty())
@@ -83,10 +115,10 @@ namespace OX.Web.Pages
                     var dealerethaddress = System.Text.Encoding.UTF8.GetString(dealerethaddressHex.HexToBytes());
                     this.model.PoolEthAddress = dealerethaddress;
                     var st = dealerethaddress.BuildOTCDealerTransaction();
-                    var sh = st.GetContract().ScriptHash;
-                    OTCDealerOXPoolAddress = sh.ToAddress();
-                    var account = Blockchain.Singleton.CurrentSnapshot.Accounts.TryGet(sh);
-                    if (account.IsNotNull() && account.Balances.TryGetValue(invest.USDX_Asset, out OTCDealerOXPoolBalance))
+                    OTCDealerOXPoolScriptHash = st.GetContract().ScriptHash;
+                    OTCDealerOXPoolAddress = OTCDealerOXPoolScriptHash.ToAddress();
+                    var account = Blockchain.Singleton.CurrentSnapshot.Accounts.TryGet(OTCDealerOXPoolScriptHash);
+                    if (account.IsNotNull() && account.Balances.TryGetValue(invest.USDT_Asset, out OTCDealerOXPoolBalance))
                     {
 
                     }
@@ -107,6 +139,37 @@ namespace OX.Web.Pages
 
         private async void HandleSubmit()
         {
+            this.success = false;
+            this.ethtxid = string.Empty;
+            if (this.Valid)
+            {
+                var act = Box.Notecase.Wallet.GetHeldAccounts().First();
+                var sh = this.model.OxAddress.ToScriptHash();
+                try
+                {
+                    var r = await this.MetaMaskService.TrySimpleDeposit(this.model.PoolEthAddress, OTCDealerOXPoolScriptHash, this.model.Amount);
+                    if (r.IsNotNullAndEmpty())
+                    {
+                        this.ethtxid = r;
+                        if (Box.Notecase.DoSimpleDeposit(act, r))
+                        {
+                            this.success = true;
+                        }
+
+                        StateHasChanged();
+                    }
+                }
+                catch (UserDeniedException e)
+                {
+                    this.msg = this.WebLocalString($"已经拒绝交易", $"Transaction has been rejected");
+                    StateHasChanged();
+                }
+            }
+        }
+        private async void HandleSubmit2()
+        {
+            this.success = false;
+            this.ethtxid = string.Empty;
             if (this.Valid)
             {
                 var act = Box.Notecase.Wallet.GetHeldAccounts().First();
@@ -119,7 +182,7 @@ namespace OX.Web.Pages
 
                         if (Box.Notecase.DoDeposit(act, this.model.FromEthAddress, this.model.PoolEthAddress, sh, r.EthTxId, r.stringToSign, r.signatureData, true))
                         {
-                            this.msg = this.WebLocalString($"以太坊交易 {r.EthTxId}已经尝试", $"Ethereum transaction {r.EthTxId} has been attempted");
+                            this.success = true;
                         }
 
                         StateHasChanged();

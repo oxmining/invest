@@ -28,9 +28,9 @@ namespace OX.Mining
         }
         public static UInt160 GetMutualLockSeed(this UInt160 sh)
         {
-            return new SideTransaction()
+            return new SlotSideTransaction()
             {
-                Recipient = invest.LockMiningAccountPubKey,
+                Slot = invest.LockMiningAccountPubKey,
                 SideType = SideType.ScriptHash,
                 Data = sh.ToArray(),
                 Flag = 1,//1标记代表种子

@@ -16,7 +16,7 @@ using OX.Wallets.Models;
 using OX.Ledger;
 using OX.IO;
 using OX.SmartContract;
-using OX.Cryptography.AES;
+using OX.Cryptography;
 using OX.Mining.DEX;
 
 namespace OX.UI.Swap

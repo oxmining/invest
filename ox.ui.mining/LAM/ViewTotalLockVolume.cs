@@ -17,7 +17,7 @@ using OX.Mining;
 using OX.Ledger;
 using OX.IO;
 using OX.SmartContract;
-using OX.Cryptography.AES;
+using OX.Cryptography;
 using OX.UI.Mining;
 
 namespace OX.UI.LAM

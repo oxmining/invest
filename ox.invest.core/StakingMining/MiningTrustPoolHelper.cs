@@ -17,9 +17,9 @@ namespace OX.Mining.StakingMining
 {
     public static class MiningTrustPoolHelper
     {
-        public const string MLMExchangePoolAddress = "ALFDnFuAeShm7vFyFmZhjiBLAHJJhpn8bG";
-        public const string SLMExchangePoolAddress = "Aaad8ABGsmun7YWMTTYuC5DDY5tqbeHTFJ";
-        public const string LLMExchangePoolAddress = "AaiQJMeqmrunxASM8DdJDquDxcG8nNtHXX";
+        public const string MLMExchangePoolAddress = "APKrG6vQdBZamPJ8AG7G23bjVRJn4t74nz";
+        public const string SLMExchangePoolAddress = "AHTqcyqSD5QvYbmhykfw1dhrqchTNRz3ge";
+        public const string LLMExchangePoolAddress = "AUTPhx9WWNekJK8ny73GNNvWsspjUftoTa";
         public static Dictionary<string, string> AssetTargets = new Dictionary<string, string>();
         public static Dictionary<string, UInt256> TargetAssets = new Dictionary<string, UInt256>();
         public static ECPoint Truster = invest.MasterAccountPubKey;
@@ -29,10 +29,10 @@ namespace OX.Mining.StakingMining
             AssetTargets["MLM"] = MLMExchangePoolAddress;
             AssetTargets["SLM"] = SLMExchangePoolAddress;
             AssetTargets["LLM"] = LLMExchangePoolAddress;
-            AssetTargets["ML2"] = "ATxdqbSJyQNRN8X6zyJDWrDzAYfo3oPyP5";
-            AssetTargets["SL2"] = "AQC1NeRC8BfN5QmKTAfHumQi9UUdL38chH";
-            AssetTargets["LL2"] = "AMtDeobTS9czi6MPRVDdERfYp7gWaUqCmX";
-            AssetTargets["BNS"] = "AUTz1AAwj4Dpk9u6VzWupqT2NHyVd2spfZ";
+            AssetTargets["ML2"] = "AKHXKpR2MiiMLHH53y7fW9vYZsLZVWx3S7";
+            AssetTargets["SL2"] = "APty1oYg7JqbrZJ9S6bGmLPQy95ZuXCsWi";
+            AssetTargets["LL2"] = "AS1jQ18oJjgZm7axZciN8DLT1XfsYr9b3e";
+            AssetTargets["BNS"] = "AMv9zcQKNbYPF5QpK8Z1L4cnhYR1tNfK7w";
 
 
 

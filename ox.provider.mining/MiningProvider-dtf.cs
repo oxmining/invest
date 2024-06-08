@@ -1,4 +1,5 @@
-﻿using Akka.Util;
+﻿using Akka.Actor;
+using Akka.Util;
 using OX.Bapps;
 using OX.Cryptography.ECC;
 using OX.IO;
@@ -75,6 +76,13 @@ namespace OX.Mining
                 return new KeyValuePair<DTFIDOSummaryKey, Fixed8>(ks.AsSerializable<DTFIDOSummaryKey>(), data.AsSerializable<Fixed8>());
             });
         }
+        public string GetAnchorMortgageIssuePoolAddress()
+        {
+            var setting = this.GetAllInvestSettings().FirstOrDefault(m => Enumerable.SequenceEqual(m.Key, new[] { InvestSettingTypes.AnchorIssuePool }));
+            if (setting.Equals(new KeyValuePair<byte[], InvestSettingRecord>()))
+                return string.Empty;
+            return setting.Value.Value;
+        }
     }
     public static partial class MiningPersistenceHelper
     {
@@ -140,7 +148,7 @@ namespace OX.Mining
                             var originAddress = tx.GetBestOriginAddress(out string ethAddress);
                             if (originAddress.IsNotNull())
                             {
-                                DTFIDOKey key = new DTFIDOKey { TrusteeAddress = tf.Key, IDOOwner =originAddress, TxId = tx.Hash };
+                                DTFIDOKey key = new DTFIDOKey { TrusteeAddress = tf.Key, IDOOwner = originAddress, TxId = tx.Hash };
                                 DTFIDORecord record = new DTFIDORecord { TrusteeAddress = tf.Key, IdoOwner = originAddress, IdoAmount = output.Value, BlockIndex = block.Index, TxN = TxN };
                                 batch.Put(SliceBuilder.Begin(InvestBizPersistencePrefixes.TrustFundIDORecord).Add(key), SliceBuilder.Begin().Add(record));
                                 DTFIDOSummaryKey summaryKey = new DTFIDOSummaryKey { IDOOwner = originAddress, TrusteeAddress = tf.Key };
@@ -159,7 +167,7 @@ namespace OX.Mining
         }
         public static void Save_DTFLockAssetTransaction(this WriteBatch batch, MiningProvider provider, Block block, LockAssetTransaction lat, ushort blockN)
         {
-            if (lat.IsNotNull() && lat.LockContract.Equals(Blockchain.LockAssetContractScriptHash) && lat.Recipient.Equals(invest.TrustFundWitnessPubKey) && lat.Attach.IsNotNullAndEmpty())
+            if (lat.IsNotNull() && lat.LockContract.Equals(Blockchain.LockAssetContractScriptHash) && lat.Recipient.Equals(invest.LockMiningAccountPubKey) && lat.Attach.IsNotNullAndEmpty())
             {
                 var targetSH = new UInt160(lat.Attach);
                 if (targetSH.IsNotNull())

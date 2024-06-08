@@ -14,12 +14,13 @@ namespace OX.Mining.OTC
 {
     public static class OTCDealerHelper
     {
-        public static SideTransaction BuildOTCDealerTransaction(this string ethAddress, OTCSetting setting = default)
+        public static SlotSideTransaction BuildOTCDealerTransaction(this string ethAddress, OTCSetting setting = default)
         {
             byte[] attch = setting.IsNotNull() ? setting.ToArray() : new byte[0];
-            SideTransaction st = new SideTransaction
+            SlotSideTransaction st = new SlotSideTransaction
             {
-                Recipient = invest.OTCAccountPubKey,
+                Slot = invest.LockMiningAccountPubKey,
+                Channel = 0x01,
                 SideType = SideType.EthereumAddress,
                 Data = ethAddress.HexToByteArray(),
                 Flag = 0,
@@ -28,14 +29,15 @@ namespace OX.Mining.OTC
             };
             return st;
         }
-        public static bool VerifyOTCDealerTx(this SideTransaction st, out string ethAddress, out OTCSetting setting)
+        public static bool VerifyOTCDealerTx(this SlotSideTransaction st, out string ethAddress, out OTCSetting setting)
         {
             ethAddress = string.Empty;
             setting = default;
             if (
                 st.Flag == 0
+                && st.Channel == 0x01
                 && st.SideType == SideType.EthereumAddress
-                && st.Recipient.Equals(invest.OTCAccountPubKey)
+                && st.Slot.Equals(invest.LockMiningAccountPubKey)
                 && st.AuthContract == Blockchain.SideAssetContractScriptHash
                 && st.EthSignatures.IsNotNullAndEmpty())
             {

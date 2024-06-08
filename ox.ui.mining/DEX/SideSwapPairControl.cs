@@ -25,12 +25,12 @@ namespace OX.UI.Swap
     {
         public Module Module { get; set; }
         protected INotecase Operater;
-        SideTransaction SideTx;
+        SlotSideTransaction SideTx;
         UInt160 PoolAddress;
         SideSwapVolumeMerge LastSwapVolume;
         UInt256 assetId;
 
-        public SideSwapPairControl(Module module, INotecase notecase, SideTransaction st)
+        public SideSwapPairControl(Module module, INotecase notecase, SlotSideTransaction st)
         {
             this.Module = module;
             this.Operater = notecase;
@@ -112,6 +112,7 @@ namespace OX.UI.Swap
         {
 
         }
+        public void OnFlashMessage(FlashMessage flashMessage) { }
         public void BeforeOnBlock(Block block)
         {
 

@@ -50,4 +50,19 @@ namespace OX.Mining.OTC
             AgentFee = reader.ReadBoolean();
         }
     }
+    public class OTCExchangeRequest : ISerializable
+    {
+        public UInt256 EthTxHash;
+
+        public virtual int Size => EthTxHash.Size;
+
+        public void Serialize(BinaryWriter writer)
+        {
+            writer.Write(EthTxHash);
+        }
+        public void Deserialize(BinaryReader reader)
+        {
+            EthTxHash = reader.ReadSerializable<UInt256>();
+        }
+    }
 }

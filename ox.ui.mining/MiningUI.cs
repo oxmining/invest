@@ -65,5 +65,11 @@ namespace OX.UI.Mining
                 if (m is Module module)
                     module.OnRebuild();
         }
+        public void OnFlashMessage(FlashMessage flashMessage)
+        {
+            foreach (var m in Modules)
+                if (m is Module module)
+                    module.OnFlashMessage(flashMessage);
+        }
     }
 }

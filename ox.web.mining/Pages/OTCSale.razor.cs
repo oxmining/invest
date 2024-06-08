@@ -16,7 +16,7 @@ using OX.Cryptography.ECC;
 using OX.Mining;
 using OX.Ledger;
 using OX.SmartContract;
-using OX.Cryptography.AES;
+using OX.Cryptography;
 using OX.Web.Models;
 using OX.Wallets.Hubs;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -92,7 +92,7 @@ namespace OX.Web.Pages
                 this.model.InPoolAddress = sh;
                 this.model.Amount = 0;
                 var account = Blockchain.Singleton.CurrentSnapshot.Accounts.TryGet(sh);
-                if (account.IsNotNull() && account.Balances.TryGetValue(invest.USDX_Asset, out OTCDealerOXPoolBalance))
+                if (account.IsNotNull() && account.Balances.TryGetValue(invest.USDT_Asset, out OTCDealerOXPoolBalance))
                 {
 
                 }
@@ -102,7 +102,7 @@ namespace OX.Web.Pages
                     var balanceState = openWallet.QueryBalanceState(this.EthID);
                     if (balanceState.IsNotNull())
                     {
-                        this.BalanceState = balanceState.TryGetBalance(invest.USDX_Asset);
+                        this.BalanceState = balanceState.TryGetBalance(invest.USDT_Asset);
                     }
                 }
             }
@@ -127,7 +127,7 @@ namespace OX.Web.Pages
                         var allutxos = openWallet.GetAllEthereumMapUTXOs();
                         if (allutxos.IsNotNullAndEmpty())
                         {
-                            var us = allutxos.Where(m => m.Value.Output.AssetId == invest.USDX_Asset && m.Value.EthAddress == this.EthID.EthAddress && m.Value.LockExpirationIndex < Blockchain.Singleton.Height);
+                            var us = allutxos.Where(m => m.Value.Output.AssetId == invest.USDT_Asset && m.Value.EthAddress == this.EthID.EthAddress && m.Value.LockExpirationIndex < Blockchain.Singleton.Height);
                             if (us.IsNotNullAndEmpty())
                             {
                                 List<EthMapUTXO> utxos = new List<EthMapUTXO>();
@@ -150,10 +150,10 @@ namespace OX.Web.Pages
                                 if (utxos.SortSearch(amt.GetInternalValue(), excludedUtxoKeys, out EthMapUTXO[] selectedUtxos, out long remainder))
                                 {
                                     List<TransactionOutput> outputs = new List<TransactionOutput>();
-                                    outputs.Add(new TransactionOutput { AssetId = invest.USDX_Asset, Value = amt, ScriptHash = shPool });
+                                    outputs.Add(new TransactionOutput { AssetId = invest.USDT_Asset, Value = amt, ScriptHash = shPool });
                                     if (remainder > 0)
                                     {
-                                        outputs.Add(new TransactionOutput { AssetId = invest.USDX_Asset, Value = new Fixed8(remainder), ScriptHash = this.EthID.MapAddress });
+                                        outputs.Add(new TransactionOutput { AssetId = invest.USDT_Asset, Value = new Fixed8(remainder), ScriptHash = this.EthID.MapAddress });
                                     }
                                     List<CoinReference> inputs = new List<CoinReference>();
                                     Dictionary<UInt160, Contract> contracts = new Dictionary<UInt160, Contract>();
@@ -225,7 +225,7 @@ namespace OX.Web.Pages
                 this.model.Amount = 0;
                 this.model.FeeRatio = (byte)OTCStatus.Open;
                 var account = Blockchain.Singleton.CurrentSnapshot.Accounts.TryGet(sh);
-                if (account.IsNotNull() && account.Balances.TryGetValue(invest.USDX_Asset, out OTCDealerOXPoolBalance))
+                if (account.IsNotNull() && account.Balances.TryGetValue(invest.USDT_Asset, out OTCDealerOXPoolBalance))
                 {
 
                 }
@@ -235,7 +235,7 @@ namespace OX.Web.Pages
                     var balanceState = openWallet.QueryBalanceState(this.EthID);
                     if (balanceState.IsNotNull())
                     {
-                        this.BalanceState = balanceState.TryGetBalance(invest.USDX_Asset);
+                        this.BalanceState = balanceState.TryGetBalance(invest.USDT_Asset);
                     }
                 }
             }

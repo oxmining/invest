@@ -17,7 +17,7 @@ using OX.Mining;
 using OX.Ledger;
 using OX.IO;
 using OX.SmartContract;
-using OX.Cryptography.AES;
+using OX.Cryptography;
 using OX.Cryptography.ECC;
 using OX.Mining.DEX;
 
@@ -71,9 +71,9 @@ namespace OX.UI.Swap
             {
                 var balance = this.Operater.Wallet.GeAccountAvailable(this.Account.ScriptHash, this.AssetId).ToString();
                 this.tb_target_balance.Text = balance;
-                var tx = new SideTransaction()
+                var tx = new SlotSideTransaction()
                 {
-                    Recipient = invest.SidePoolAccountPubKey,
+                     Slot = invest.SidePoolAccountPubKey,
                     SideType = SideType.AssetID,
                     Data = this.AssetId.ToArray(),
                     Flag = 0,
@@ -136,9 +136,9 @@ namespace OX.UI.Swap
                 reply.Mark = ido.ToArray();
             }
 
-            var tx = new SideTransaction()
+            var tx = new SlotSideTransaction()
             {
-                Recipient = invest.SidePoolAccountPubKey,
+                 Slot = invest.SidePoolAccountPubKey,
                 SideType = SideType.AssetID,
                 Data = this.AssetId.ToArray(),
                 Flag = 0,

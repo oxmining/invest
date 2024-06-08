@@ -16,7 +16,7 @@ using OX.Cryptography.ECC;
 using OX.Mining;
 using OX.Ledger;
 using OX.SmartContract;
-using OX.Cryptography.AES;
+using OX.Cryptography;
 using OX.Web.Models;
 using OX.Wallets.Hubs;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -34,6 +34,7 @@ using OX.IO.Data.LevelDB;
 using OX.Wallets.Eths;
 using System.Diagnostics.Contracts;
 using OX.Mining.CheckinMining;
+using StringWrapper = OX.Mining.StakingMining.StringWrapper;
 
 namespace OX.Web.Pages
 {

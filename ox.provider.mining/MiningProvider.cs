@@ -4,6 +4,7 @@ using OX.Cryptography.ECC;
 using OX.IO;
 using OX.IO.Data.LevelDB;
 using OX.Ledger;
+using OX.Mining.AMI;
 using OX.Mining.CheckinMining;
 using OX.Mining.DEX;
 using OX.Mining.DTF;
@@ -45,11 +46,12 @@ namespace OX.Mining
         {
             Db = DB.Open(Path.GetFullPath($"{WalletIndexDirectory}\\mng_{Message.Magic.ToString("X8")}"), new Options { CreateIfMissing = true });
             OTCDealers = new Dictionary<UInt160, OTCDealerMerge>(this.GetAll<UInt160, OTCDealerMerge>(InvestBizPersistencePrefixes.OTC_Dealer));
+            ExchangeRequestRecords = new Dictionary<UInt256, Uint32Wrapper>(this.GetAll<UInt256, Uint32Wrapper>(InvestBizPersistencePrefixes.OTC_ExchangeRequest));
             TrustFunds = new Dictionary<UInt160, TrustFundModel>(this.GetAll<UInt160, TrustFundModel>(InvestBizPersistencePrefixes.TrustFundRequest));
             DTFLockAssets = new Dictionary<CoinReference, DTFLockAssetMerge>(this.GetAllDTFLockAssets());
             DTFIDOSummary = new Dictionary<DTFIDOSummaryKey, Fixed8>(this.GetAllDTFIDOSummary());
             SwapPairs = new Dictionary<UInt160, SwapPairMerge>(this.GetAll<UInt160, SwapPairMerge>(InvestBizPersistencePrefixes.SwapPair));
-            Side_SwapPairs = new Dictionary<UInt160, SideSwapPairKeyMerge>(this.GetAll<SideSwapPairKey, SideTransaction>(InvestBizPersistencePrefixes.SideSwapPair).Select(m => new KeyValuePair<UInt160, SideSwapPairKeyMerge>(m.Key.PoolAddress, new SideSwapPairKeyMerge { Key = m.Key, Value = m.Value })));
+            Side_SwapPairs = new Dictionary<UInt160, SideSwapPairKeyMerge>(this.GetAll<SideSwapPairKey, SlotSideTransaction>(InvestBizPersistencePrefixes.SideSwapPair).Select(m => new KeyValuePair<UInt160, SideSwapPairKeyMerge>(m.Key.PoolAddress, new SideSwapPairKeyMerge { Key = m.Key, Value = m.Value })));
             SwapPairStates = new Dictionary<UInt160, SwapPairStateReply>(this.GetAll<UInt160, SwapPairStateReply>(InvestBizPersistencePrefixes.SwapPairState));
             MutualLockNodes = new Dictionary<UInt160, MutualNode>(this.GetAll<UInt160, MutualNode>(InvestBizPersistencePrefixes.MutualLockNode));
             var mutualLockAssetRecords = this.GetAll<MutualLockMiningAssetKey, MutualLockMiningAssetReply>(InvestBizPersistencePrefixes.MutualLockMiningAssetReply);
@@ -75,7 +77,7 @@ namespace OX.Mining
                     this.LevelLockInTx[g.Key.ToKey()] = g.Value;
                 }
             }
-            bizshs = Bapp.ValidBizScriptHashs.Select(m => Contract.CreateSignatureRedeemScript(m).ToScriptHash()).ToArray();
+            bizshs = Bapp.ValidBizScriptHashs.IsNotNullAndEmpty() ? Bapp.ValidBizScriptHashs.Select(m => Contract.CreateSignatureRedeemScript(m).ToScriptHash()).ToArray() : new UInt160[0];
         }
         void initHashAccounts()
         {
@@ -113,6 +115,9 @@ namespace OX.Mining
             Db.Write(WriteOptions.Default, batch);
             Bapp.PushEvent(new BappEvent { EventItems = new BappEventItem[] { new BappEventItem() { EventType = InvestBappEventType.ReBuildIndex.Value() } } });
 
+        }
+        public override void OnFlashMessage(FlashMessage flashMessage)
+        {
         }
         public override void BeforeOnBlock(Block block)
         { }
@@ -155,13 +160,13 @@ namespace OX.Mining
                 }
                 else if (tx is EthereumMapTransaction emt)
                 {
-                    OnEthereumMapTransaction(batch, block, emt);
+                    OnEthereumMapTransaction(batch, block, emt, i);
                 }
                 else if (tx is IssueTransaction ist)
                 {
                     OnIssueTransaction(batch, block, ist);
                 }
-                else if (tx is SideTransaction st)
+                else if (tx is SlotSideTransaction st)
                 {
                     OnSideTransaction(batch, block, st);
                 }
@@ -193,6 +198,7 @@ namespace OX.Mining
                     {
                         TransactionOutput output = tx.Outputs[k];
                         OnPledgeMiningTransaction(batch, this, block, tx, output, k);
+                        CheckUSDTBlackHoleDestroy(batch, block, output, tx);
                     }
                 }
                 if (tx.References.IsNotNullAndEmpty())
@@ -272,13 +278,14 @@ namespace OX.Mining
                 }
             }
         }
-        public void OnEthereumMapTransaction(WriteBatch batch, Block block, EthereumMapTransaction emt)
+        public void OnEthereumMapTransaction(WriteBatch batch, Block block, EthereumMapTransaction emt, ushort TxN)
         {
             if (emt.EthMapContract.Equals(Blockchain.EthereumMapContractScriptHash))
             {
                 OnEthereumMapTransactionForSelfLock(batch, block, emt);
                 OnEthereumMapTransactionForMutualLock(batch, block, emt);
                 OnEthereumMapTransactionForLevelLock(batch, block, emt);
+                OnEthereumMapTransactionForAnchorMortgageIssue(batch, block, emt, TxN);
             }
         }
         public void OnLockAssetTransaction(WriteBatch batch, Block block, LockAssetTransaction lat)
@@ -479,7 +486,7 @@ namespace OX.Mining
                 batch.UpdateCheckinMiningCount(this, ethAddress, markIndex);
             }
         }
-        public void OnSideTransaction(WriteBatch batch, Block block, SideTransaction st)
+        public void OnSideTransaction(WriteBatch batch, Block block, SlotSideTransaction st)
         {
             UInt256 AssetId = default;
             if (st.VerifyRegMainSwap(out AssetId, out SwapPairReply swapPairReply))
@@ -559,9 +566,16 @@ namespace OX.Mining
                         batch.Save_SwapTraderRedeemRequest(this, block, at, holderSH, SwapTraderRedeemRequest);
                     }
                     break;
+                case (byte)InvestType.OTCExchangeRequest:
+                    if (at.GetDataModel<OTCExchangeRequest>(bizshs, (byte)InvestType.OTCExchangeRequest, out OTCExchangeRequest otcexchangerequest))
+                    {
+                        batch.Save_OTCExchangeRequest(this, block, at, otcexchangerequest);
+                    }
+                    break;
             }
 
         }
+
         #endregion
         #region IMiningProvider
 
@@ -648,6 +662,7 @@ namespace OX.Mining
         //        return new KeyValuePair<MiningHolderKey, MinerParentPrivatePublish>(ks.AsSerializable<MiningHolderKey>(), data.AsSerializable<MinerParentPrivatePublish>());
         //    });
         //}
+
         #endregion
 
     }

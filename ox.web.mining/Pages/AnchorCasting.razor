@@ -1,0 +1,82 @@
+﻿@page "/_pc/invest/anchorcasting"
+@inherits MiningComponentBase
+<Microsoft.AspNetCore.Components.Web.Extensions.Head.Title Value=@PageTitle />
+<PageContainer Title=@PageTitle>
+    <Content>
+        <span>@msg</span>
+    </Content>
+    <ChildContent>
+        <Card Class="tabsCard">
+            <CardTabs>
+                <Tabs>
+                    <ChildContent>
+                        <TabPane Key="0">
+                            <TabTemplate><Badge Dot><a>@this.WebLocalString("跨链交互", "Cross chain interaction")</a></Badge></TabTemplate>
+                            <ChildContent>
+                                <Row Gutter="24">
+                                    <GridCol Class="col" Span="8">
+                                    </GridCol>
+                                    <GridCol Class="col" Span="8">
+                                        <Paragraph><Text Code>@this.WebLocalString("ERC20 USDT 抵押地址", "ERC20 USDT Mortgage Address")</Text> <Text Copyable>@MortgageAddress</Text></Paragraph>
+                                            <Paragraph><Text Code>@this.WebLocalString("OX-ECO USDT 销毁地址", "OX-ECO USDT Destroy Address")</Text> <Text Copyable>@UInt160.Zero.ToAddress()</Text></Paragraph>
+
+                                            <Form Model="@Model">
+                                                <FormItem Label="@this.WebLocalString("金额:", "amount:")">
+                                                    <Input @bind-Value="@context.Amount" />
+                                                </FormItem>
+
+                                                <FormItem WrapperColOffset="8" WrapperColSpan="16">
+                                                    <Button OnClick="Cast" Type="@ButtonType.Primary">@this.WebLocalString("铸造USDT", "Cast USDT")</Button>
+                                                    <Button OnClick="Destroy" Type="@ButtonType.Primary">@this.WebLocalString("销毁USDT", "Destroy USDT")</Button>
+                                                </FormItem>
+                                            </Form>
+                                        </GridCol>
+                                        <GridCol Class="col" Span="8">
+                                        </GridCol>
+                                    </Row>
+
+                                    <Divider>@this.WebLocalString("规则", "Rule")</Divider>
+                                    <Paragraph>
+                                        @this.WebLocalString(
+                                             "任何以太坊地址可以通过抵押ERC20 USDT来为自己铸造等额的OX-ECO USDT。同时，这种跨链价值转移是双向的，以太坊地址可以通过销毁总额不大于累计铸造额的OX-ECO USDT来赎回自身抵押的等额ERC20 USDT",
+                                             "Any Ethereum address can cast an equal amount of OX-ECO USDT for itself by mortgaging ERC20 USDT. Meanwhile, this cross chain value transfer is bidirectional, and Ethereum addresses can redeem their pledged ERC20 USDT of equal value by destroying OX-ECO USDT with a total amount not exceeding the cumulative casting amount"
+                                             )
+                                </Paragraph>
+                            </ChildContent>
+                        </TabPane>
+                        <TabPane Key="1">
+                            <TabTemplate>@this.WebLocalString("铸造记录", "Cast Records")</TabTemplate>
+                            <ChildContent>
+                                @if (this.CastingRecords.IsNotNullAndEmpty())
+                                {
+                                    <ul>
+                                        @foreach (var p in this.CastingRecords.OrderByDescending(m => m.Key.Timestamp))
+                                        {
+                                            <li>  <Paragraph><Text Code>@p.Key.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")</Text> <Text>@(p.Value.Value) USDT</Text></Paragraph></li>
+                                        }
+                                    </ul>
+                                }
+                            </ChildContent>
+                        </TabPane>
+                        <TabPane Key="2">
+                            <TabTemplate>@this.WebLocalString("销毁记录", "Destroy Records")</TabTemplate>
+                            <ChildContent>
+                                @if (this.DestroyRecords.IsNotNullAndEmpty())
+                                {
+                                    <ul>
+                                        @foreach (var p in this.DestroyRecords.OrderByDescending(m => m.Key.Timestamp))
+                                        {
+                                            <li>  <Paragraph><Text Code>@p.Key.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")</Text> <Text>@(p.Value.Value) USDT</Text></Paragraph></li>
+                                        }
+                                    </ul>
+                                }
+                            </ChildContent>
+                        </TabPane>
+                    </ChildContent>
+
+                </Tabs>
+            </CardTabs>
+        </Card>
+    </ChildContent>
+</PageContainer>
+

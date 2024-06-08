@@ -55,6 +55,10 @@ namespace OX.UI.LAM
         {
 
         }
+        public void OnFlashMessage(FlashMessage flashMessage)
+        {
+
+        }
         public void OnBlock(Block block)
         {
         }

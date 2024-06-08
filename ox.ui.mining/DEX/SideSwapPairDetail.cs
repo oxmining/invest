@@ -17,7 +17,7 @@ using OX.Mining;
 using OX.Ledger;
 using OX.IO;
 using OX.SmartContract;
-using OX.Cryptography.AES;
+using OX.Cryptography;
 using OX.UI.Mining;
 
 namespace OX.UI.Swap
@@ -26,10 +26,10 @@ namespace OX.UI.Swap
     {
         public Module Module { get; set; }
         INotecase Operator;
-        SideTransaction SideTransaction;
+        SlotSideTransaction SideTransaction;
         AssetState assetState;
         string poolAddr = string.Empty;
-        public SideSwapPairDetail(INotecase operater, SideTransaction sideTx)
+        public SideSwapPairDetail(INotecase operater, SlotSideTransaction sideTx)
         {
             this.Operator = operater;
             this.SideTransaction = sideTx;
