@@ -26,7 +26,7 @@ namespace OX.Mining.DTF
             {
                 TrustContract = Blockchain.TrustAssetContractScriptHash,
                 IsMustRelateTruster = true,
-                Truster = invest.LockMiningAccountPubKey,
+                Truster = invest.DTFLockAssetCustodyAccountPubKey,
                 Trustee = Trustee,
                 Targets = new UInt160[] { Trustee.BuildWitnessAddress() },
                 SideScopes = new UInt160[] { invest.SidePoolAccountAddress, CasinoSettleAccountAddress, CasinoWitnessAccountAddress }

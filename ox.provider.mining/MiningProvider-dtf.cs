@@ -167,7 +167,7 @@ namespace OX.Mining
         }
         public static void Save_DTFLockAssetTransaction(this WriteBatch batch, MiningProvider provider, Block block, LockAssetTransaction lat, ushort blockN)
         {
-            if (lat.IsNotNull() && lat.LockContract.Equals(Blockchain.LockAssetContractScriptHash) && lat.Recipient.Equals(invest.LockMiningAccountPubKey) && lat.Attach.IsNotNullAndEmpty())
+            if (lat.IsNotNull() && lat.LockContract.Equals(Blockchain.LockAssetContractScriptHash) && lat.Recipient.Equals(invest.DTFLockAssetCustodyAccountPubKey) && lat.Attach.IsNotNullAndEmpty())
             {
                 var targetSH = new UInt160(lat.Attach);
                 if (targetSH.IsNotNull())
