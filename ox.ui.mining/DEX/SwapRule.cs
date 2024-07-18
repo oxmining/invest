@@ -31,6 +31,7 @@ namespace OX.UI.Swap
                 AddSetting(settings, InvestSettingTypes.DEXBonusToken, UIHelper.LocalString("交易奖励资产", "DEX Bonus Asset Id"), "");
                 AddSetting(settings, InvestSettingTypes.SidePairRegFee, UIHelper.LocalString("边池交易对注册费", "Side Exchange Pair Reg Fee"), "OXC");
                 AddSetting(settings, InvestSettingTypes.AnchorIssuePool, UIHelper.LocalString("USDT锚地抵押发行池", "USDT anchor mortgage issuance pool"), "");
+                AddSetting(settings, InvestSettingTypes.ValidEthChain, UIHelper.LocalString("有效的网络ID", "Valid Chain ID"), "");
             }
         }
         void AddSetting(IEnumerable<KeyValuePair<byte[], InvestSettingRecord>> settings, byte settingKey, string name, string suffix)

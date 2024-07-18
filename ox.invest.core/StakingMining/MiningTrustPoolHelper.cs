@@ -17,6 +17,7 @@ namespace OX.Mining.StakingMining
 {
     public static class MiningTrustPoolHelper
     {
+        public const string USDTExchangePoolAddress = "AN4dv3rnHKE5Lqn4tUZwC8YQ17B7VxLqzR";
         public const string MLMExchangePoolAddress = "APKrG6vQdBZamPJ8AG7G23bjVRJn4t74nz";
         public const string SLMExchangePoolAddress = "AHTqcyqSD5QvYbmhykfw1dhrqchTNRz3ge";
         public const string LLMExchangePoolAddress = "AUTPhx9WWNekJK8ny73GNNvWsspjUftoTa";

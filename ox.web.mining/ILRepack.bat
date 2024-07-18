@@ -1,0 +1,1 @@
+C:\Users\Scott\.nuget\packages\ilrepack\2.0.33\tools\ILRepack.exe /lib:C:\ox\net7.0  /out:bin\Debug\net7.0-windows\mining.dll     bin\Debug\net7.0-windows\ox.invest.core.dll bin\Debug\net7.0-windows\ox.provider.mining.dll  bin\Debug\net7.0-windows\ox.ui.mining.dll bin\Debug\net7.0-windows\ox.web.mining.dll 

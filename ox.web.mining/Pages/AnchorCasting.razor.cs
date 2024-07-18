@@ -51,7 +51,7 @@ namespace OX.Web.Pages
 
         void Init()
         {
-            if (this.Valid)
+            if (this.Valid && this.ValidMainChain)
             {
                 var bizPlugin = Bapp.GetBappProvider<MiningBapp, IMiningProvider>() as MiningProvider;
                 if (bizPlugin.IsNotNull())
@@ -66,26 +66,34 @@ namespace OX.Web.Pages
         {
             if (this.Valid && this.MortgageAddress.IsNotNullAndEmpty())
             {
-                if (this.Model.Amount >= 100M)
+                if (this.ValidMainChain)
                 {
-                    try
+                    if (this.Model.Amount >= 100M)
                     {
-                        var ethtxid = await this.MetaMaskService.SendUSDT(this.MortgageAddress, this.Model.Amount);
-                        if (ethtxid.IsNotNullAndEmpty())
+                        try
                         {
-                            this.msg = this.WebLocalString($"以太坊交易 {ethtxid}已经尝试", $"Ethereum transaction {ethtxid} has been attempted");
+                            var ethtxid = await this.MetaMaskService.SendUSDT(this.MortgageAddress, this.Model.Amount);
+                            if (ethtxid.IsNotNullAndEmpty())
+                            {
+                                this.msg = this.WebLocalString($"以太坊交易 {ethtxid}已经尝试", $"Ethereum transaction {ethtxid} has been attempted");
+                                StateHasChanged();
+                            }
+                        }
+                        catch (UserDeniedException e)
+                        {
+                            this.msg = this.WebLocalString($"已经拒绝交易", $"Transaction has been rejected");
                             StateHasChanged();
                         }
                     }
-                    catch (UserDeniedException e)
+                    else
                     {
-                        this.msg = this.WebLocalString($"已经拒绝交易", $"Transaction has been rejected");
+                        this.msg = this.WebLocalString($"最低铸造额为100USDT", $"The minimum casting amount is 100 USDT");
                         StateHasChanged();
                     }
                 }
                 else
                 {
-                    this.msg = this.WebLocalString($"最低铸造额为100USDT", $"The minimum casting amount is 100 USDT");
+                    this.msg = this.WebLocalString($"仅支持以太坊主网", $"Only supports Ethereum mainnet");
                     StateHasChanged();
                 }
             }

@@ -3,7 +3,7 @@
 <Microsoft.AspNetCore.Components.Web.Extensions.Head.Title Value=@PageTitle />
 <PageContainer Title=@PageTitle>
     <Content>
-        <span>@msg</span>
+       @msg
     </Content>
     <ChildContent>
         <Card>
@@ -19,7 +19,7 @@
                 <FormItem Label=@this.WebLocalString("OX出金地址","OX Sale Address") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
                     <Input @bind-Value="@selfaddr" ReadOnly=true />
                 </FormItem>
-                <FormItem Label=@this.WebLocalString("出金地址 USDX 可用余额","Sale Address USDX Available Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                <FormItem Label=@this.WebLocalString("出金地址 USDT 可用余额","Sale Address USDT Available Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
                     <Input @bind-Value="@this.BalanceState.AvailableBalance" ReadOnly=true />
                 </FormItem>
                 @{
@@ -28,11 +28,11 @@
                 <FormItem Label=@this.WebLocalString("场外交易池地址","OTC Pool Address") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
                     <Input @bind-Value="@addr" ReadOnly=true />
                 </FormItem>
-                <FormItem Label=@this.WebLocalString("场外交易池USDX余额","OX Dealer Pool USDX Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                <FormItem Label=@this.WebLocalString("场外交易池USDT余额","OX Dealer Pool USDT Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
                     <Input @bind-Value="@this.OTCDealerOXPoolBalance" ReadOnly=true />
                 </FormItem>
-                <FormItem Label=@this.WebLocalString("USDX 出金额","USDX Sale Amount") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
-                    <Input Placeholder=@this.WebLocalString("输入要出金的 USDX 资产金额","Enter the USDX amount to sale") @bind-Value="@context.Amount" />
+                <FormItem Label=@this.WebLocalString("USDT 出金额","USDT Sale Amount") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                    <Input Placeholder=@this.WebLocalString("输入要出金的 USDT 资产金额","Enter the USDT amount to sale") @bind-Value="@context.Amount" />
                 </FormItem>
                 <FormItem Label=@this.WebLocalString("手续费率","Commission Ratio") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
                     <AntDesign.InputNumber @bind-Value="@context.FeeRatio" Min="0" Max="20" DefaultValue="5" />

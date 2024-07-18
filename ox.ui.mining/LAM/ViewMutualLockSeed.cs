@@ -90,20 +90,42 @@ namespace OX.UI.LAM
 
         private void tb_address_TextChanged(object sender, EventArgs e)
         {
+            var bizPlugin = Bapp.GetBappProvider<MiningBapp, IMiningProvider>();
+            if (bizPlugin.IsNull()) return;
+            this.lb_msg.Text = string.Empty;
             var s = this.tb_address.Text;
+            bool findMiner = false;
             try
             {
-                var sh =s.ToScriptHash();
-                this.tb_seedAddress.Text = sh.GetMutualLockSeed().ToAddress();
+                var sh = s.ToScriptHash();
+                var seedSh = sh.GetMutualLockSeed();
+                this.tb_seedAddress.Text = seedSh.ToAddress();
+                if (bizPlugin.MutualLockNodes.TryGetValue(seedSh, out var _))
+                {
+                    findMiner = true;
+                }
             }
             catch
             {
                 if (s.IsValidEthereumAddressHexFormat())
                 {
-                    this.tb_seedAddress.Text = s.BuildMapAddress().GetMutualLockSeed().ToAddress();
+                    var seedSh = s.BuildMapAddress().GetMutualLockSeed();
+                    this.tb_seedAddress.Text = seedSh.ToAddress();
+                    if (bizPlugin.MutualLockNodes.TryGetValue(seedSh, out var _))
+                    {
+                        findMiner = true;
+                    }
                 }
                 else
                     this.tb_seedAddress.Text = string.Empty;
+            }
+            if (findMiner)
+            {
+                this.lb_msg.Text = UIHelper.LocalString("有效的矿机", "Valid miner");
+            }
+            else
+            {
+                this.lb_msg.Text = UIHelper.LocalString("没有找到矿机", "No miner found");
             }
         }
 

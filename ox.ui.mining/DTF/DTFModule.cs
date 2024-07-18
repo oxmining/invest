@@ -64,7 +64,7 @@ namespace OX.UI.Mining.DTF
             myEntrustedFundsMenu.Name = "myEntrustedFundsMenu";
             myEntrustedFundsMenu.ShortcutKeys = Keys.Control| Keys.Alt| Keys.M;
             myEntrustedFundsMenu.Size = new System.Drawing.Size(170, 22);
-            myEntrustedFundsMenu.Text = UIHelper.LocalString("我受托的基金", "My Be Entrusted Funds");
+            myEntrustedFundsMenu.Text = UIHelper.LocalString("我管理的基金", "My Be Entrusted Funds");
             myEntrustedFundsMenu.Click += MyEntrustedFundsMenu_Click;
 
             //我认筹的的基金

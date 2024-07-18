@@ -17,7 +17,7 @@
                     <FormItem Label=@this.WebLocalString("OX 场外交易池地址","OX Dealer Pool Address") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
                         <Input @bind-Value="@this.OTCDealerOXPoolAddress" ReadOnly=true />
                     </FormItem>
-                    <FormItem Label=@this.WebLocalString("场外交易池USDX余额","OX Dealer Pool USDX Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                    <FormItem Label=@this.WebLocalString("场外交易池USDT余额","OX Dealer Pool USDT Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
                         <Input @bind-Value="@this.OTCDealerOXPoolBalance" ReadOnly=true />
                     </FormItem>
 
@@ -35,7 +35,7 @@
                         <Input Placeholder=@this.WebLocalString("输入要入金的以太坊资产金额","Enter the Eth amount to buy") @bind-Value="@context.Amount" />
                     </FormItem>
                     <FormItem Label=" " Style="margin-top:32px" WrapperCol="_submitFormLayout.WrapperCol">
-                        <Button Type="primary" HtmlType="submit" Disabled=!this.Valid>
+                        <Button Type="primary" HtmlType="submit" Disabled=!this.Valid||!this.ValidChain>
                             @this.WebLocalString("提交", "Submit")
                         </Button>
                     </FormItem>

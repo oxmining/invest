@@ -57,6 +57,7 @@ namespace OX.Web.Pages
         public Fixed8 PricingBalance { get; set; } = Fixed8.Zero;
         public UInt256 AssetId { get; set; }
         public string AssetName { get; set; }
+        public string SwapAssetName { get; set; }
         public EthAssetBalanceState BalanceState = new EthAssetBalanceState();
         string msg;
         bool loading2 = false;
@@ -176,6 +177,9 @@ namespace OX.Web.Pages
                     PricingBalance = vom.Volume.PricingBalance;
                 }
             }
+            var assetState = Blockchain.Singleton.CurrentSnapshot.Assets.TryGet(SideSwapPairKey.AssetId);
+            if (assetState.IsNotNull())
+                SwapAssetName = assetState.GetName();
             if (kind == "0")
             {
                 AssetId = Blockchain.OXC;
@@ -184,9 +188,7 @@ namespace OX.Web.Pages
             else
             {
                 AssetId = SideSwapPairKey.AssetId;
-                var assetState = Blockchain.Singleton.CurrentSnapshot.Assets.TryGet(AssetId);
-                if (assetState.IsNotNull())
-                    AssetName = assetState.GetName();
+                AssetName = SwapAssetName;
             }
             if (this.EthID.IsNotNull() && this.Box.Notecase.Wallet is OpenWallet openWallet)
             {

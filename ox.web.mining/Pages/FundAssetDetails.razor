@@ -11,7 +11,10 @@
                 @RateTitle
             </Extra>
             <CardTabs>
-                <Tabs DefaultActiveKey="1">
+                @{
+                    TabPosition tp = this.IsMobile ? TabPosition.Left : TabPosition.Top;
+                }
+                <Tabs DefaultActiveKey="1" TabPosition=tp>
                     <TabPane Key="1">
                         <TabTemplate><Badge Dot><a>@this.WebLocalString("未锁仓资产", "Unlocked Asset")</a></Badge></TabTemplate>
                         <ChildContent>
@@ -37,7 +40,7 @@
                                                         var state = Blockchain.Singleton.Store.GetAssets().TryGet(assetId);
                                                         assetname = state.GetName();
                                                     }
-                                                    var s = $"{assetname}    ({assetId.ToString()})          :           {b.Value}";
+                                                    var s = $"{assetname}    ({this.OmitString(assetId.ToString())})          :           {b.Value}";
                                                     <li><Paragraph>@s</Paragraph></li>
                                                 }
                                             }
@@ -72,7 +75,7 @@
                                                         var state = Blockchain.Singleton.Store.GetAssets().TryGet(assetId);
                                                         assetname = state.GetName();
                                                     }
-                                                    var s = $"{assetname}    ({assetId.ToString()})          :          {la.Value.Output.Value}   ->{la.Value.Tx.LockExpiration}";
+                                                    var s = $"{assetname}    ({this.OmitString(assetId.ToString())})          :          {la.Value.Output.Value}   ->{la.Value.Tx.LockExpiration}";
                                                     <li><Paragraph>@s</Paragraph></li>
                                                 }
                                             }
@@ -90,7 +93,7 @@
                                     @{
                                         foreach (var rp in Rates.OrderByDescending(m => m.Value))
                                         {
-                                            var s = $"{rp.Key.ToAddress()}          :          {rp.Value.ToString("f6")} ";
+                                            var s = $"{this.OmitString(rp.Key.ToAddress())}          :          {rp.Value.ToString("f6")} ";
                                             <li><Paragraph>@s</Paragraph></li>
                                         }
 

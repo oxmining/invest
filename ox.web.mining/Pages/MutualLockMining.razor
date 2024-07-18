@@ -29,25 +29,28 @@
                             @if (this.HaveEthID)
                             {
                                 var url = $"/_pc/wallet/transferasset/{d.Key.ToString()}/2/{this.EthID.EthAddress}/{Last.MinAmount.ToString()}/{Blockchain.Singleton.HeaderHeight + 1001000}";
-                                <a class="bt" href="@url">@this.WebLocalString("去挖矿","Go Mining")</a>
+                                <a class="bt" href="@url">@this.WebLocalString("去挖矿", "Go Mining")</a>
                             }
                         </ExtraTemplate>
                         <ChildContent>
                             <Card Class="tabsCard">
                                 <CardTabs>
-                                    <Tabs DefaultActiveKey="@((i*100+1).ToString())">
+                                    @{
+                                        TabPosition tp = this.IsMobile? TabPosition.Left : TabPosition.Top;
+                                    }
+                                    <Tabs DefaultActiveKey="@((i*100+1).ToString())" TabPosition=tp>
                                         <TabPane Key="@((i*100+1).ToString())">
-                                            <TabTemplate><Badge Dot><a>@this.WebLocalString("挖矿信息","Mining Information")</a></Badge></TabTemplate>
-                                        <ChildContent>
-                                            <div>
-                                                <ul>
-                                                    <li><Paragraph>@this.WebLocalString("资产Id","Asset Id")  :  <Text Strong Copyable>@d.Key.ToString()</Text></Paragraph></li>
+                                            <TabTemplate><Badge Dot><a>@this.WebLocalString("挖矿信息", "Mining Information")</a></Badge></TabTemplate>
+                                            <ChildContent>
+                                                <div>
+                                                    <ul>
+                                                        <li><Paragraph>@this.WebLocalString("资产Id", "Asset Id")  :  <Text Strong Copyable>@this.OmitString(d.Key.ToString())</Text></Paragraph></li>
 
-                                                    <li><Paragraph>@this.WebLocalString($"最大发行量:{cap}", $"Issue Cap:{cap}")</Paragraph></li>
+                                                        <li><Paragraph>@this.WebLocalString($"最大发行量:{cap}", $"Issue Cap:{cap}")</Paragraph></li>
 
-                                                    <li><Paragraph>@this.WebLocalString($"已发行量:{havecap}", $"Issued:{havecap}")  </Paragraph></li>
-                                                </ul>
-                                                @foreach (var l in d.Value.AssetInfos.OrderByDescending(m => m.Item1.IssueIndex))
+                                                        <li><Paragraph>@this.WebLocalString($"已发行量:{havecap}", $"Issued:{havecap}")  </Paragraph></li>
+                                                    </ul>
+                                                    @foreach (var l in d.Value.AssetInfos.OrderByDescending(m => m.Item1.IssueIndex))
                                                     {
                                                         <Divider Orientation="left" Style="font-weight:bold">@this.WebLocalString($"参数发布区块:{l.Item1.IssueIndex}", $"Parameter issue height:{l.Item1.IssueIndex}")</Divider>
                                                         <ul>
@@ -63,7 +66,7 @@
                                             </ChildContent>
                                         </TabPane>
                                         <TabPane Key="@((i*100+2).ToString())">
-                                            <TabTemplate>@this.WebLocalString("本矿机挖矿记录","Mining Records")</TabTemplate>
+                                            <TabTemplate>@this.WebLocalString("本矿机挖矿记录", "Mining Records")</TabTemplate>
                                             <ChildContent>
                                                 <div>
                                                     @if (this.Miner.IsNotNull() && this.HaveEthID)
@@ -71,7 +74,7 @@
                                                         var lw = this.Provider.GetTotalValidLockVolume(d.Key, this.EthID.MapAddress);
                                                         if (lw.IsNull()) lw = new LongWrapper();
                                                         <Divider Style="font-weight:bold">
-                                                            @this.WebLocalString($"累计有效时空锁仓总量：{lw.Value}",$"Total Valid Space-Time Lock Volume：{lw.Value}")
+                                                            @this.WebLocalString($"累计有效时空锁仓总量：{lw.Value}", $"Total Valid Space-Time Lock Volume：{lw.Value}")
                                                         </Divider>
                                                     }
                                                     @foreach (var r in d.Value.SelfMiningRecords.OrderByDescending(m => m.Timestamp))
@@ -90,7 +93,7 @@
                                             </ChildContent>
                                         </TabPane>
                                         <TabPane Key="@((i*100+3).ToString())">
-                                            <TabTemplate>@this.WebLocalString("叶子矿机挖矿记录","Leaf Mining Records")</TabTemplate>
+                                            <TabTemplate>@this.WebLocalString("叶子矿机挖矿记录", "Leaf Mining Records")</TabTemplate>
                                             <ChildContent>
                                                 <div>
                                                     @foreach (var r in d.Value.LeafMiningRecords.OrderByDescending(m => m.Timestamp))
@@ -99,8 +102,8 @@
                                                             <li>@this.WebLocalString($"锁仓数:{r.Amount.ToString()}", $"Lock Volume:{r.Amount.ToString()}")</li>
                                                             <li>@this.WebLocalString($"锁仓时间:{r.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}", $"Lock Time:{r.Timestamp.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss")}")</li>
                                                             <li>@this.WebLocalString($"锁仓高度:{r.StartIndex}", $"Lock Height:{r.StartIndex}")</li>
-                                                            <li>@this.WebLocalString($"锁仓地址:{r.LockAddress.ToAddress()}", $"Lock Address:{r.LockAddress.ToAddress()}")</li>
-                                                            <li>@this.WebLocalString($"解锁地址:{r.Owner.ToAddress()}", $"Unlock Address:{r.Owner.ToAddress()}")</li>
+                                                            <li>@this.WebLocalString($"锁仓地址:{this.OmitString(r.LockAddress.ToAddress())}", $"Lock Address:{this.OmitString(r.LockAddress.ToAddress())}")</li>
+                                                            <li>@this.WebLocalString($"解锁地址:{this.OmitString(r.Owner.ToAddress())}", $"Unlock Address:{this.OmitString(r.Owner.ToAddress())}")</li>
                                                             <li>@this.WebLocalString($"解锁高度:{r.EndIndex}", $"Unlock Height:{r.EndIndex}")</li>
                                                         </ul>
                                                         <Divider />
@@ -109,7 +112,7 @@
                                             </ChildContent>
                                         </TabPane>
                                         <TabPane Key="@((i*100+4).ToString())">
-                                            <TabTemplate>@this.WebLocalString("本矿机出矿记录","Interest Records")</TabTemplate>
+                                            <TabTemplate>@this.WebLocalString("本矿机出矿记录", "Interest Records")</TabTemplate>
                                             <ChildContent>
                                                 <div>
                                                     @foreach (var r in d.Value.SelfInterestRecords.OrderByDescending(m => m.Timestamp))
@@ -125,7 +128,7 @@
                                             </ChildContent>
                                         </TabPane>
                                         <TabPane Key="@((i*100+5).ToString())">
-                                            <TabTemplate>@this.WebLocalString("叶子矿机出矿记录","Leaf Interest Records")</TabTemplate>
+                                            <TabTemplate>@this.WebLocalString("叶子矿机出矿记录", "Leaf Interest Records")</TabTemplate>
                                             <ChildContent>
                                                 <div>
                                                     @foreach (var r in d.Value.LeafInterestRecords.OrderByDescending(m => m.Timestamp))

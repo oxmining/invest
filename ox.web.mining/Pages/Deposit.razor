@@ -3,54 +3,48 @@
 <Microsoft.AspNetCore.Components.Web.Extensions.Head.Title Value=@PageTitle />
 <PageContainer Title=@PageTitle>
     <ChildContent>
-        @{
-            var cardTitle = this.WebLocalString("场外交易列表", "OTC Trading List");
-        }
+
         <div class="standardList">
-            <Card Class="listCard"
-                  Title=@cardTitle
-                  Style="margin-top: 24px;"
-                  BodyStyle="padding: 0 32px 40px 32px">
-                <ChildContent>
-                    <AntList TItem="OTCDealerViewModel"
-                             DataSource="OTCDealers"
-                             ItemLayout="ListItemLayout.Horizontal">
-                        <ListItem>
-                            <div class="listContent">
-                                <div class="listContentItem">
-                                    <span>@this.WebLocalString("出金地址","Sale Address")</span>
-                                    <p>@context.OTCDealerMerge.InPoolAddress.ToAddress() </p>
-                                </div>
-                                @if (context.OTCDealerMerge.Setting.IsNotNull())
-                                {
-                                    <div class="listContentItem">
-                                        <span>@this.WebLocalString("USDX 余额","USDX Balance")</span>
-                                        <p>@context.Balance</p>
-                                    </div>
-                                    <div class="listContentItem">
-                                        <span>@this.WebLocalString("手续费率","Fee Ratio")</span>
-                                        <p>@context.OTCDealerMerge.Setting.InRate %</p>
-                                    </div>
-                                    <div class="listContentItem">
-                                        <span>@this.WebLocalString("状态","State")</span>
-                                        <p>@this.WebLocalString( context.OTCDealerMerge.Setting.State.StringValue(),context.OTCDealerMerge.Setting.State.EngStringValue())</p>
-                                    </div>
-                                    <div class="listContentItem">
-                                        @{
-                                            var hex = System.Text.Encoding.UTF8.GetBytes(context.OTCDealerMerge.EthAddress).ToHexString();
-                                        }
-                                        <a href="/_pc/invest/godeposit/@hex">@this.WebLocalString("去入金","Go Deposit")</a>
-                                    </div>
-                                }
+            <AntList TItem="OTCDealerViewModel"
+                     DataSource="OTCDealers"
+                     ItemLayout="ListItemLayout.Horizontal">
+                <ListItem>
+                    <div class="listContent">
+                        <div class="listContentItem">
+                            <span>@this.WebLocalString("出金地址", "Sale Address")</span>
+                            <p>@this.OmitString(context.OTCDealerMerge.InPoolAddress.ToAddress()) </p>
+                        </div>
+                        @if (context.OTCDealerMerge.Setting.IsNotNull())
+                        {
+                            <div class="listContentItem">
+                                <span>@this.WebLocalString("USDT 余额", "USDT Balance")</span>
+                                <p>@context.Balance</p>
                             </div>
-                        </ListItem>
-                    </AntList>
-                </ChildContent>
-            </Card>
+                            <div class="listContentItem">
+                                <span>@this.WebLocalString("手续费率", "Fee Ratio")</span>
+                                <p>@context.OTCDealerMerge.Setting.InRate %</p>
+                            </div>
+                            <div class="listContentItem">
+                                <span>@this.WebLocalString("状态", "State")</span>
+                                <p>@this.WebLocalString(context.OTCDealerMerge.Setting.State.StringValue(), context.OTCDealerMerge.Setting.State.EngStringValue())</p>
+                            </div>
+                            <div class="listContentItem">
+                                @{
+                                    var hex = System.Text.Encoding.UTF8.GetBytes(context.OTCDealerMerge.EthAddress).ToHexString();
+                                }
+                                <a href="/_pc/invest/godeposit/@hex">@this.WebLocalString("去入金", "Go Deposit")</a>
+                            </div>
+                        }
+                    </div>
+                </ListItem>
+            </AntList>
         </div>
     </ChildContent>
 </PageContainer>
 <style type="text/css">
+    .listContent{
+        border-bottom: 1px solid #fff;
+    }
     .standardList .ant-card-head {
         border-bottom: none;
     }

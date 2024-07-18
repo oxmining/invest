@@ -80,7 +80,7 @@ namespace OX.Web.Pages
         };
         void Revert()
         {
-            if (this.Valid)
+            if (this.Valid && this.ValidChain)
             {
                 var act = Box.Notecase.Wallet.GetHeldAccounts().First();
                 if (UInt256.TryParse(revertEthHash, out UInt256 ethId))
@@ -89,7 +89,7 @@ namespace OX.Web.Pages
                     if (Provider.IsNotNull())
                     {
                         if (!Provider.ContainEthExchangeRequest(ethId))
-                         {
+                        {
                             ethtxid = revertEthHash;
                             if (Box.Notecase.DoSimpleDeposit(act, ethtxid))
                             {
@@ -127,6 +127,11 @@ namespace OX.Web.Pages
                     {
                         this.model.FromEthAddress = this.EthID.EthAddress;
                         this.model.OxAddress = this.EthID.MapAddress.ToAddress();
+                        if (this.Valid && this.ValidChain)
+                        {
+                            var n = string.Join(',', this.ValidChains.Select(m => m.ToString()));
+                            this.msg = this.WebLocalString($"仅支持  {n}", $"Only supported {n}");
+                        }
                     }
                     await Task.CompletedTask;
                 }
@@ -141,7 +146,7 @@ namespace OX.Web.Pages
         {
             this.success = false;
             this.ethtxid = string.Empty;
-            if (this.Valid)
+            if (this.Valid && this.ValidChain)
             {
                 var act = Box.Notecase.Wallet.GetHeldAccounts().First();
                 var sh = this.model.OxAddress.ToScriptHash();
@@ -166,35 +171,35 @@ namespace OX.Web.Pages
                 }
             }
         }
-        private async void HandleSubmit2()
-        {
-            this.success = false;
-            this.ethtxid = string.Empty;
-            if (this.Valid)
-            {
-                var act = Box.Notecase.Wallet.GetHeldAccounts().First();
-                var sh = this.model.OxAddress.ToScriptHash();
-                try
-                {
-                    var r = await this.MetaMaskService.TryDeposit(this.model.FromEthAddress, this.model.PoolEthAddress, sh, this.model.Amount);
-                    if (r.OK)
-                    {
+        //private async void HandleSubmit2()
+        //{
+        //    this.success = false;
+        //    this.ethtxid = string.Empty;
+        //    if (this.Valid && this.ValidChain)
+        //    {
+        //        var act = Box.Notecase.Wallet.GetHeldAccounts().First();
+        //        var sh = this.model.OxAddress.ToScriptHash();
+        //        try
+        //        {
+        //            var r = await this.MetaMaskService.TryDeposit(this.model.FromEthAddress, this.model.PoolEthAddress, sh, this.model.Amount);
+        //            if (r.OK)
+        //            {
 
-                        if (Box.Notecase.DoDeposit(act, this.model.FromEthAddress, this.model.PoolEthAddress, sh, r.EthTxId, r.stringToSign, r.signatureData, true))
-                        {
-                            this.success = true;
-                        }
+        //                if (Box.Notecase.DoDeposit(act, this.model.FromEthAddress, this.model.PoolEthAddress, sh, r.EthTxId, r.stringToSign, r.signatureData, true))
+        //                {
+        //                    this.success = true;
+        //                }
 
-                        StateHasChanged();
-                    }
-                }
-                catch (UserDeniedException e)
-                {
-                    this.msg = this.WebLocalString($"已经拒绝交易", $"Transaction has been rejected");
-                    StateHasChanged();
-                }
-            }
-        }
+        //                StateHasChanged();
+        //            }
+        //        }
+        //        catch (UserDeniedException e)
+        //        {
+        //            this.msg = this.WebLocalString($"已经拒绝交易", $"Transaction has been rejected");
+        //            StateHasChanged();
+        //        }
+        //    }
+        //}
         protected override async Task MetaMaskService_AccountChangedEvent(string arg)
         {
             await base.MetaMaskService_AccountChangedEvent(arg);

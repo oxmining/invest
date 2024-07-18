@@ -35,7 +35,7 @@ namespace OX.UI.DTF
         {
             InitializeComponent();
 
-            this.DockText = UIHelper.LocalString("我受托的基金", "My Be Entrusted Funds");
+            this.DockText = UIHelper.LocalString("我管理的基金", "My Be Entrusted Funds");
             this.RoundPanel.SizeChanged += RoundPanel_SizeChanged;
             this.SizeChanged += GameRoom_SizeChanged;
             this.RoundPanel.MouseDown += PairView_MouseDown;

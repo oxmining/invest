@@ -58,15 +58,19 @@ namespace OX.Web.Pages
         {
             var act = Blockchain.Singleton.CurrentSnapshot.Accounts.TryGet(invest.SwapFeeAccountAddress);
             act.Balances.TryGetValue(Blockchain.OXC, out SwapFeeBalance);
-            if (this.HaveEthID && this.Provider.IsNotNull())
+            if (this.Valid && this.ValidMainChain && this.Provider.IsNotNull())
             {
                 var lw = this.Provider.Get<LongWrapper>(InvestBizPersistencePrefixes.MarkMiningCount, new StringWrapper(this.EthID.EthAddress));
                 if (lw.IsNotNull()) Count = lw.Value;
             }
+            else
+            {
+                this.msg = this.WebLocalString("无效的钱包或者区块链网络", "Invalid wallet or blockchain network");
+            }
         }
         async void Checkin()
         {
-            if (this.HaveEthID)
+            if (this.Valid && this.ValidMainChain)
             {
                 var remainder = Blockchain.Singleton.HeaderHeight % 10000;
                 var minIndex = Blockchain.Singleton.HeaderHeight - remainder;

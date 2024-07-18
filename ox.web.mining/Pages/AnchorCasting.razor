@@ -8,38 +8,34 @@
     <ChildContent>
         <Card Class="tabsCard">
             <CardTabs>
-                <Tabs>
+                @{
+                    TabPosition tp = this.IsMobile ? TabPosition.Left : TabPosition.Top;
+                }
+                <Tabs TabPosition=tp>
                     <ChildContent>
                         <TabPane Key="0">
                             <TabTemplate><Badge Dot><a>@this.WebLocalString("跨链交互", "Cross chain interaction")</a></Badge></TabTemplate>
                             <ChildContent>
-                                <Row Gutter="24">
-                                    <GridCol Class="col" Span="8">
-                                    </GridCol>
-                                    <GridCol Class="col" Span="8">
-                                        <Paragraph><Text Code>@this.WebLocalString("ERC20 USDT 抵押地址", "ERC20 USDT Mortgage Address")</Text> <Text Copyable>@MortgageAddress</Text></Paragraph>
-                                            <Paragraph><Text Code>@this.WebLocalString("OX-ECO USDT 销毁地址", "OX-ECO USDT Destroy Address")</Text> <Text Copyable>@UInt160.Zero.ToAddress()</Text></Paragraph>
 
-                                            <Form Model="@Model">
-                                                <FormItem Label="@this.WebLocalString("金额:", "amount:")">
-                                                    <Input @bind-Value="@context.Amount" />
-                                                </FormItem>
+                                <Paragraph><Text Code>@this.WebLocalString("ERC20 USDT 抵押地址", "ERC20 USDT Mortgage Address")</Text> <Text Copyable>@MortgageAddress</Text></Paragraph>
+                                <Paragraph><Text Code>@this.WebLocalString("OX-ECO USDT 销毁地址", "OX-ECO USDT Destroy Address")</Text> <Text Copyable>@UInt160.Zero.ToAddress()</Text></Paragraph>
+                                <Form Model="@Model">
+                                    <FormItem Label="@this.WebLocalString("金额:", "amount:")">
+                                        <Input @bind-Value="@context.Amount" />
+                                    </FormItem>
 
-                                                <FormItem WrapperColOffset="8" WrapperColSpan="16">
-                                                    <Button OnClick="Cast" Type="@ButtonType.Primary">@this.WebLocalString("铸造USDT", "Cast USDT")</Button>
-                                                    <Button OnClick="Destroy" Type="@ButtonType.Primary">@this.WebLocalString("销毁USDT", "Destroy USDT")</Button>
-                                                </FormItem>
-                                            </Form>
-                                        </GridCol>
-                                        <GridCol Class="col" Span="8">
-                                        </GridCol>
-                                    </Row>
+                                    <FormItem WrapperColOffset=this.IsMobile?2:8 WrapperColSpan=this.IsMobile?2:16>
+                                        <Button OnClick="Cast" Type="@ButtonType.Primary" Disabled=!this.Valid||!this.ValidMainChain>@this.WebLocalString("铸造USDT", "Cast USDT")</Button>
+                                        <Button OnClick="Destroy" Type="@ButtonType.Primary">@this.WebLocalString("销毁USDT", "Destroy USDT")</Button>
+                                    </FormItem>
+                                </Form>
 
-                                    <Divider>@this.WebLocalString("规则", "Rule")</Divider>
-                                    <Paragraph>
-                                        @this.WebLocalString(
-                                             "任何以太坊地址可以通过抵押ERC20 USDT来为自己铸造等额的OX-ECO USDT。同时，这种跨链价值转移是双向的，以太坊地址可以通过销毁总额不大于累计铸造额的OX-ECO USDT来赎回自身抵押的等额ERC20 USDT",
-                                             "Any Ethereum address can cast an equal amount of OX-ECO USDT for itself by mortgaging ERC20 USDT. Meanwhile, this cross chain value transfer is bidirectional, and Ethereum addresses can redeem their pledged ERC20 USDT of equal value by destroying OX-ECO USDT with a total amount not exceeding the cumulative casting amount"
+
+                                <Divider>@this.WebLocalString("规则", "Rule")</Divider>
+                                <Paragraph>
+                                    @this.WebLocalString(
+                                             "任何以太坊地址可以在以太坊主网上通过抵押ERC20 USDT来为自己铸造等额的OX-ECO USDT。同时，这种跨链价值转移是双向的，以太坊地址可以通过销毁总额不大于累计铸造额的OX-ECO USDT来赎回自身抵押的等额ERC20 USDT",
+                                             "Any Ethereum address can cast an equal amount of OX-ECO USDT for itself on the Ethereum mainnet by mortgaging ERC20 USDT. Meanwhile, this cross chain value transfer is bidirectional, and Ethereum addresses can redeem their pledged ERC20 USDT of equal value by destroying OX-ECO USDT with a total amount not exceeding the cumulative casting amount"
                                              )
                                 </Paragraph>
                             </ChildContent>

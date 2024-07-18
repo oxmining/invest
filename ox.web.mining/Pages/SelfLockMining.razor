@@ -36,13 +36,16 @@
                         <ChildContent>
                             <Card Class="tabsCard">
                                 <CardTabs>
-                                    <Tabs DefaultActiveKey="@((i*100+1).ToString())">
+                                    @{
+                                        TabPosition tp = this.IsMobile? TabPosition.Left : TabPosition.Top;
+                                    }
+                                    <Tabs DefaultActiveKey="@((i*100+1).ToString())" TabPosition=tp>
                                         <TabPane Key="@((i*100+1).ToString())">
                                             <TabTemplate><Badge Dot><a>@this.WebLocalString("挖矿信息","Mining Information")</a></Badge></TabTemplate>
                                         <ChildContent>
                                             <div>
                                                 <ul>
-                                                    <li><Paragraph>@this.WebLocalString("资产Id","Asset Id")  :  <Text Strong Copyable>@d.Key.ToString()</Text></Paragraph></li>
+                                                    <li><Paragraph>@this.WebLocalString("资产Id","Asset Id")  :  <Text Strong Copyable>@this.OmitString(d.Key.ToString())</Text></Paragraph></li>
 
                                                     <li><Paragraph>@this.WebLocalString($"最大发行量:{cap}", $"Issue Cap:{cap}")</Paragraph></li>
 

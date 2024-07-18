@@ -21,5 +21,6 @@
         public const byte NodeTeamBonusOXSLockVolume = 0x10;
         public const byte NodeTeamBonusOXSMinLock = 0x11;
         public const byte AnchorIssuePool = 0x12;
+        public const byte ValidEthChain = 0x13;
     }
 }

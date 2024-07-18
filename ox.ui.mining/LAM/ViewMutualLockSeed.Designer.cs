@@ -29,162 +29,173 @@ namespace OX.UI.LAM
         /// </summary>
         private void InitializeComponent()
         {
-            this.lb_accounts = new OX.Wallets.UI.Controls.DarkLabel();
-            this.lb_seedAddress = new OX.Wallets.UI.Controls.DarkLabel();
-            this.tb_seedAddress = new OX.Wallets.UI.Controls.DarkTextBox();
-            this.bt_copy = new OX.Wallets.UI.Controls.DarkButton();
-            this.tb_address = new OX.Wallets.UI.Controls.DarkTextBox();
-            this.lb_genesisSeed = new OX.Wallets.UI.Controls.DarkLabel();
-            this.tb_genesisSeed = new OX.Wallets.UI.Controls.DarkTextBox();
-            this.bt_copyGenesisSeed = new OX.Wallets.UI.Controls.DarkButton();
-            this.SuspendLayout();
+            lb_accounts = new Wallets.UI.Controls.DarkLabel();
+            lb_seedAddress = new Wallets.UI.Controls.DarkLabel();
+            tb_seedAddress = new Wallets.UI.Controls.DarkTextBox();
+            bt_copy = new Wallets.UI.Controls.DarkButton();
+            tb_address = new Wallets.UI.Controls.DarkTextBox();
+            lb_genesisSeed = new Wallets.UI.Controls.DarkLabel();
+            tb_genesisSeed = new Wallets.UI.Controls.DarkTextBox();
+            bt_copyGenesisSeed = new Wallets.UI.Controls.DarkButton();
+            lb_msg = new Wallets.UI.Controls.DarkLabel();
+            SuspendLayout();
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(18, 18);
+            btnCancel.Location = new System.Drawing.Point(18, 18);
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(18, 18);
+            btnClose.Location = new System.Drawing.Point(18, 18);
             // 
             // btnYes
             // 
-            this.btnYes.Location = new System.Drawing.Point(18, 18);
+            btnYes.Location = new System.Drawing.Point(18, 18);
             // 
             // btnNo
             // 
-            this.btnNo.Location = new System.Drawing.Point(18, 18);
+            btnNo.Location = new System.Drawing.Point(18, 18);
             // 
             // btnRetry
             // 
-            this.btnRetry.Location = new System.Drawing.Point(708, 18);
+            btnRetry.Location = new System.Drawing.Point(708, 18);
             // 
             // btnIgnore
             // 
-            this.btnIgnore.Location = new System.Drawing.Point(708, 18);
+            btnIgnore.Location = new System.Drawing.Point(708, 18);
             // 
             // lb_accounts
             // 
-            this.lb_accounts.AutoSize = true;
-            this.lb_accounts.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.lb_accounts.Location = new System.Drawing.Point(30, 120);
-            this.lb_accounts.Name = "lb_accounts";
-            this.lb_accounts.Size = new System.Drawing.Size(106, 24);
-            this.lb_accounts.TabIndex = 6;
-            this.lb_accounts.Text = "darkLabel1";
+            lb_accounts.AutoSize = true;
+            lb_accounts.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
+            lb_accounts.Location = new System.Drawing.Point(30, 120);
+            lb_accounts.Name = "lb_accounts";
+            lb_accounts.Size = new System.Drawing.Size(106, 24);
+            lb_accounts.TabIndex = 6;
+            lb_accounts.Text = "darkLabel1";
             // 
             // lb_seedAddress
             // 
-            this.lb_seedAddress.AutoSize = true;
-            this.lb_seedAddress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.lb_seedAddress.Location = new System.Drawing.Point(30, 188);
-            this.lb_seedAddress.Name = "lb_seedAddress";
-            this.lb_seedAddress.Size = new System.Drawing.Size(106, 24);
-            this.lb_seedAddress.TabIndex = 8;
-            this.lb_seedAddress.Text = "darkLabel1";
+            lb_seedAddress.AutoSize = true;
+            lb_seedAddress.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
+            lb_seedAddress.Location = new System.Drawing.Point(30, 188);
+            lb_seedAddress.Name = "lb_seedAddress";
+            lb_seedAddress.Size = new System.Drawing.Size(106, 24);
+            lb_seedAddress.TabIndex = 8;
+            lb_seedAddress.Text = "darkLabel1";
             // 
             // tb_seedAddress
             // 
-            this.tb_seedAddress.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
-            this.tb_seedAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tb_seedAddress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.tb_seedAddress.ImeMode = System.Windows.Forms.ImeMode.Disable;
-            this.tb_seedAddress.Location = new System.Drawing.Point(232, 182);
-            this.tb_seedAddress.MaxLength = 20;
-            this.tb_seedAddress.Name = "tb_seedAddress";
-            this.tb_seedAddress.ReadOnly = true;
-            this.tb_seedAddress.ShortcutsEnabled = false;
-            this.tb_seedAddress.Size = new System.Drawing.Size(526, 30);
-            this.tb_seedAddress.TabIndex = 51;
+            tb_seedAddress.BackColor = System.Drawing.Color.FromArgb(69, 73, 74);
+            tb_seedAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            tb_seedAddress.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
+            tb_seedAddress.ImeMode = System.Windows.Forms.ImeMode.Disable;
+            tb_seedAddress.Location = new System.Drawing.Point(232, 182);
+            tb_seedAddress.MaxLength = 20;
+            tb_seedAddress.Name = "tb_seedAddress";
+            tb_seedAddress.ReadOnly = true;
+            tb_seedAddress.ShortcutsEnabled = false;
+            tb_seedAddress.Size = new System.Drawing.Size(526, 30);
+            tb_seedAddress.TabIndex = 51;
             // 
             // bt_copy
             // 
-            this.bt_copy.Location = new System.Drawing.Point(775, 179);
-            this.bt_copy.Name = "bt_copy";
-            this.bt_copy.Padding = new System.Windows.Forms.Padding(5);
-            this.bt_copy.Size = new System.Drawing.Size(137, 34);
-            this.bt_copy.SpecialBorderColor = null;
-            this.bt_copy.SpecialFillColor = null;
-            this.bt_copy.SpecialTextColor = null;
-            this.bt_copy.TabIndex = 55;
-            this.bt_copy.Text = "darkButton1";
-            this.bt_copy.Click += new System.EventHandler(this.bt_copy_Click);
+            bt_copy.Location = new System.Drawing.Point(775, 179);
+            bt_copy.Name = "bt_copy";
+            bt_copy.Padding = new System.Windows.Forms.Padding(5);
+            bt_copy.Size = new System.Drawing.Size(137, 34);
+            bt_copy.SpecialBorderColor = null;
+            bt_copy.SpecialFillColor = null;
+            bt_copy.SpecialTextColor = null;
+            bt_copy.TabIndex = 55;
+            bt_copy.Text = "darkButton1";
+            bt_copy.Click += bt_copy_Click;
             // 
             // tb_address
             // 
-            this.tb_address.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
-            this.tb_address.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tb_address.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.tb_address.Location = new System.Drawing.Point(232, 118);
-            this.tb_address.Name = "tb_address";
-            this.tb_address.Size = new System.Drawing.Size(526, 30);
-            this.tb_address.TabIndex = 56;
-            this.tb_address.TextChanged += new System.EventHandler(this.tb_address_TextChanged);
+            tb_address.BackColor = System.Drawing.Color.FromArgb(69, 73, 74);
+            tb_address.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            tb_address.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
+            tb_address.Location = new System.Drawing.Point(232, 118);
+            tb_address.Name = "tb_address";
+            tb_address.Size = new System.Drawing.Size(526, 30);
+            tb_address.TabIndex = 56;
+            tb_address.TextChanged += tb_address_TextChanged;
             // 
             // lb_genesisSeed
             // 
-            this.lb_genesisSeed.AutoSize = true;
-            this.lb_genesisSeed.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.lb_genesisSeed.Location = new System.Drawing.Point(30, 32);
-            this.lb_genesisSeed.Name = "lb_genesisSeed";
-            this.lb_genesisSeed.Size = new System.Drawing.Size(106, 24);
-            this.lb_genesisSeed.TabIndex = 57;
-            this.lb_genesisSeed.Text = "darkLabel1";
+            lb_genesisSeed.AutoSize = true;
+            lb_genesisSeed.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
+            lb_genesisSeed.Location = new System.Drawing.Point(30, 32);
+            lb_genesisSeed.Name = "lb_genesisSeed";
+            lb_genesisSeed.Size = new System.Drawing.Size(106, 24);
+            lb_genesisSeed.TabIndex = 57;
+            lb_genesisSeed.Text = "darkLabel1";
             // 
             // tb_genesisSeed
             // 
-            this.tb_genesisSeed.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
-            this.tb_genesisSeed.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tb_genesisSeed.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.tb_genesisSeed.Location = new System.Drawing.Point(232, 30);
-            this.tb_genesisSeed.Name = "tb_genesisSeed";
-            this.tb_genesisSeed.ReadOnly = true;
-            this.tb_genesisSeed.Size = new System.Drawing.Size(526, 30);
-            this.tb_genesisSeed.TabIndex = 58;
+            tb_genesisSeed.BackColor = System.Drawing.Color.FromArgb(69, 73, 74);
+            tb_genesisSeed.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            tb_genesisSeed.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
+            tb_genesisSeed.Location = new System.Drawing.Point(232, 30);
+            tb_genesisSeed.Name = "tb_genesisSeed";
+            tb_genesisSeed.ReadOnly = true;
+            tb_genesisSeed.Size = new System.Drawing.Size(526, 30);
+            tb_genesisSeed.TabIndex = 58;
             // 
             // bt_copyGenesisSeed
             // 
-            this.bt_copyGenesisSeed.Location = new System.Drawing.Point(775, 27);
-            this.bt_copyGenesisSeed.Name = "bt_copyGenesisSeed";
-            this.bt_copyGenesisSeed.Padding = new System.Windows.Forms.Padding(5);
-            this.bt_copyGenesisSeed.Size = new System.Drawing.Size(137, 34);
-            this.bt_copyGenesisSeed.SpecialBorderColor = null;
-            this.bt_copyGenesisSeed.SpecialFillColor = null;
-            this.bt_copyGenesisSeed.SpecialTextColor = null;
-            this.bt_copyGenesisSeed.TabIndex = 59;
-            this.bt_copyGenesisSeed.Text = "darkButton1";
-            this.bt_copyGenesisSeed.Click += new System.EventHandler(this.bt_copyGenesisSeed_Click);
+            bt_copyGenesisSeed.Location = new System.Drawing.Point(775, 27);
+            bt_copyGenesisSeed.Name = "bt_copyGenesisSeed";
+            bt_copyGenesisSeed.Padding = new System.Windows.Forms.Padding(5);
+            bt_copyGenesisSeed.Size = new System.Drawing.Size(137, 34);
+            bt_copyGenesisSeed.SpecialBorderColor = null;
+            bt_copyGenesisSeed.SpecialFillColor = null;
+            bt_copyGenesisSeed.SpecialTextColor = null;
+            bt_copyGenesisSeed.TabIndex = 59;
+            bt_copyGenesisSeed.Text = "darkButton1";
+            bt_copyGenesisSeed.Click += bt_copyGenesisSeed_Click;
+            // 
+            // lb_msg
+            // 
+            lb_msg.AutoSize = true;
+            lb_msg.ForeColor = System.Drawing.Color.FromArgb(220, 220, 220);
+            lb_msg.Location = new System.Drawing.Point(232, 235);
+            lb_msg.Name = "lb_msg";
+            lb_msg.Size = new System.Drawing.Size(0, 24);
+            lb_msg.TabIndex = 60;
             // 
             // ViewMutualLockSeed
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(930, 327);
-            this.Controls.Add(this.bt_copyGenesisSeed);
-            this.Controls.Add(this.tb_genesisSeed);
-            this.Controls.Add(this.lb_genesisSeed);
-            this.Controls.Add(this.tb_address);
-            this.Controls.Add(this.bt_copy);
-            this.Controls.Add(this.tb_seedAddress);
-            this.Controls.Add(this.lb_seedAddress);
-            this.Controls.Add(this.lb_accounts);
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "ViewMutualLockSeed";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "ViewMutualLockSeed";
-            this.Load += new System.EventHandler(this.RegMinerForm_Load);
-            this.Controls.SetChildIndex(this.lb_accounts, 0);
-            this.Controls.SetChildIndex(this.lb_seedAddress, 0);
-            this.Controls.SetChildIndex(this.tb_seedAddress, 0);
-            this.Controls.SetChildIndex(this.bt_copy, 0);
-            this.Controls.SetChildIndex(this.tb_address, 0);
-            this.Controls.SetChildIndex(this.lb_genesisSeed, 0);
-            this.Controls.SetChildIndex(this.tb_genesisSeed, 0);
-            this.Controls.SetChildIndex(this.bt_copyGenesisSeed, 0);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(930, 396);
+            Controls.Add(lb_msg);
+            Controls.Add(bt_copyGenesisSeed);
+            Controls.Add(tb_genesisSeed);
+            Controls.Add(lb_genesisSeed);
+            Controls.Add(tb_address);
+            Controls.Add(bt_copy);
+            Controls.Add(tb_seedAddress);
+            Controls.Add(lb_seedAddress);
+            Controls.Add(lb_accounts);
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "ViewMutualLockSeed";
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            Text = "ViewMutualLockSeed";
+            Load += RegMinerForm_Load;
+            Controls.SetChildIndex(lb_accounts, 0);
+            Controls.SetChildIndex(lb_seedAddress, 0);
+            Controls.SetChildIndex(tb_seedAddress, 0);
+            Controls.SetChildIndex(bt_copy, 0);
+            Controls.SetChildIndex(tb_address, 0);
+            Controls.SetChildIndex(lb_genesisSeed, 0);
+            Controls.SetChildIndex(tb_genesisSeed, 0);
+            Controls.SetChildIndex(bt_copyGenesisSeed, 0);
+            Controls.SetChildIndex(lb_msg, 0);
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -196,5 +207,6 @@ namespace OX.UI.LAM
         private Wallets.UI.Controls.DarkLabel lb_genesisSeed;
         private Wallets.UI.Controls.DarkTextBox tb_genesisSeed;
         private Wallets.UI.Controls.DarkButton bt_copyGenesisSeed;
+        private Wallets.UI.Controls.DarkLabel lb_msg;
     }
 }

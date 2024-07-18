@@ -7,29 +7,32 @@
     {
         if (this.kind == "0")
         {
-            s = this.WebLocalString("买入", "Buy") + $"{this.AssetName}";
+            s = this.WebLocalString("买入", "Buy") + $"{SwapAssetName}";
         }
         else if (this.kind == "1")
         {
-            s = this.WebLocalString("卖出", "Sale") + $"{this.AssetName}";
+            s = this.WebLocalString("卖出", "Sale") + $"{SwapAssetName}";
         }
     }
 }
-<PageHeader Class="site-page-header" Title="@s" Subtitle="@this.pooladdress" />
-<span>@msg</span>
-<Card>
+<PageHeader Class="site-page-header" Title="@s" />
+@msg
+<Card Class="listCard">
     <Form Model="@Model"
           Style="margin-top: 8px;"
           OnFinish="HandleSubmit">
         @{
             var p = this.Price.ToString("f6");
         }
+        <FormItem Label=@this.WebLocalString($"交易池地址",$"Swap Pool Address") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+            <Input @bind-Value="@this.pooladdress" ReadOnly=true />
+        </FormItem>
         <FormItem Label=@this.WebLocalString($"当前价格",$"Current Price") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
             <Input @bind-Value="@p" ReadOnly=true />
         </FormItem>
         @if (this.SideSwapPairKey.IsNotNull())
         {
-            <FormItem Label=@this.WebLocalString($"交易池 {this.AssetName} 余额",$"Exchange Pool {this.AssetName} Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+            <FormItem Label=@this.WebLocalString($"交易池 {SwapAssetName} 余额",$"Exchange Pool {this.AssetName} Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
                 <Input @bind-Value="@TargetBalance" ReadOnly=true />
             </FormItem>
             <FormItem Label=@this.WebLocalString($"交易池 OXC 余额",$"Exchange Pool OXC Balance") LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
@@ -44,7 +47,7 @@
         </FormItem>
         <FormItem Label=" " Style="margin-top:32px" WrapperCol="_submitFormLayout.WrapperCol">
             <Button Type="primary" HtmlType="submit" Disabled=!this.Valid>
-                @this.WebLocalString("提交","Submit")
+                @this.WebLocalString("提交", "Submit")
             </Button>
         </FormItem>
         <FormItem Label=" " Style="margin-top:32px" WrapperCol="_submitFormLayout.WrapperCol">
@@ -54,72 +57,76 @@
     </Form>
     <div>
         <RadioGroup OnChange="@((string e)=>changeKind(e))" @bind-Value="KLKind" ButtonStyle="@RadioButtonStyle.Solid">
-            <Radio RadioButton Value="@("day")">@this.WebLocalString("日线","Day Line")</Radio>
-            <Radio RadioButton Value="@("hour")">@this.WebLocalString("时线","Hour Line")</Radio>
-            </RadioGroup>
-        </div>
-        <Stock OnFirstRender="OnChartRender" Config="config1" />
-        </Card>
-        <style>
+            <Radio RadioButton Value="@("day")">@this.WebLocalString("日线", "Day Line")</Radio>
+            <Radio RadioButton Value="@("hour")">@this.WebLocalString("时线", "Hour Line")</Radio>
+        </RadioGroup>
+    </div>
+    <Stock OnFirstRender="OnChartRender" Config="config1" />
+</Card>
+<style>
+    .listCard {
+        margin: 0px;
+        padding: 0xp;
+    }
 
-            .card {
-                margin-bottom: 24px;
-            }
+    .card {
+        margin-bottom: 24px;
+    }
 
-                .card :global .ant-legacy-form-item .ant-legacy-form-item-control-wrapper {
-                    width: 100%;
-                }
+        .card :global .ant-legacy-form-item .ant-legacy-form-item-control-wrapper {
+            width: 100%;
+        }
 
-            .errorIcon {
-                margin-right: 24px;
-                color: #ff4d4f;
-                cursor: pointer;
-            }
+    .errorIcon {
+        margin-right: 24px;
+        color: #ff4d4f;
+        cursor: pointer;
+    }
 
-                .errorIcon span.anticon {
-                    margin-right: 4px;
-                }
+        .errorIcon span.anticon {
+            margin-right: 4px;
+        }
 
-            .errorPopover :global .ant-popover-inner-content {
-                min-width: 256px;
-                max-height: 290px;
-                padding: 0;
-                overflow: auto;
-            }
+    .errorPopover :global .ant-popover-inner-content {
+        min-width: 256px;
+        max-height: 290px;
+        padding: 0;
+        overflow: auto;
+    }
 
-            .errorListItem {
-                padding: 8px 16px;
-                list-style: none;
-                border-bottom: 1px solid #f0f0f0;
-                cursor: pointer;
-                transition: all 0.3s;
-            }
+    .errorListItem {
+        padding: 8px 16px;
+        list-style: none;
+        border-bottom: 1px solid #f0f0f0;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
 
-                .errorListItem:hover {
-                    background: #e6f7ff;
-                }
+        .errorListItem:hover {
+            background: #e6f7ff;
+        }
 
-                .errorListItem:last-child {
-                    border: 0;
-                }
+        .errorListItem:last-child {
+            border: 0;
+        }
 
-                .errorListItem .errorIcon {
-                    float: left;
-                    margin-top: 4px;
-                    margin-right: 12px;
-                    padding-bottom: 22px;
-                    color: #ff4d4f;
-                }
+        .errorListItem .errorIcon {
+            float: left;
+            margin-top: 4px;
+            margin-right: 12px;
+            padding-bottom: 22px;
+            color: #ff4d4f;
+        }
 
-                .errorListItem .errorField {
-                    margin-top: 2px;
-                    color: rgba(0, 0, 0, 0.45);
-                    font-size: 12px;
-                }
+        .errorListItem .errorField {
+            margin-top: 2px;
+            color: rgba(0, 0, 0, 0.45);
+            font-size: 12px;
+        }
 
-            .editable td {
-                padding-top: 13px !important;
-                padding-bottom: 12.5px !important;
-            }
+    .editable td {
+        padding-top: 13px !important;
+        padding-bottom: 12.5px !important;
+    }
 
-        </style>
+</style>
