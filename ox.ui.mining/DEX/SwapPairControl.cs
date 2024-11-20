@@ -142,6 +142,7 @@ namespace OX.UI.Swap
                 else
                 {
                     IsIDOTime = false;
+                    this.bt_goSwap.Text = UIHelper.LocalString("去交易", "Go Swap");
                 }
             });
         }

@@ -42,7 +42,7 @@ namespace OX.Web.Models
         }
         public static bool DoSimpleDeposit(this INotecase notecase, WalletAccount account, string ethTxId)
         {
-            var key = account.GetKey();
+            //var key = account.GetKey();
             OTCExchangeRequest request = new OTCExchangeRequest
             {
                 EthTxHash = UInt256.Parse(ethTxId)

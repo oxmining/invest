@@ -37,7 +37,7 @@ namespace OX.UI.LAM
             this.lb_genesisSeed.Text = UIHelper.LocalString("根种子:", "Root Seed:");
             this.btnOk.Text = UIHelper.LocalString("关闭", "Close");
             this.bt_copyGenesisSeed.Text = UIHelper.LocalString("复制", "Copy");
-            this.tb_genesisSeed.Text = MutualLockHelper.GenesisSeed().ToAddress();
+            this.tb_genesisSeed.Text = MutualLockMiningHelper.GenesisSeed().ToAddress();
         }
         #region IBlockChainTrigger
         public void OnBappEvent(BappEvent be)

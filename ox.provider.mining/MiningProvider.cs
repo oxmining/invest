@@ -230,7 +230,7 @@ namespace OX.Mining
         public void OnPledgeMiningTransaction(WriteBatch batch, MiningProvider miningProvider, Block block, Transaction tx, TransactionOutput output, ushort k)
         {
             MutualNode parentNode = default;
-            var isRootReg = output.ScriptHash.Equals(MutualLockHelper.GenesisSeed());
+            var isRootReg = output.ScriptHash.Equals(MutualLockMiningHelper.GenesisSeed());
             var isCommonReg = this.MutualLockNodes.TryGetValue(output.ScriptHash, out parentNode);
             if (isRootReg || isCommonReg)
             {

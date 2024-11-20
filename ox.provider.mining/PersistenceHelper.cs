@@ -300,7 +300,7 @@ namespace OX.Mining
             var seedSH = from.GetMutualLockSeed();
             if (!miningProvider.MutualLockNodes.ContainsKey(seedSH))
             {
-                byte nodeType = (byte)(output.ScriptHash.Equals(MutualLockHelper.GenesisSeed()) ? 1 : 0);
+                byte nodeType = (byte)(output.ScriptHash.Equals(MutualLockMiningHelper.GenesisSeed()) ? 1 : 0);
                 var node = new MutualNode { HolderAddress = from, RegIndex = block.Index, NodeType = nodeType, RootSeedAddress = parentNode.IsNotNull() ? parentNode.RootSeedAddress : seedSH, ParentHolder = parentNode.IsNotNull() ? parentNode.HolderAddress : invest.MasterAccountAddress, IsEthMap = true };
                 batch.Put(SliceBuilder.Begin(InvestBizPersistencePrefixes.MutualLockNode).Add(seedSH), SliceBuilder.Begin().Add(node));
                 miningProvider.MutualLockNodes[seedSH] = node;
@@ -316,7 +316,7 @@ namespace OX.Mining
                 var seedSH = from.GetMutualLockSeed();
                 if (!miningProvider.MutualLockNodes.ContainsKey(seedSH))
                 {
-                    byte nodeType = (byte)(output.ScriptHash.Equals(MutualLockHelper.GenesisSeed()) ? 1 : 0);
+                    byte nodeType = (byte)(output.ScriptHash.Equals(MutualLockMiningHelper.GenesisSeed()) ? 1 : 0);
                     var node = new MutualNode { HolderAddress = from, RegIndex = block.Index, NodeType = nodeType, RootSeedAddress = parentNode.IsNotNull() ? parentNode.RootSeedAddress : seedSH, ParentHolder = parentNode.IsNotNull() ? parentNode.HolderAddress : invest.MasterAccountAddress, IsEthMap = false };
                     batch.Put(SliceBuilder.Begin(InvestBizPersistencePrefixes.MutualLockNode).Add(seedSH), SliceBuilder.Begin().Add(node));
                     miningProvider.MutualLockNodes[seedSH] = node;
@@ -438,7 +438,7 @@ namespace OX.Mining
             {
                 lw = new LongWrapper();
             }
-            lw.Value += MutualLockHelper.CalculateValidSpaceTimeVolume(value, startIndex, endIndex);
+            lw.Value += MutualLockMiningHelper.CalculateValidSpaceTimeVolume(value, startIndex, endIndex);
             batch.Put(SliceBuilder.Begin(InvestBizPersistencePrefixes.TotalMutualLockSpaceTimeLockVolume).Add(key), SliceBuilder.Begin().Add(lw));
         }
         public static void UpdateCheckinMiningCount(this WriteBatch batch, MiningProvider provider, string ethAddress, uint markIndex)

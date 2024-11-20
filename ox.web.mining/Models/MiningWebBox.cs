@@ -27,7 +27,7 @@ namespace OX.Web.Models
                 Path = "/_pc/invest",
                 Name = UIHelper.WebLocalString(language, "交易", "Exchange"),
                 Key = "exchange",
-                //Icon = "smile",                
+                Icon = "retweet",
             };
             List<MenuDataItem> subMenus = new List<MenuDataItem>();
             subMenus.Add(new MenuDataItem
@@ -66,7 +66,7 @@ namespace OX.Web.Models
                     Path = "/_pc/mining",
                     Name = UIHelper.WebLocalString(language, "挖矿", "Mining"),
                     Key = "mining",
-                    //Icon = "smile",
+                    Icon = "account-book",
                     Children = new MenuDataItem[] {
                          new MenuDataItem
                     {
@@ -111,7 +111,7 @@ namespace OX.Web.Models
                     Path = "/_pc/fund",
                     Name = UIHelper.WebLocalString(language, "基金", "Fund"),
                     Key = "fund",
-                    //Icon = "smile",
+                    Icon = "fund",
                     Children = new MenuDataItem[] {
                         new MenuDataItem
                         {

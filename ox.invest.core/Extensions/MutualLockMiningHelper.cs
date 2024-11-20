@@ -14,7 +14,7 @@ using OX.Cryptography.ECC;
 namespace OX.Mining
 {
 
-    public static class MutualLockHelper
+    public static class MutualLockMiningHelper
     {
         public const uint MAXVALIDMUTUALLOCKBLOCKS = 6000000;
         static UInt160 genesisSeedAddress;

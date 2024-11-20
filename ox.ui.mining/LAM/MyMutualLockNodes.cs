@@ -128,7 +128,7 @@ namespace OX.UI.LAM
                         for (ushort k = 0; k < tx.Outputs.Length; k++)
                         {
                             TransactionOutput output = tx.Outputs[k];
-                            if (output.ScriptHash.Equals(MutualLockHelper.GenesisSeed()) || bizPlugin.MutualLockNodes.ContainsKey(output.ScriptHash))
+                            if (output.ScriptHash.Equals(MutualLockMiningHelper.GenesisSeed()) || bizPlugin.MutualLockNodes.ContainsKey(output.ScriptHash))
                             {
                                 if (output.VerifyMutualLockNodeRegister())
                                 {
